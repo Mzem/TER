@@ -19,29 +19,42 @@
 
 	\section*{Introduction}
 	
-	\paragraph{}Ce document est le compte-rendu final de notre travail qui s'inscrit dans le cadre du module \textit{Projet} du master informatique de l'\textit{\textbf{UVSQ}}.
-	
+	\paragraph{}Ce document est le compte-rendu final de notre projet sur les tests de primalité qui s'inscrit dans le cadre du module \textit{TER} du M1 informatique de l'\textit{\textbf{UVSQ}}.
+	\paragraph{}Les tests de primalité sont des algorithmes qui permettent de savoir si un nombre entier est premier. Ces tests sont indispensables pour la cryptographie à clé publique.
+	\paragraph{}Il existe plusieurs algorithmes de tests de primalité. L'efficacité de ces algorithmes est particulièrement liée au cryptosystème utilisé. 
+	\paragraph{}Notre travail consiste donc à implémenter différents tests de primalité et de comparer leurs performances.
+	\paragraph{}Dans la première partie de ce document, on présentera l'architecture de notre application, illustrée par un organigramme.\\
+	Ensuite, on parlera des principaux cryptosystèmes faisant appel à des tests de primalité. \\
+	La troisième partie traitera des différents algorithmes de tests de primalité implémentés.\\
+	Les mesures de performance et le comparatif des tests de primalités seront détaillés dans la quatrième partie.\\
+	Finalement, on établira un bilan technique de notre projet, quant à l'application, à l'organisation interne au sein du groupe et aux coûts.
 	
 	\section{Architecture de l'application}
 		\subsection{Organigramme et données échangées}
-		Cet organigramme préalablement établi, représente la décomposition en modules de l'application, ainsi que les informations qui circulent entre ces modules.
+		Cet organigramme représente la décomposition en modules de l'application, ainsi que les informations qui circulent entre ces modules.
 		
 		\subsection{Fonctionnalités des modules}
 		
-	\section{Outils et langages de programmation}
-		\subsection{Contraintes}
-		Lors de la réalisation de l'application, des contraintes ont dû être respectées.
-		Ces contraintes se sont avérées déterminantes pour les choix techniques que l'on a fait, et en l'occurrence, le choix des langages de programmation. 
-		
-		\subsection{Choix des outils et des langages}
-		Les contraintes imposées et les exigences définies nous ont permis de fixer nos choix sur plusieurs langages de programmation qui vont interagir ensemble :
-	
-	\section{Fonctionnement de l'application}
+		\subsection{Outils et langages de programmation}
+		Notre application va être implémentée dans le langage \lstinline!C!. Le langage \lstinline!C! possède plusieurs types pour représenter des nombre entiers. Cependant, tous ces types ont une précision fixe et ne peuvent pas dépasser un certain nombre d'octets. Le type le plus grand est le \lstinline!long long int! qui peut contenir des entiers d'un taille maximale de 64 bits. Or, tous ces types sont beaucoup trop courts pour les applications cryptographiques qui nécessitent la manipulation de données d'au moins 512 bits.
+		\paragraph{}\lstinline!GNU MP! pour \lstinline!GNU Multi Precision!, souvent appelée \lstinline!GMP! est une bibliothèque \lstinline!C!/\lstinline!C++! de calcul multiprécision sur des nombres entiers, rationnels et à virgule flottante qui permet en particulier de manipuler de très grand nombres.
 	
 	\section{Cryptosystèmes}
-	
+		Les tests de primalité sont des algorithmes indispensables pour la cryptographie à clé publique. Ces tests sont couramment utilisés par les cryptosystèmes \textbf{\textit{RSA}} et \textbf{\textit{ElGamal}}.\\
+		Pour \textit{RSA}, les tests sont effectués lors la phase de génération de clés. Pour \textit{ElGamal}, ils sont effectués lors de l'établissement d'un échange de clés.
+		
+		
 	\section{Tests de primalité}
-
+		Dans cette partie, on va détailler les différents algorithmes de tests de primalité traités. Pour chaque test, on donnera un bref historique, l'algorithme du test et sa preuve, puis son implémentation. 
+		
+		\subsection{Test de Fermat}
+		
+		\subsection{Test de Miller-Rabin}
+		
+		\subsection{AKS}
+		
+	\section{Mesures de performance et comparatifs}
+	
 		
 	\section{Bilan technique du projet}
 		Notre produit final, c'est à dire l'application, se comporte comme prévu : l'application est fonctionnelle, la liaison entre ses différents modules réussit bien et les différentes fonctionnalités fournissent le résultat attendu.		
@@ -53,12 +66,12 @@
 			\subsubsection*{Problèmes non résolus :}
 				Certains problèmes rencontrés n'ont pas été entièrement résolus. Ces problèmes ne sont pas déterminants pour l'acceptabilité de notre produit.
 				
-	\section{Organisation interne du groupe}
-	Assignation des modules pour chaque membre du groupe :
-	Cette répartition a été parfaitement respectée. Elle nous a permis de travailler efficacement et assez indépendamment, ce qui prouve que l'assignation des modules a été judicieusement faite. Nous sommes également restés en contact pendant toute la phase de développement pour s'entraider pour la prise en main des nouveaux outils.
+		\subsection{Organisation interne du groupe}
+		Assignation des modules pour chaque membre du groupe :
+		Cette répartition a été parfaitement respectée. Elle nous a permis de travailler efficacement et assez indépendamment, ce qui prouve que l'assignation des modules a été judicieusement faite. Nous sommes également restés en contact pendant toute la phase de développement pour s'entraider pour la prise en main des nouveaux outils.
 	
-	\section{Coûts}
-	Ce tableau indique les coûts estimés et les coûts finaux, en nombre de lignes de code et pour chaque module :
+		\subsection{Coûts}
+		Ce tableau indique les coûts estimés et les coûts finaux, en nombre de lignes de code et pour chaque module :
 	
 	\section*{Conclusion}
 		
