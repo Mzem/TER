@@ -12,16 +12,9 @@ void dechiffrement(mpz_t m, const mpz_t c, const mpz_t d, const mpz_t n)
 	mpz_powm_sec(m, c, d, n);
 }
 
-void creationCles(mpz_t n, mpz_t e, mpz_t p, mpz_t q, mpz_t d)
-{
-	
-	//initialisation de l'aléatoire
-	unsigned long int seed = 1;
-	gmp_randstate_t r_state;
-
-    gmp_randinit_default(r_state);
-    gmp_randseed_ui(r_state, seed);
-    
+void creationCles(mpz_t n, mpz_t e, mpz_t p, mpz_t q, mpz_t d,
+	gmp_randstate_t r_state)
+{   
     //Création des clés
 	mpz_t pgcd;
 	mpz_t pmoins1, qmoins1, phi_n;

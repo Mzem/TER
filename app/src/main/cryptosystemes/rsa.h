@@ -6,7 +6,6 @@
 #include <stdlib.h>
 
 #define NB_BITS_CLE 512
-#define NB_BITS_MSG 1024
 #define NB_REPS_MILLER_RABIN 50
 
 /**
@@ -31,6 +30,8 @@ void dechiffrement(mpz_t m, const mpz_t c, const mpz_t d, const mpz_t n);
  * @param p
  * @param q
  * @param d
+ * @param r_state
  * */
-void creationCles(mpz_t n, mpz_t e, mpz_t p, mpz_t q, mpz_t d);
+void creationCles(mpz_t n, mpz_t e, mpz_t p, mpz_t q, mpz_t d,
+	gmp_randstate_t r_state);
 #endif
