@@ -43,9 +43,30 @@
 	\section{Cryptosystèmes}
 		Les tests de primalité sont des algorithmes indispensables pour la cryptographie à clé publique. Ces tests sont couramment utilisés par les cryptosystèmes \textbf{\textit{RSA}} et \textbf{\textit{ElGamal}}.\\
 		Pour \textit{RSA}, les tests sont effectués lors la phase de génération de clés. Pour \textit{ElGamal}, ils sont effectués lors de l'établissement d'un échange de clés.
+		Dans cette partie, on va détailler ces cryptosystèmes et exhiber rôle important des tests de primalité.
 		
 		\subsection{RSA}
-		
+		Décrit en 1977 par Ronald Rivest, Adi Shamir et Leonard Adleman, RSA est un cryptosystème basé sur le problème de factorisation, qui utilise une paire de clés (publique, privée) qui permettent de chiffrer et de déchiffrer un message. Le fonctionnement de RSA peut être décrit en 3 phases :
+			\subsubsection*{Génération des clés} 
+			\begin{itemize}
+				\item Choisir 2 grands \textbf{\textit{nombres premiers}} distincts $p$ et $q$.
+				\item Calculer $n = p*q$. $n$ est le module RSA et fait 1024 bit au minimum en général.
+				\item Calculer $\Phi(n) = (p - 1)(q - 1)$.
+				\item Choisir $e \in \mathbb{Z}_{\Phi(n)}^{*}$ ($e$ premier avec $\Phi(n)$).
+				\item Calculer $d$ telle que $d*e \equiv 1 mod \Phi(n)$ ($d$ inverse de $e$ pour la multiplication modulo $\Phi(n)$).
+			\end{itemize}
+			Les éléments échangés constituant la clé publique sont $(n, e)$. Les éléments constituant la clé privé sont $(p, q, d)$.
+			
+			\subsubsection*{Chiffrement}
+			Pour chiffrer un message $M$ en un chiffré $C$, on utilise les éléments de la clé publique $(n, e)$ :
+			\[C \equiv M^{e} \pmod n\]		
+			
+			\subsubsection*{Déchiffrement}
+			Pour déchiffrer un chiffré $C$ en un message clair $M$, on utilise les éléments de la clé privée $(p, q, d)$ :
+			\[M \equiv C^{d} \pmod n\]
+			
+			\subsubsection*{Nombres premiers et tests de primalité}
+			La première étape dans RSA est la génération de 2 nombres premiers dont la taille en bits est la moitié de celle du module RSA.
 		\subsection{ElGamal}
 		
 		
