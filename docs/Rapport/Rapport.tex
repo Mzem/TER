@@ -1,4 +1,5 @@
 \input{../tex/preambule}
+\usepackage[french,frenchkw,ruled]{../tex/algorithm2e}
 
 \title{\vspace{\fill}\textbf{\Huge Rapport}}
 \author{
@@ -19,7 +20,7 @@
 
 	\section*{Introduction}
 	
-	\paragraph{}Ce document est le compte-rendu final de notre projet sur les tests de primalité qui s'inscrit dans le cadre du module \textit{TER} du M1 informatique de l'\textit{\textbf{UVSQ}}.
+	\paragraph{}Ce document est le compte-rendu final de notre projet sur les tests de primalité qui s'inscrit dans le cadre du module \textit{TER} du M1 informatique de l'\textit{UVSQ}.
 	\paragraph{}Les tests de primalité sont des algorithmes qui permettent de savoir si un nombre entier est premier. Ces tests sont indispensables pour la cryptographie à clé publique.
 	\paragraph{}Il existe plusieurs algorithmes de tests de primalité. L'efficacité de ces algorithmes est particulièrement liée au cryptosystème utilisé. 
 	\paragraph{}Notre travail consiste donc à implémenter différents tests de primalité et de comparer leurs performances.
@@ -43,11 +44,51 @@
 		Les tests de primalité sont des algorithmes indispensables pour la cryptographie à clé publique. Ces tests sont couramment utilisés par les cryptosystèmes \textbf{\textit{RSA}} et \textbf{\textit{ElGamal}}.\\
 		Pour \textit{RSA}, les tests sont effectués lors la phase de génération de clés. Pour \textit{ElGamal}, ils sont effectués lors de l'établissement d'un échange de clés.
 		
+		\subsection{RSA}
+		
+		\subsection{ElGamal}
+		
 		
 	\section{Tests de primalité}
-		Dans cette partie, on va détailler les différents algorithmes de tests de primalité traités. Pour chaque test, on donnera un bref historique, l'algorithme du test et sa preuve, puis son implémentation. 
+		Les tests de primalité sont des algorithmes qui permettent de savoir si un nombre entier est premier. Dans le cas où le nombre n'est pas premier, il est dit \textbf{\textit{composé}}. Dans cette partie, on va détailler les différents algorithmes de tests de primalité traités. Pour chaque test, on donnera un bref historique, l'algorithme du test, sa complexité et sa preuve, puis son implémentation.\\
+		Les tests de primalité peuvent être
+		\begin{itemize}
+			\item \textbf{déterministes :} fournissent toujours la même réponse pour un nombre donné
+			\item \textbf{probabilistes :} peuvent fournir des réponses différentes pour un même nombre (utilisent des données tirées aléatoirement)
+		\end{itemize}
 		
 		\subsection{Test de Fermat}
+			Le test de Fermat est un test de primalité probabiliste basé sur le \textit{petit théorème de Fermat}.
+			\newtheorem*{Fermat}{Petit théorème de Fermat}
+			\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+			\begin{Fermat}
+				si $p$ est un nombre premier, alors pour tout nombre entier $a$ premier avec $p$
+				\[a^{p-1}\equiv 1 \pmod p\]
+			\end{Fermat}
+			\end{adjustwidth}\vspace{0.5em}
+			
+			\subsubsection{Algorithme}
+				Le théorème de Fermat décrit une propriété commune à tous les nombres premiers qui peut être utilisée pour détecter si un nombre est premier ou bien composé.\\
+				En effet, si pour un entier $a$ premier avec $n$ : 
+				\begin{itemize}
+				\item $a^{n-1} \not\equiv 1 \pmod n$ alors $n$ est surement composé.
+				\item $a^{n-1}\equiv 1 \pmod n$, on ne peut pas conclure avec certitude que $n$ est premier puisque la réciproque du théorème de Fermat est fausse. Un nombre $n$ vérifiant cette équation peut être premier, mais aussi composé, dans ce cas $n$ est dit \textit{\textbf{pseudo-premier} de base $a$}.
+				\end{itemize}
+				Les nombres pseudo-premiers sont relativement rares. On peut donc envisager d'adopter ce critère pour un test probabiliste de primalité, qui est le test de Fermat.
+				
+				\begin{algorithm}
+					\caption{Test de Fermat\label{TF}}
+					\Donnees{un entier n et le nombre de répétitions souhaitée k}
+					\Pour{$i$ = $1$ jusqu'à $k$}{
+						Choisir aléatoirement $a$ tel que $1 < a < n - 1$\;
+						\Si {$a^{p-1} \not\equiv 1 \pmod n$}
+							{\Retour composé\;}
+				}
+				\Retour premier\;
+				\end{algorithm}
+		
+			\subsubsection{Complexité}
+			\subsubsection{Preuve}
 		
 		\subsection{Test de Miller-Rabin}
 		
