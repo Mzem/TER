@@ -5,8 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../tests_primalite/tests_primalite.h"
+
 #define NB_BITS_CLE 512
-#define NB_REPS_MILLER_RABIN 50
+#define NB_REPS_MILLER_RABIN 15
 
 /**
  * @param c
@@ -30,7 +32,6 @@ void dechiffrement(mpz_t m, const mpz_t c, const mpz_t d, const mpz_t n);
  * @param p
  * @param q
  * @param d
- * @param r_state
  * */
 void creationCles(mpz_t n, mpz_t e, mpz_t p, mpz_t q, mpz_t d,
 	gmp_randstate_t r_state);

@@ -23,13 +23,13 @@ void creationCles(mpz_t n, mpz_t e, mpz_t p, mpz_t q, mpz_t d,
 	//initialisation p et p - 1
 	do {
 		mpz_urandomb(p, r_state, NB_BITS_CLE);
-	}while(mpz_cmp_ui(p, 0) == 0 || mpz_probab_prime_p(p, NB_REPS_MILLER_RABIN) == 0);
+	}while(mpz_cmp_ui(p, 0) == 0 || isProbabPrime(p, NB_REPS_MILLER_RABIN, r_state) == 0);
 	mpz_sub_ui(pmoins1, p, 1);
 	
 	//initialisation q et q - 1
 	do {
 		mpz_urandomb(q, r_state, NB_BITS_CLE);
-	}while(mpz_cmp_ui(q, 0) == 0 || mpz_cmp(p, q) == 0 || mpz_probab_prime_p(q, NB_REPS_MILLER_RABIN) == 0);
+	}while(mpz_cmp_ui(q, 0) == 0 || mpz_cmp(p, q) == 0 || isProbabPrime(q, NB_REPS_MILLER_RABIN, r_state) == 0);
 	mpz_sub_ui(qmoins1, q, 1);
 	
 	//n = p * q et phi_n = (p - 1) * (q - 1)

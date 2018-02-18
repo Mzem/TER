@@ -1,6 +1,9 @@
 #ifndef EXEMPLES_H
 #define EXEMPLES_H
-
+/**
+ * Ce module contient des routines pour expérimenter les fonctionnalités développées.
+ * */
+ 
 #include <gmp.h>
 
 #include "../cryptosystemes/cryptosystemes.h"
