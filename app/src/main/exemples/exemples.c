@@ -30,3 +30,9 @@ void essai_rsa(gmp_randstate_t r_state) {
 
 	mpz_clears(m1, m2, c, p, q, n, e, d, NULL);
 }
+
+void test_alea_premiers (mpz_t rpng,gmp_randstate_t r_state, int nb_bits_max)
+{
+    alea_premiers (rpng,r_state,nb_bits_max);
+    gmp_printf("Le nombre donné est: %Zd",rpng);	
+}
