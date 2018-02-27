@@ -78,7 +78,7 @@
 				
 				\begin{algorithm}
 					\caption{Test de Fermat\label{TF}}
-					\Donnees{un entier n et le nombre de répétitions souhaitée k}
+					\Donnees{un entier n et le nombre de répétitions souhaité k}
 					\Pour{$i$ = $1$ jusqu'à $k$}{
 						Choisir aléatoirement $a$ tel que $1 < a < n - 1$\;
 						\Si {$a^{p-1} \not\equiv 1 \pmod n$}
@@ -91,6 +91,75 @@
 			\subsubsection{Preuve}
 		
 		\subsection{Test de Miller-Rabin}
+			Le test de Miller-Rabin (probabiliste) est lui aussi basé sur le Petit Théorème de Fermat, mais exploite quant à lui quelques propriétés supplémentaires.
+			Si $n$ est un nombre impair dont on souhaite tester la primalité, on peut écrire $n − 1 = 2s^{t}$, où $t$ est un nombre impair. 
+			Dans le cas où $n$ est un nombre premier nous avons par le \textit{petit théorème de Fermat}:
+				\begin{itemize}
+				\item $1 \equiv a^{n-1} \pmod n$
+				\item $\Leftrightarrow 0 \equiv a^{2^{s}t}-1 \pmod n$
+				\end{itemize}
+		
+		\subsubsection{Algorithme}
+			\begin{algorithm}
+					\caption{Test de Miller-Rabin\label{TF}}
+					\Donnees{un entier n et le nombre de répétitions souhaité k}
+					\Pour{$i$ = $1$ jusqu'à $k$}{
+						Choisir aléatoirement $a$ tel que $0 < a < n$\;
+						$y\leftarrow a^{t} \pmod n$\;
+						\Si {$y\not\equiv 1 \pmod n$ et $y\not\equiv -1 \pmod n$}
+							\Pour{$j=1$ jusqu'à $s-1$}
+								$y\leftarrow y^{2} \pmod n$\;
+								\Si {$y\equiv 1 \pmod n$}
+									{\Retour composé\;}
+								\Si {$y\equiv -1 \pmod n$}
+									{Arrêter la boucle de $j$. Continuer avec le $i$ suivant\;}
+							{\Retour composé\;}
+							}
+					{\Retour premier\;}	
+			\end{algorithm}
+			
+			Si le test de Miller-Rabin renvoie composé, alors le nombre est effectivement composé. 
+			Il peut être démontré que si le test de Miller-Rabin dit que $n$ est premier, le résultat est faux avec une probabilité inférieure à 1/4. 
+			En effet, il existe des valeurs de $a$ qui produiront de manière répétée des menteurs, qui indiqueront donc que $n$ est premier alors qu’il est composé. On appelle un témoin fort pour $n$ un entier $a$ pour lequel
+				$a^{t}\not\equiv 1 \pmod n$ et $a^{2^{s}j}\not\equiv -1 \pmod n$ pour tous les $0\le j\le s-1$.
+			Il peut être montré qu’il existe toujours un témoin fort pour n’importe quel composé impair $n$, et qu’au moins 3/4 de ces valeurs pour $a$ sont des témoins forts pour la composition de $n$. 
+			Si on répète ce test $k$ fois, la probabilité que le résultat est toujours faux décroît très rapidement. La probabilité que le test renvoie premier à tort après $k$ itérations est $1$/${4^{k}}$.
+			
+		\subsubsection{Preuve}
+		    Soit $n$ un nombre premier;
+		    Nous avons par le \textit{petit théorème de Fermat}:
+				\begin{itemize}
+				\item $1 \equiv a^{n-1} \pmod n$
+				\item $\Leftrightarrow 0 \equiv a^{2^{s}t}-1 \pmod n$
+				
+				
+			 Puisque $s \geq 1$, le nombre  $a^{2^{s}t}$ = $(a^{2^{s-1}t})^{2}$ est un carré. Donc,
+			  \item $a^{2^{s}t}-1$=($a^{2^{s-1}t}+1$)($a^{2^{s-1}t}-1$)\\
+		
+			Si $s-1 > 0$ alors le dernier terme est de nouveau une différence de carrés qui peut être donc factorisée.
+            En continuant de la même manière, on obtient au final l'expression suivante :\\
+            $0\equiv ($a^{2^{s-1}t}+1$)($a^{2^{s-2}t}+1$) ... ($a^{t}+1$)($a^{t}-1$)  \pmod n$.           (1)\\
+            \\
+            On sait maintenant que pour un nombre premier $p$, si $ab\equiv 0 \pmod p$ alors $a\equiv 0 \pmod p$ ou $b\equiv 0 \pmod p$
+            Par conséquent, si $n$ est premier, alors l'équation (1) est vraie si et seulement si un des termes de la partie droite est $0 \pmod n$. Autrement dit, si $n$ est premier alors:
+            
+            \item $a^{2^{j}t} \equiv -1 \pmod n$, pour au moins un $j=0, ..., s-1$\\
+            ou
+            \item $a^{t} \equiv 1 \pmod n$\\
+            
+            Si pour un nombre entier $n$, une des équations ci-dessus est vérifiée, alors l'algorithme conclue que $n$ est probablement premier et termine.\\
+            Si aucune de ces équations n'est vérifiée, alors l'algorithme renvoie que $n$ est composé. 
+            Nous pouvons maintenant apporter à cette première approche l'amélioration suivante.\\
+            
+            Si on trouve que
+            \item $a^{2^{j}t} \equiv 1 \pmod n$\\
+            pour un $j=0, ..., s-1$, on peut directement conclure que $n$ est composé et terminer l'exécution de l'algorithme. Ceci est basé sur le fait que si $p$ est premier, les seuls éléments pour lesquels $x^{2} \equiv 1 \pmod p$ sont $1$ et $-1$. Or, $1$ et $-1$ sont les deux seuls racines carrés de l'unité.\\
+            La version du test de Miller-Rabin, prenant en compte cette dernière astuce est décrite par l'algorithme ci-dessus.
+            
+        
+			\end{itemize}
+		\subsubsection{Compléxité}
+		
 		
 		\subsection{AKS}
 		

@@ -21,5 +21,6 @@ void alea_premiers (mpz_t rpng,gmp_randstate_t r_state, int nb_bits_max)
 	}
 	while((isProbabPrime(rpng, nb_reps, r_state) == 0)||(mpz_cmp(rpng,nb_bits_min) < 0));		
 
-	mpz_clear(deux);	
+	mpz_clear(deux);
+	mpz_clear(nb_bits_min);	
 }
