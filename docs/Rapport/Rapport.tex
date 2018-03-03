@@ -32,48 +32,164 @@
 	
 	\section{Architecture de l'application}
 		\subsection{Organigramme et données échangées}
-		Cet organigramme représente la décomposition en modules de l'application, ainsi que les informations qui circulent entre ces modules.
+		Cet organigramme représente la décomposition en modules de l'application ainsi que les informations qui circulent entre ces modules.
+		\begin{figure}[H]
+			\begin{tikzpicture}
+			\begin{scope}[xscale=2,yscale=0.9]
+				
+				\node (Fct) at (0,5) [rectangle,draw,text depth=3.2cm,minimum width=14cm,minimum height=4cm,font=\textbf\Large] {\begin{tabular}{c}Fonctionnalités\end{tabular}};
+				\node (Exp) [rectangle,draw,dashed] at ([yshift=0.7cm]Fct.center) {\begin{tabular}{c}Exemples\end{tabular}};
+				\node (CS) [rectangle,draw,dashed] at ([xshift=-2cm,yshift=-1.5cm]Exp.south) {\begin{tabular}{c}Cryptosystèmes\end{tabular}};
+				\node (TPrim) [rectangle,draw,dashed] at ([xshift=2cm,yshift=-1.5cm]Exp.south) {\begin{tabular}{c}Tests de primalité\end{tabular}};
+			
+				\node (An) at (0,-1.2) [rectangle,draw,text depth=-3cm,minimum width=5cm,minimum height=4cm,font=\textbf\Large] {\begin{tabular}{c}Analyses\end{tabular}};
+				\node (MPerf) [rectangle,draw,dashed,below=of Fct.south,yshift=-1cm] {\begin{tabular}{c}Mesures de performance\end{tabular}};
+				\node (AM) [rectangle,draw,dashed,below=of MPerf.south,yshift=0cm] {\begin{tabular}{c}Analyse des mesures\end{tabular}};
+				
+				%\node (VERIF) [rectangle,draw,dashed,fill=white] at ([yshift=1cm]API1.center){\begin{tabular}{c}Vérification format\\fichier\end{tabular}};
+				%\node (ANALYS) [rectangle,draw,dashed,fill=white,below=of VERIF.south,yshift=0.5cm] {\begin{tabular}{c}Analyse contenu\\fichier\end{tabular}};
+			
+				\path[->,>=stealth',blue!60] (Exp) edge[bend right=6] node[anchor=south,left,xshift=-0.1cm,yshift=0.2cm]{1} (CS);
+				\path[->,>=stealth',blue!60] (CS) edge[bend right=6] node[anchor=south,right,xshift=0.1cm,yshift=-0.1cm]{2} (Exp);
+				\path[->,>=stealth',blue!60] (Exp) edge[bend left=6] node[anchor=south,right,xshift=0.1cm,yshift=0.2cm]{3} (TPrim);
+				\path[->,>=stealth',blue!60] (TPrim) edge[bend left=6] node[anchor=south,left,xshift=-0.1cm,yshift=-0.1cm]{4} (Exp);	
+				
+				\draw[-triangle 45,blue!60] (CS.2.5) -- node[anchor=south,yshift=0.0cm]{5} (TPrim.177.5);
+				\draw[-triangle 45,blue!60] (TPrim.182.5) -- node[anchor=south,yshift=-0.5cm]{6} (CS.357.5);
+				
+				\path[->,>=stealth',blue!60] (MPerf) edge[bend left=5] node[anchor=south,left,xshift=-0.1cm,yshift=-0.1cm]{7} (CS);
+				\path[->,>=stealth',blue!60] (CS) edge[bend left=5] node[anchor=south,right,xshift=0.1cm,yshift=0.0cm]{8} (MPerf);
+				\path[->,>=stealth',blue!60] (MPerf) edge[bend left=5] node[anchor=south,left,xshift=-0.1cm,yshift=0.0cm]{9} (TPrim);
+				\path[->,>=stealth',blue!60] (TPrim) edge[bend left=5] node[anchor=south,right,xshift=0.1cm,yshift=-0.1cm]{10} (MPerf);
+			
+				\draw[-triangle 45,blue!60] (MPerf) -- node[anchor=south,left] {11} (AM);
+			
+			\end{scope}
+			%Légende
+			\begin{scope}
+				\node (LEGENDE) at (-7,-5) {\textbf{Légende :}};
+				\node (PACKAGE) at (-4.5,-5) [rectangle,draw] {\begin{tabular}{c}Package\end{tabular}};
+				\node (MODULE) at (-2,-5) [rectangle,draw,dashed] {\begin{tabular}{c}Module\end{tabular}};
+				\path[->,>=stealth',blue!60] (0.5,-5.3) edge[bend left=0] node[anchor=south,above]{informations transmises} (3,-5.3);
+			\end{scope}
+			\end{tikzpicture}
+			\caption{Organigramme des différents modules de l'application}\label{fig:M1}
+		\end{figure}
+			
+		\vspace{1em}
+		\hspace{-1.3em}\textbf{Notes :}\\
+			\textbf{(1)} Message à chiffrer\\
+			\textbf{(2)} Chiffré du message\\
+			\textbf{(3)} Nombre entier à tester (primalité)\\
+			\textbf{(4)} Réponse sur la primalité (0 composé, 1 premier, 2 pseudo-premier)\\
+			\textbf{(5)} Nombre entier à tester (primalité)\\
+			\textbf{(6)} Réponse sur la primalité (0 composé, 1 premier, 2 pseudo-premier)\\
+			\textbf{(7)} Message à chiffrer\\
+			\textbf{(8)} Chiffré du message\\
+			\textbf{(9)} Nombre entier à tester (primalité)\\
+			\textbf{(10)} Réponse sur la primalité (0 composé, 1 premier, 2 pseudo-premier)\\
+			\textbf{(11)} Données collectées des différentes mesures de performance\\	
+		
 		
 		\subsection{Fonctionnalités des modules}
+			\subsubsection*{Package Fonctionnalités}
+				\begin{enumerate}[leftmargin=*]
+					\item Module Cryptosystèmes : implémentation des majeurs cryptosystèmes ayant recours à des nombres premiers : \textbf{\textit{RSA}} et \textbf{\textit{ElGamal}}.
+					\item Module Test de primalité : implémentation de différents algorithmes de tests de primalité qui feront l'objet d'une étude comparative par la suite :
+					\begin{itemize}
+						\item Test naïf
+						\item Test de Fermat
+						\item Test de Miller-Rabin
+						\item AKS
+					\end{itemize}
+					\item Module Exemples : exemples d'utilisation des fonctionnalités implémentées (cryptosystèmes et tests de primalité), permet au package Fonctionnalités d'être utilisé comme une API indépendante de l'application finale.
+				\end{enumerate}
+				
+				\subsubsection*{Package Analyses}
+				\begin{enumerate}[leftmargin=*]
+					\item Module Mesures de performance : mesures des performances des différents tests de primalité implémentés selon les valeurs données en entrées et les cryptosystèmes qui les utilisent.
+					\item Module Analyse des mesures :
+					\begin{itemize}[leftmargin=0.2cm]
+						\item Analyse comparative des différentes mesures calculées par le module Mesures de performance.
+						\item Produit final de l'application.
+					\end{itemize}
+				\end{enumerate}
 		
 		\subsection{Outils et langages de programmation}
 		Notre application va être implémentée dans le langage \lstinline!C!. Le langage \lstinline!C! possède plusieurs types pour représenter des nombre entiers. Cependant, tous ces types ont une précision fixe et ne peuvent pas dépasser un certain nombre d'octets. Le type le plus grand est le \lstinline!long long int! qui peut contenir des entiers d'un taille maximale de 64 bits. Or, tous ces types sont beaucoup trop courts pour les applications cryptographiques qui nécessitent la manipulation de données d'au moins 512 bits.
 		\paragraph{}\lstinline!GNU MP! pour \lstinline!GNU Multi Precision!, souvent appelée \lstinline!GMP! est une bibliothèque \lstinline!C!/\lstinline!C++! de calcul multiprécision sur des nombres entiers, rationnels et à virgule flottante qui permet en particulier de manipuler de très grand nombres.
 	
 	\section{Cryptosystèmes}
-		Les tests de primalité sont des algorithmes indispensables pour la cryptographie à clé publique. Ces tests sont couramment utilisés par les cryptosystèmes \textbf{\textit{RSA}} et \textbf{\textit{ElGamal}}.\\
+		Les tests de primalité sont des algorithmes indispensables pour la cryptographie à clé publique. Ces tests sont couramment utilisés par les cryptosystèmes \textbf{\textit{RSA}} et \textbf{\textit{ElGamal}} afin de générer des nombres premiers.\\
 		Pour \textit{RSA}, les tests sont effectués lors la phase de génération de clés. Pour \textit{ElGamal}, ils sont effectués lors de l'établissement d'un échange de clés.
-		Dans cette partie, on va détailler ces cryptosystèmes et exhiber rôle important des tests de primalité.
+		Dans cette partie, on va détailler ces cryptosystèmes et exhiber rôle important des nombres premiers.
 		
 		\subsection{RSA}
-		Décrit en 1977 par Ronald Rivest, Adi Shamir et Leonard Adleman, RSA est un cryptosystème basé sur le problème de factorisation, qui utilise une paire de clés (publique, privée) qui permettent de chiffrer et de déchiffrer un message. Le fonctionnement de RSA peut être décrit en 3 phases :
-			\subsubsection*{Génération des clés} 
-			\begin{itemize}
-				\item Choisir 2 grands \textbf{\textit{nombres premiers}} distincts $p$ et $q$.
-				\item Calculer $n = p*q$. $n$ est le module RSA et fait 1024 bit au minimum en général.
-				\item Calculer $\Phi(n) = (p - 1)(q - 1)$.
-				\item Choisir $e \in \mathbb{Z}_{\Phi(n)}^{*}$ ($e$ premier avec $\Phi(n)$).
-				\item Calculer $d$ telle que $d*e \equiv 1 mod \Phi(n)$ ($d$ inverse de $e$ pour la multiplication modulo $\Phi(n)$).
-			\end{itemize}
-			Les éléments échangés constituant la clé publique sont $(n, e)$. Les éléments constituant la clé privé sont $(p, q, d)$.
+		Décrit en 1977 par Ronald Rivest, Adi Shamir et Leonard Adleman, RSA est un cryptosystème basé sur le problème de factorisation, qui utilise une paire de clés (publique, privée) permettant de chiffrer et de déchiffrer un message. Le fonctionnement de RSA peut être décrit en 3 phases :
+			\begin{enumerate}[leftmargin=2em]
+				\vspace{1em}
+				\item \textbf{Génération des clés} 
+				\begin{itemize}
+					\item Choisir 2 grands \textbf{\textit{nombres premiers}} distincts $p$ et $q$.
+					\item Calculer $n = p * q$. $n$ est le module RSA et fait 1024 bit au minimum en général.
+					\item Calculer $\Phi(n) = (p - 1)(q - 1)$.
+					\item Choisir $e \in \mathbb{Z}_{\Phi(n)}^{*}$ ($e$ premier avec $\Phi(n)$).
+					\item Calculer $d$ telle que $d*e \equiv 1 mod \Phi(n)$ ($d$ inverse de $e$ pour la multiplication modulo $\Phi(n)$).
+				\end{itemize}
+				Les éléments échangés constituant la clé publique sont $(n, e)$. Les éléments constituant la clé privé sont $(p, q, d)$.
+				\vspace{1em}
+				\item \textbf{Chiffrement}\\
+				Pour chiffrer un message $M$ en un chiffré $C$, on utilise les éléments de la clé publique $(n, e)$ :
+				\[C \equiv M^{e} \pmod n\]		
+				
+				\item \textbf{Déchiffrement}\\
+				Pour déchiffrer un chiffré $C$ en un message clair $M$, on utilise les éléments de la clé privée $(p, q, d)$ :
+				\[M \equiv C^{d} \pmod n\]
+			\end{enumerate}
 			
-			\subsubsection*{Chiffrement}
-			Pour chiffrer un message $M$ en un chiffré $C$, on utilise les éléments de la clé publique $(n, e)$ :
-			\[C \equiv M^{e} \pmod n\]		
+			\subsubsection*{Rôle des nombres premiers}
+			La première étape pour la mise en place d'un cryptosystème RSA est la génération de deux très grands nombres premiers $p$ et $q$. Leur produit $n = p * q$ forme le module RSA. Pour cette raison, la taille de $p$ et $q$ en bits, doit être égale à la moitie de la taille en bits du module $n$. Par exemple, dans le cadre de RSA-1024, les deux nombres premiers doivent avoir une longueur de 512 bits.
+			\paragraph{}En effet, un attaquant qui connait le module RSA $n$ et la clé publique $e$ doit connaitre la factorisation de $n$ en nombres premiers pour trouver la clé privée $d$. Ainsi, l'entier $n$ doit être très grand afin que sa factorisation ne soit pas possible avec les ressources de calcul actuelles. On voit donc l'intérêt crucial pour la sécurité de générer les deux grands nombres premiers $p$ et $q$.
+			\paragraph{}Parmi les algorithmes classiques de factorisation les plus efficaces, on retrouve \textbf{\textit{GNFS}} (General Number Field Sieve) dont le temps d'exécution croît exponentiellement à la taille de $n$ (complexité exponentielle). Avec les puissances de calcul actuelles, il est de plus en plus déconseillé d'utiliser un module RSA de taille 1024 bits. Il est estimé qu'un module de taille 2048 bits soit sécurisé (complexité factorisation supérieure à $2^{80}$) jusqu'à l'année 2020. 
+			En 1994, l'algorithme de Shor appliqué sur des ordinateurs quantiques a permis d'effectuer un factorisation en un temps non exponentiel. Les applications des ordinateurs quantiques permettent théoriquement de casser RSA par la force brute, mais actuellement ces ordinateurs génèrent des erreurs aléatoires qui les rendent inefficaces.
 			
-			\subsubsection*{Déchiffrement}
-			Pour déchiffrer un chiffré $C$ en un message clair $M$, on utilise les éléments de la clé privée $(p, q, d)$ :
-			\[M \equiv C^{d} \pmod n\]
-			
-			\subsubsection*{Nombres premiers et tests de primalité}
-			La première étape dans RSA est la génération de 2 nombres premiers dont la taille en bits est la moitié de celle du module RSA.
+		
 		\subsection{ElGamal}
 		
+			\subsubsection*{Rôle des nombres premiers}
 		
+	
+	\section{Génération des nombres premiers}
+		Les cryptosystèmes utilisent une approche commune pour la génération des nombres premiers. Cette approche générale consiste à utiliser un générateur de nombres aléatoires pour générer un entier, dont on testera ensuite la primalité. Ce processus est illustré par la figure ci-dessous :
+		
+		\begin{figure}[H]
+			\begin{center}
+			\begin{tikzpicture}
+			\begin{scope}
+				\node (Gen) at (0,0) [rectangle,draw] {\begin{tabular}{c}Générateur de\\nombres aléatoires\end{tabular}};	
+				\node (Test) at (6,0) [rectangle,draw] {\begin{tabular}{c}Test de\\primalité\end{tabular}};	
+				\node (Prim) at (10,1) [rectangle] {\begin{tabular}{c}$\bar{p}$ est premier\end{tabular}};	
+				\node (Comp) at (10,-1) [rectangle] {\begin{tabular}{c}$\bar{p}$ est composé\end{tabular}};	
+				
+				\draw[-triangle 45] (Gen) -- node[anchor=south]{Candidat $\bar{p}$} (Test);
+				\draw[-triangle 45] (Test) -- node[anchor=south]{} (Prim.180);
+				\draw[-triangle 45] (Test) -- node[anchor=south]{} (Comp.180);
+			
+			\end{scope}
+			\end{tikzpicture}
+			\end{center}
+			\caption{Processus de génération des nombres premiers}\label{fig:M1}
+		\end{figure}
+		Dans cette démarche, il est important d'utiliser un bon générateur de nombres aléatoires, qui ne doit dans aucun cas être prévisible. Si un attaquant réussit à deviner les nombres premiers qui composent le module RSA, alors le système est immédiatement cassé.
+	
+		\subsubsection*{Fréquence des nombres premiers}
+		Lors de la génération des nombres premiers à l'aide de ce processus, on voudrait savoir combien de nombres doit-on tester avant de trouver un nombre premier. La réponse à cette question est donnée par le \textit{Théorème des Nombres Premiers}.
+		
+	
 	\section{Tests de primalité}
 		Les tests de primalité sont des algorithmes qui permettent de savoir si un nombre entier est premier. Dans le cas où le nombre n'est pas premier, il est dit \textbf{\textit{composé}}. Dans cette partie, on va détailler les différents algorithmes de tests de primalité traités. Pour chaque test, on donnera un bref historique, l'algorithme du test, sa complexité et sa preuve, puis son implémentation.\\
 		Les tests de primalité peuvent être
-		\begin{itemize}
+		\begin{itemize}[leftmargin=*]
 			\item \textbf{déterministes :} fournissent toujours la même réponse pour un nombre donné
 			\item \textbf{probabilistes :} peuvent fournir des réponses différentes pour un même nombre (utilisent des données tirées aléatoirement)
 		\end{itemize}
