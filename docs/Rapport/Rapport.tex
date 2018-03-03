@@ -178,17 +178,29 @@
 			\end{scope}
 			\end{tikzpicture}
 			\end{center}
-			\caption{Processus de génération des nombres premiers}\label{fig:M1}
+			\caption{Processus de génération des nombres premiers}\label{fig:M2}
 		\end{figure}
 		Dans cette démarche, il est important d'utiliser un bon générateur de nombres aléatoires, qui ne doit dans aucun cas être prévisible. Si un attaquant réussit à deviner les nombres premiers qui composent le module RSA, alors le système est immédiatement cassé.
 	
 		\subsubsection*{Fréquence des nombres premiers}
 		Lors de la génération des nombres premiers à l'aide de ce processus, on voudrait savoir combien de nombres doit-on tester avant de trouver un nombre premier. La réponse à cette question est donnée par le \textit{Théorème des Nombres Premiers}.
+			\newtheorem{Th}{Théorème}
+			\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+			\begin{Th}[Théorème des Nombres Premiers]
+				soit $\pi(n)$ le nombre de premiers qui sont inférieurs à $n$, alors
+				\[\pi(n) \approx \frac{n}{ln(n)} \quad \quad (n \to +\infty)\]
+			\end{Th}
+			\end{adjustwidth}\vspace{0.5em}
+		Un graphique de la fonction $\pi(n)$ pour les 1000 premiers nombres premiers est donné dans la figure ci-dessous :
+		\begin{figure}[H]
+			\begin{center}\includegraphics[scale=0.4]{freqPremiers.png}\end{center}\vspace{-3em}
+			\caption{La fonction $\pi(n)$ pour les 1000 premiers nombres premiers.}\label{fig:M3}
+		\end{figure}
 		
 	
 	\section{Tests de primalité}
 		Les tests de primalité sont des algorithmes qui permettent de savoir si un nombre entier est premier. Dans le cas où le nombre n'est pas premier, il est dit \textbf{\textit{composé}}. Dans cette partie, on va détailler les différents algorithmes de tests de primalité traités. Pour chaque test, on donnera un bref historique, l'algorithme du test, sa complexité et sa preuve, puis son implémentation.\\
-		Les tests de primalité peuvent être
+		Les tests de primalité peuvent être :
 		\begin{itemize}[leftmargin=*]
 			\item \textbf{déterministes :} fournissent toujours la même réponse pour un nombre donné
 			\item \textbf{probabilistes :} peuvent fournir des réponses différentes pour un même nombre (utilisent des données tirées aléatoirement)
@@ -196,12 +208,11 @@
 		
 		\subsection{Test de Fermat}
 			Le test de Fermat est un test de primalité probabiliste basé sur le \textit{petit théorème de Fermat}.
-			\newtheorem*{Fermat}{Petit théorème de Fermat}
 			\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
-			\begin{Fermat}
+			\begin{Th}[Petit théorème de Fermat]
 				si $p$ est un nombre premier, alors pour tout nombre entier $a$ premier avec $p$
 				\[a^{p-1}\equiv 1 \pmod p\]
-			\end{Fermat}
+			\end{Th}
 			\end{adjustwidth}\vspace{0.5em}
 			
 			\subsubsection{Algorithme}
