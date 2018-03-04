@@ -5,6 +5,9 @@
 *.nav
 *.snm
 *.toc
+*.loa
+*.loe
+*.lof
 *.fdb_latexmk
 *.synctex
 *.synctex(busy)

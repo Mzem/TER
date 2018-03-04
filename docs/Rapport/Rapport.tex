@@ -1,5 +1,5 @@
 \input{../tex/preambule}
-\usepackage[french,frenchkw,ruled]{../tex/algorithm2e}
+\usepackage[french,frenchkw,ruled,vlined]{../tex/algorithm2e}
 
 \title{\vspace{\fill}\textbf{\Huge Rapport}}
 \author{
@@ -9,14 +9,28 @@
 	\vspace{2em}
 }
 
+\declaretheorem[name=Théorème]{Th}
+
+
+
 \begin{document}
 \pagenumbering{gobble}\clearpage
 \maketitle\vspace{9em}
 \begin{center}\includegraphics[scale=0.7]{logo.png}\end{center}
 \begin{flushright}Module \textit{TER}\end{flushright}
+
 \newpage
 \tableofcontents
+
+\newpage
+\listoffigures
+\listofalgorithms
+\renewcommand{\listtheoremname}{Liste des théorèmes mathématiques}
+\listoftheorems
+
 \newpage\clearpage\pagenumbering{arabic}
+
+
 
 	\section*{Introduction}
 	
@@ -30,7 +44,10 @@
 	Les mesures de performance et le comparatif des tests de primalités seront détaillés dans la quatrième partie.\\
 	Finalement, on établira un bilan technique de notre projet, quant à l'application, à l'organisation interne au sein du groupe et aux coûts.
 	
+	
+	
 	\section{Architecture de l'application}
+	
 		\subsection{Organigramme et données échangées}
 		Cet organigramme représente la décomposition en modules de l'application ainsi que les informations qui circulent entre ces modules.
 		\begin{figure}[H]
@@ -119,7 +136,10 @@
 		Notre application va être implémentée dans le langage \lstinline!C!. Le langage \lstinline!C! possède plusieurs types pour représenter des nombre entiers. Cependant, tous ces types ont une précision fixe et ne peuvent pas dépasser un certain nombre d'octets. Le type le plus grand est le \lstinline!long long int! qui peut contenir des entiers d'un taille maximale de 64 bits. Or, tous ces types sont beaucoup trop courts pour les applications cryptographiques qui nécessitent la manipulation de données d'au moins 512 bits.
 		\paragraph{}\lstinline!GNU MP! pour \lstinline!GNU Multi Precision!, souvent appelée \lstinline!GMP! est une bibliothèque \lstinline!C!/\lstinline!C++! de calcul multiprécision sur des nombres entiers, rationnels et à virgule flottante qui permet en particulier de manipuler de très grand nombres.
 	
+	
+	
 	\section{Cryptosystèmes}
+	
 		Les tests de primalité sont des algorithmes indispensables pour la cryptographie à clé publique. Ces tests sont couramment utilisés par les cryptosystèmes \textbf{\textit{RSA}} et \textbf{\textit{ElGamal}} afin de générer des nombres premiers.\\
 		Pour \textit{RSA}, les tests sont effectués lors la phase de génération de clés. Pour \textit{ElGamal}, ils sont effectués lors de l'établissement d'un échange de clés.
 		Dans cette partie, on va détailler ces cryptosystèmes et exhiber rôle important des nombres premiers.
@@ -159,7 +179,9 @@
 			\subsubsection*{Rôle des nombres premiers}
 		
 	
+	
 	\section{Génération des nombres premiers}
+	
 		Les cryptosystèmes utilisent une approche commune pour la génération des nombres premiers. Cette approche générale consiste à utiliser un générateur de nombres aléatoires pour générer un entier, dont on testera ensuite la primalité. Ce processus est illustré par la figure ci-dessous :
 		
 		\begin{figure}[H]
@@ -184,13 +206,14 @@
 	
 		\subsubsection*{Fréquence des nombres premiers}
 		Lors de la génération des nombres premiers à l'aide de ce processus, on voudrait savoir combien de nombres doit-on tester avant de trouver un nombre premier. La réponse à cette question est donnée par le \textit{Théorème des Nombres Premiers}.
-			\newtheorem{Th}{Théorème}
+		
 			\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
 			\begin{Th}[Théorème des Nombres Premiers]
 				soit $\pi(n)$ le nombre de premiers qui sont inférieurs à $n$, alors
 				\[\pi(n) \approx \frac{n}{ln(n)} \quad \quad (n \to +\infty)\]
 			\end{Th}
 			\end{adjustwidth}\vspace{0.5em}
+			
 		Un graphique de la fonction $\pi(n)$ pour les 1000 premiers nombres premiers est donné dans la figure ci-dessous :
 		\begin{figure}[H]
 			\begin{center}\includegraphics[scale=0.4]{freqPremiers.png}\end{center}\vspace{-3em}
@@ -221,7 +244,9 @@
 		\paragraph{Cas de RSA-1024 :} pour générer une des deux clé de RSA-1024 dont la taille en bits est 512, on a probabilité de $1/ln(2^{511}) \approx 1/355$ pour générer un nombre premier de 512 bits. Cette chance double si on se restreint sur les entiers impairs, c'est à dire qu'on doit générer à peu près 177 nombres avant de tomber sur un nombre premier.
 		
 	
+	
 	\section{Tests de primalité}
+	
 		Les tests de primalité interviennent dans la deuxième étape du processus de génération des nombres premiers. Ce sont des algorithmes qui permettent de savoir si un nombre entier est premier. Dans le cas où le nombre n'est pas premier, il est dit \textbf{\textit{composé}}. Dans cette partie, on va détailler les différents algorithmes de tests de primalité traités. Pour chaque test, on donnera un bref historique, l'algorithme du test, sa complexité et sa preuve, puis son implémentation.\\
 		Les tests de primalité peuvent être :
 		\begin{itemize}[leftmargin=*]
@@ -229,12 +254,47 @@
 			\item \textbf{probabilistes :} peuvent fournir des réponses différentes pour un même nombre (utilisent des données tirées aléatoirement)
 		\end{itemize}
 		
+		
 		\subsection{Test naïf}
 			Le test naïf représente l'idée la plus intuitive pour tester la primalité d'un nombre entier. Pour décider si un nombre $n$ est premier ou composé, on teste si les entiers $2, 3, ..., n-1$ divisent $n$. Si un parmi ces entiers divise $n$ alors on déduit que $n$ est composé, sinon on conclut qu'il est premier. Ceci revient à factoriser le nombre en question.\\
 			Pour améliorer cet algorithme, on sait qu'un diviseur d'un entier $n$ quelconque ne peut dépasser $n/2$. De plus, si $n$ possède un diviseur plus grand que $\sqrt{n}$, alors il a forcement au moins un diviseur plus petit que $\sqrt{n}$. On peut donc accélérer la recherche en ne prenant en compte que des nombres premiers inférieurs à $\sqrt{n}$. Pour cela il suffit de pré-calculer et de stoker dans une table tous les nombres premiers $\leqslant \sqrt{n}$. Le \textit{crible d'Eratosthène} par exemple peut être utilisé dans ce but.
 		
+			\begin{algorithm}
+				\caption{Test naïf}\label{TN}
+				\Donnees{un entier $n$}
+				\Pour{tout nombre premier $p \leqslant \sqrt{n}$}{
+					\Si {$p$ divise $n$}
+						{\Retour composé\;}
+			}
+			\Retour premier\;
+			\end{algorithm}
+				
+			\subsubsection*{Complexité}
+				La complexité en temps de l'algorithme \ref{TN} (Test naïf) dans le pire des cas est de $\pi(n) \approx \frac{2\sqrt{n}}{ln(n)}$ division, c'est-à-dire $O(\sqrt{n})$ opérations. Dans le cas de RSA-1024, la complexité de cette méthode avoisine les $2^{503}$ divisions.
+				
+			\subsubsection*{Algorithmes déterministes - Algorithmes probabilistes}
+				Le test naïf est un exemple d'algorithme déterministe, dont la sortie est exacte avec probabilité de 1. Il existe d'autres algorithmes déterministes pour tester la primalité. Par exemple, le \textit{\textbf{test de Wilson}}, basé sur le théorème suivant :
+				
+				\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+				\begin{Th}[Théorème de Wilson]
+					un entier $n > 1$ est un nombre premier si et seulement si
+					\[(n-1)! \equiv -1 \pmod n\]
+				\end{Th}
+				\end{adjustwidth}\vspace{0.5em}
+				
+				Ce test qui est basé sur une propriété très simple a cependant une complexité trop élevée. Il faut effectuer environ $n$ multiplications modulaires, par conséquent la complexité est de $O(n)$.
+				
+				\paragraph{} En pratique, on utilise des algorithmes beaucoup plus efficaces pour tester la primalité d'un nombre. Il s'agit des algorithmes probabilistes. Ces algorithmes décident si un entier est premier ou pas avec une certaine probabilité $P$. La sortie d'un test de primalité probabiliste sur un entier $n$ est soit :
+				\begin{itemize}
+					\item $n$ est composé : toujours vrai
+					\item $n$ est premier : vrai avec une probabilité $P$
+				\end{itemize}
+				Dans le cas où la sortie du test est "premier", il y a toujours une petite probabilité que le nombre testé ne soit pas vraiment premier. Pour pallier à ce problème et diminuer cette probabilité, on a tendance à répéter le test probabiliste un certain nombre de fois.
+			
+		
 		\subsection{Test de Fermat}
 			Le test de Fermat est un test de primalité probabiliste basé sur le \textit{petit théorème de Fermat}.
+			
 			\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
 			\begin{Th}[Petit théorème de Fermat]
 				si $p$ est un nombre premier, alors pour tout nombre entier $a$ premier avec $p$
@@ -252,8 +312,8 @@
 				Les nombres pseudo-premiers sont relativement rares. On peut donc envisager d'adopter ce critère pour un test probabiliste de primalité, qui est le test de Fermat.
 				
 				\begin{algorithm}
-					\caption{Test de Fermat\label{TF}}
-					\Donnees{un entier n et le nombre de répétitions souhaitée k}
+					\caption{Test de Fermat}\label{TF}
+					\Donnees{un entier $n$ et le nombre de répétitions $k$}
 					\Pour{$i$ = $1$ jusqu'à $k$}{
 						Choisir aléatoirement $a$ tel que $1 < a < n - 1$\;
 						\Si {$a^{p-1} \not\equiv 1 \pmod n$}
@@ -269,8 +329,11 @@
 		
 		\subsection{AKS}
 		
+		
+		
 	\section{Mesures de performance et comparatifs}
 	
+		
 		
 	\section{Bilan technique du projet}
 		Notre produit final, c'est à dire l'application, se comporte comme prévu : l'application est fonctionnelle, la liaison entre ses différents modules réussit bien et les différentes fonctionnalités fournissent le résultat attendu.		
@@ -288,6 +351,8 @@
 	
 		\subsection{Coûts}
 		Ce tableau indique les coûts estimés et les coûts finaux, en nombre de lignes de code et pour chaque module :
+	
+	
 	
 	\section*{Conclusion}
 		
