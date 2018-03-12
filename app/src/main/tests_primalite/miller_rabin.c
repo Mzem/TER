@@ -1,7 +1,8 @@
 #include "miller_rabin.h"
 
-int MillerRabin(mpz_t n, int k)
+int MillerRabin(mpz_t n, int k, gmp_randstate_t etat)
 {
+	//initialisation
 	mpz_t a,res,res2,t,modulo,n2,temp;
 	mpz_init (t);
 	mpz_init (modulo);
@@ -22,20 +23,23 @@ int MillerRabin(mpz_t n, int k)
 		s++;
 		mpz_mod_ui (modulo,t,(unsigned long int) 2);
 	}
+
+	//on effectue k tests 
 	for (int i = 0; i < k ; i++)
 	{
-		//genere a aleatoirement
-		gmp_randstate_t etat;              
-		gmp_randinit_mt (etat);
-		temps=clock();
-		gmp_randseed_ui (etat, (unsigned long int) temps);
+		
 		mpz_sub_ui(n2,n,(unsigned long int)1);
+		//genere a entre 0 et n-2
 		mpz_urandomm (a, etat, n2);
+		//augment a de 1 pour avoir 0 < a < n
 		mpz_add_ui(a,a,(unsigned long int)1);
 		
+		//calcule a^n-1 mod n
 		mpz_set(temp,t);
 		mpz_powm(res,a,temp,n);
 		mpz_set(res2,res);
+
+		//si le resultat different de 1 et de -1 (ou n-1)
 		if((mpz_cmp_d(res2,1) != 0)&&(mpz_cmp(res2,n2) != 0))
 		{
 			int j;
@@ -57,5 +61,6 @@ int MillerRabin(mpz_t n, int k)
 				return 0;
 		}
 	}
+	//tres probablement premier
 	return 1;
 }
