@@ -1,42 +1,67 @@
 #include "naif.h"
 
-struct list
-{
-    mpz_t val;
-    struct list *next;
-};
-typedef struct list List;
 
-void premiers(List l, mpz_t n)
+
+List* premiers(List* l, mpz_t n)
 {//cette fonction va mettre tout les nombres premiers inferieurs a racine(n) dans l
+	List* l2;
+	List* l3;
 	mpz_t racine;
 	mpz_init (racine);
+	mpz_t valeur;
+	mpz_init (valeur);
+	mpz_t res_mod;
+	mpz_init (res_mod);
 	mpz_sqrt(racine,n);
 	mpz_t i;
 	mpz_init (i);
-	for (i = 0; i < racine; i++)
+	mpz_set_ui(i,2);
+	l = malloc(sizeof(List)); 
+	l2 = l;
+	while(mpz_cmp(i, racine) <= 0)
 	{
-		l.val = i;
-		l = l.next;
+		mpz_init(l->val);
+		mpz_set(l->val,i);
+		l->next = malloc(sizeof(List));
+		l = l->next;
+		mpz_add_ui(i,i,1);
 	}
-	//non fonctionnel pour le moment
+	l = l2;
 	//deuxieme partie de la fonction consiste a supprimer les multiples des valeurs qui sont deja dans la liste 
+	while(l!= NULL)
+	{
+		mpz_set(valeur,l->val);
+		l3=l;
+		while(l3->next != NULL)
+		{
+			mpz_mod(res_mod,l3->next->val,valeur);
+			if(mpz_cmp_ui(res_mod,0) == 0)
+				l3->next = l3->next->next;
+			else
+				l3 = l3->next;
+		}
+		l = l->next;
+	}
+	return l2;
 }
 
 int Naif(mpz_t n)
 {
-	List l;
+	List* l;
+	List* l2;
 	mpz_t res_mod;
 	mpz_init (res_mod);
-	premiers(l,n);
+	//on cree une liste de nombre premiers inferieurs a racine(n)
+	l=premiers(l,n);
+	//on teste un par un si ils divisent n
 	while(l != NULL)
 	{
-		mpz_mod(res_mod,n,l.val);
+		mpz_mod(res_mod,n,l->val);
 		if(	mpz_cmp_ui(res_mod,0)==0)
 			return 0;
 		else
-			l = l.next;
+			l = l->next;
 	}
-	//premier
+	//sinon il est premier
 	return 2;
 }
