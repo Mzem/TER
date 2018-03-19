@@ -24,9 +24,9 @@ void Fact(mpz_t retour,mpz_t n)
 
 int Wilson(mpz_t n)
 {
+	int retour;
 	mpz_t res,p;
-	mpz_init(res);
-	mpz_init(p);
+	mpz_inits(res,p,NULL);
 
 	//variable tmp
 	mpz_set(p,n);
@@ -36,8 +36,11 @@ int Wilson(mpz_t n)
 	Fact(res,p);
 	mpz_add_ui(res,res,1);
 	mpz_mod(res,res,n);
-	if(mpz_cmp_ui(res,0)==0)
-		return 2; //premier
-	else return 0; //composé
-
+	if(mpz_cmp_ui(res,0)==0) 
+		retour = 2; //premier
+	else retour = 0; //composé
+	
+	mpz_clears(res,p,NULL);
+	
+	return retour;
 }
