@@ -4,13 +4,7 @@ int MillerRabin(mpz_t n, int k, gmp_randstate_t etat)
 {
 	//initialisation
 	mpz_t a,res,res2,t,modulo,n2,temp;
-	mpz_init (t);
-	mpz_init (modulo);
-	mpz_init (n2);
-	mpz_init (a);
-	mpz_init (temp);
-	mpz_init (res);
-	mpz_init (res2);
+	mpz_inits (t,modulo,n2,a,temp,res,res2,NULL);
 	int s=0;
 	clock_t temps;
 	
@@ -49,6 +43,7 @@ int MillerRabin(mpz_t n, int k, gmp_randstate_t etat)
 				mpz_mod (res,res, n);
 				if(mpz_cmp_d(res,1) == 0)
 					{
+						mpz_clears(t,modulo,n2,a,temp,res,res2,NULL);
 						return 0;
 					}
 				if(mpz_cmp(res,n2) == 0)
@@ -58,9 +53,13 @@ int MillerRabin(mpz_t n, int k, gmp_randstate_t etat)
 			}
 			if( (j == (s-1)) || (j == 0) )
 				//on ne retourne pas 0 si j = s
+			{
+				mpz_clears(t,modulo,n2,a,temp,res,res2,NULL);
 				return 0;
+			}
 		}
 	}
 	//tres probablement premier
+	mpz_clears(t,modulo,n2,a,temp,res,res2,NULL);
 	return 1;
 }
