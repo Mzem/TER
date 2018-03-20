@@ -20,6 +20,7 @@ PP_BUILD_PATH = build/main/prog_principal/
 OBJ = $(TP_BUILD_PATH)fermat.o $(TP_BUILD_PATH)miller_rabin.o $(TP_BUILD_PATH)tests_primalite.o\
 	$(CS_BUILD_PATH)rsa.o\
 	$(EX_BUILD_PATH)exemples.o\
+	$(GP_BUILD_PATH)rpng.o\
 	$(PP_BUILD_PATH)main.o
 
 #Compilation et lancement du main

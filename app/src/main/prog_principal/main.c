@@ -9,10 +9,13 @@ int main(int argc, char *argv[]) {
     gmp_randseed_ui(r_state, seed);
 	
     //Exemple :
-    essai_rsa(r_state);
+    //essai_rsa(r_state);
     
     //Entrez la fonction à tester
-    
-    
+    mpz_t rpng;
+    mpz_init(rpng);
+    test_alea_premiers(rpng,r_state,512);
+
+    mpz_clear(rpng);
     return 0;
 }
