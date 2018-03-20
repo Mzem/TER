@@ -6,15 +6,9 @@ List* premiers(List* l, mpz_t n)
 {//cette fonction va mettre tout les nombres premiers inferieurs a racine(n) dans l
 	List* l2;
 	List* l3;
-	mpz_t racine;
-	mpz_init (racine);
-	mpz_t valeur;
-	mpz_init (valeur);
-	mpz_t res_mod;
-	mpz_init (res_mod);
+	mpz_t racine,valeur,res_mod,i;
+	mpz_inits(res_mod,valeur,racine,i,NULL);
 	mpz_sqrt(racine,n);
-	mpz_t i;
-	mpz_init (i);
 	mpz_set_ui(i,2);
 	l = malloc(sizeof(List)); 
 	l2 = l;
@@ -42,6 +36,7 @@ List* premiers(List* l, mpz_t n)
 		}
 		l = l->next;
 	}
+	mpz_clears(res_mod,valeur,racine,i,NULL);
 	return l2;
 }
 
@@ -58,10 +53,14 @@ int Naif(mpz_t n)
 	{
 		mpz_mod(res_mod,n,l->val);
 		if(	mpz_cmp_ui(res_mod,0)==0)
+		{
+			mpz_clear(res_mod);
 			return 0;
+		}
 		else
 			l = l->next;
 	}
 	//sinon il est premier
+	mpz_clear(res_mod);
 	return 2;
 }
