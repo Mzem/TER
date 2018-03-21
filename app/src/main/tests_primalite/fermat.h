@@ -4,6 +4,6 @@
 #include <gmp.h>
 #include <time.h>
 
-int Fermat(mpz_t n, int k);
+int Fermat(mpz_t n, int k, gmp_randstate_t etat);
 
 #endif
