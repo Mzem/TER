@@ -40,6 +40,7 @@ List* premiers(List* l, mpz_t n)
 	return l2;
 }
 
+//la liste n'est pas free a la fin
 int Naif(mpz_t n)
 {
 	List* l;
