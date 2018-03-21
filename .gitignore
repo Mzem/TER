@@ -16,3 +16,4 @@
 *.pdfsyn
 build
 app/build
+.DS_Store
