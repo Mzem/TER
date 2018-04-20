@@ -7,6 +7,7 @@
 #include "../head/fonctionnalites/tests_primalite/testWilson.h"
 #include "../head/fonctionnalites/tests_primalite/testFermat.h"
 #include "../head/fonctionnalites/tests_primalite/testMillerRabin.h"
+#include "../head/fonctionnalites/tests_primalite/testSolovay.h"
 
 int main(int argc, char *argv[]) 
 {
