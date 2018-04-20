@@ -1,0 +1,31 @@
+\section{Tests de primalité}
+
+	Les tests de primalité interviennent dans la deuxième étape du processus de génération des nombres premiers. Ce sont des algorithmes qui permettent de savoir si un nombre entier est premier. Dans le cas où le nombre n'est pas premier, il est dit \textbf{\textit{composé}}. Dans cette partie, on va détailler différents algorithmes de tests de primalité.\\
+	Les tests de primalité peuvent être :
+	\begin{itemize}[leftmargin=*]
+		\item \textbf{déterministes :} fournissent toujours la même réponse pour un nombre donné
+		\item \textbf{probabilistes :} peuvent fournir des réponses différentes pour un même nombre (utilisent des données tirées aléatoirement)
+	\end{itemize}
+	
+	Voici la liste des différents algorithmes de tests de primalité qu'on va plus ou moins aborder :
+	\begin{table}[H]\begin{center}
+		\begin{tabular}{|c|c|c|}
+		\hline
+		Algorithme           & Année & Type       \\ \hline
+		Crible d’Eratosthène & -240  & Déterministe \\ \hline
+		Fermat               & 1640  & Probabiliste \\ \hline
+		Wilson               & 1773  & Déterministe \\ \hline
+		Miller-Rabin         & 1976  & Probabiliste \\ \hline
+		Solovay-Strassen     & ~     & Probabiliste \\ \hline
+		AKS                  & 2002  & Déterministe \\ \hline
+		\end{tabular}
+	\end{center}\end{table}
+	
+	Certains tests seront énoncés rapidement du fait qu'il ne sont pas assez performants. Par contre, on s'intéressera plus en détail aux tests de \textit{Fermat}, \textit{Miller-Rabin}, \textit{Solovay-Strassen} et \textit{AKS}. Pour chacun de ces tests, on donnera un bref historique, son algorithme, sa complexité, sa preuve, ainsi que son implémentation.
+	
+	\input{TestsPrim/Eras}
+	\input{TestsPrim/Wil}
+	\input{TestsPrim/Fermat}
+	\input{TestsPrim/Miller}
+	\input{TestsPrim/Solo}
+	\input{TestsPrim/AKS}

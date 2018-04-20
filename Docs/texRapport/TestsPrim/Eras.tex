@@ -1,0 +1,46 @@
+	\subsection{Test naïf - Crible d’Eratosthène}
+		Le test naïf représente l'idée la plus intuitive pour tester la primalité d'un nombre entier. Pour décider si un nombre $n$ est premier ou composé, on teste si les entiers $2, 3, ..., n-1$ divisent $n$. Si un parmi ces entiers divise $n$ alors on déduit que $n$ est composé, sinon on conclut qu'il est premier. Ceci revient à factoriser le nombre en question.\\
+		Pour améliorer cet algorithme, on sait qu'un diviseur d'un entier $n$ quelconque ne peut dépasser $n/2$. De plus, si $n$ possède un diviseur plus grand que $\sqrt{n}$, alors il a forcement au moins un diviseur plus petit que $\sqrt{n}$. On peut donc accélérer la recherche en ne prenant en compte que des nombres premiers inférieurs à $\sqrt{n}$. Pour cela il suffit de pré-calculer et de stoker dans une table tous les nombres premiers $\leqslant \sqrt{n}$. Le \textbf{\textit{crible d'Eratosthène}} par exemple peut être utilisé dans ce but.\\
+	
+		\begin{algorithm}[H]
+			\caption{Test naïf}\label{TN}
+			\Donnees{un entier $n$}
+			\Pour{tout nombre premier $p \leqslant \sqrt{n}$}{
+				\Si {$p$ divise $n$}
+					{\Retour composé\;}
+			}
+		\Retour premier\;
+		\end{algorithm}
+		
+		\subsubsection*{Crible d'Eratosthène}
+		Ce crible est un procédé établi par Eratosthène, un mathématicien grec  du III\up{e} siècle av. J.-C., qui permet de trouver tous les nombres premiers inférieurs à un certain entier naturel donné $N$. Dans notre cas, cet entier donné est $\sqrt{n}$, $n$ étant le nombre dont on va tester la primalité.\\
+		L'algorithme procède par élimination : il s'agit de supprimer d'une table des entiers de $2$ à $N$ tous les multiples d'un entier. En supprimant tous les multiples, à la fin il ne restera que les entiers qui ne sont multiples d'aucun entier, et qui sont donc les nombres premiers.
+		\begin{itemize}
+			\item retirer les multiples du plus petit entier premier restant (multiples de 2, puis de 3, etc.)
+			\item on peut s'arrêter lorsque le carré de ce plus petit entier premier restant est supérieur au plus grand entier premier restant, car dans ce cas, tous les non-premiers ont déjà été retirés précédemment
+			\item à la fin du processus, tous les entiers qui n'ont pas été rayés sont les nombres premiers inférieurs à $N$
+		\end{itemize}
+		L'algorithme du crible est le suivant :\\ 
+		
+		\begin{algorithm}[H]
+			\caption{Crible d'Eratosthène}\label{Eras}
+			\Donnees{un entier $N$ qui correspond à $\sqrt{n}$}
+			{Créer une liste L de couples \textit{(entier, primalité)}, pour les entiers allant de $2$ jusqu'à $N$, avec une primalité initialisée à "premier" : \textit{\textbf{L = \{(2, premier), (3, premier), ..., ($N$, premier)\}}} \;}
+			{\textit{\textbf{plusGrandPremier}} = $N$ \;}
+			\Pour{tout nombre $p$ marqué "premier" de la liste L (de manière croissante)}{
+				\Si{$p^{2}$ > \textit{\textbf{plusGrandPremier}}}{ 
+					\Retour L\;
+				}
+				{\textit{\textbf{i}} = $2$ \;}
+				\Tq{$p*i < N$}{ 
+					{Marquer "composé" l'entier à la position $p*i$ \;}
+					{Mettre à jour \textit{\textbf{plusGrandPremier}} \;}
+					{$i++$ \;}
+				}
+			}
+		\end{algorithm}	
+			
+			
+		\subsubsection*{Complexité}
+			La complexité en temps de l'algorithme \ref{TN} (Test naïf) dans le pire des cas est de $\pi(n) \approx \frac{2\sqrt{n}}{ln(n)}$ division, c'est-à-dire $O(\sqrt{n})$ opérations. Dans le cas de RSA-1024, la complexité de cette méthode avoisine les $2^{503}$ divisions.
+			

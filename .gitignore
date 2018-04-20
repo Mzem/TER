@@ -14,6 +14,8 @@
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsyn
-build
-app/build
+*.o
+PRIMALITE
+bin
+App/bin
 .DS_Store

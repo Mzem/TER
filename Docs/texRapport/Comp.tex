@@ -1,0 +1,17 @@
+\section{Mesures de performance et comparatifs}
+	Dans la partie précédente, on s'est contenté de présenter différents tests de primalité sans conclue par rapport à leurs performances. Dans cette partie, on va mesurer ces performances et établir un comparatif entre les différents tests abordés.
+	
+	\subsection{Premiers tests déterministes}
+		
+		\paragraph{Algorithmes déterministes - Algorithmes probabilistes} Les tests vus dans les parties précédentes sont des exemples d'algorithmes déterministes, dont la sortie est exacte avec probabilité de 1. Leur complexité est cependant trop élevée. 
+		En pratique, on utilise des algorithmes beaucoup plus efficaces pour tester la primalité d'un nombre. Il s'agit des algorithmes probabilistes. Ces algorithmes décident si un entier est premier ou pas avec une certaine probabilité $P$. La sortie d'un test de primalité probabiliste sur un entier $n$ est soit :
+		\begin{itemize}
+			\item $n$ est composé : toujours vrai
+			\item $n$ est premier : vrai avec une probabilité $P$
+		\end{itemize}
+		Dans le cas où la sortie du test est "premier", il y a toujours une petite probabilité que le nombre testé ne soit pas vraiment premier. Pour pallier à ce problème et diminuer cette probabilité, on a tendance à répéter le test probabiliste un certain nombre de fois.
+		
+	\subsection{Tests probabilistes}
+	\subsection{Tests déterministes rapides : AKS}
+	\subsection{Test générique}
+	

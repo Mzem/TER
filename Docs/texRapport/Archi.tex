@@ -1,0 +1,81 @@
+\section{Architecture de l'application}
+
+	\subsection{Organigramme et données échangées}
+	Cet organigramme représente la décomposition en modules de l'application ainsi que les informations qui circulent entre ces modules.
+	\begin{figure}[H]
+		\begin{tikzpicture}
+		\begin{scope}[xscale=2,yscale=0.9]
+			
+			\node (Fct) at (0,5) [rectangle,draw,text depth=3.2cm,minimum width=14cm,minimum height=3cm,font=\textbf\Large] {\begin{tabular}{c}Fonctionnalités\end{tabular}};
+			\node (CS) [rectangle,draw,dashed] at ([xshift=-2cm]Fct.center) {\begin{tabular}{c}Cryptosystèmes\end{tabular}};
+			\node (TPrim) [rectangle,draw,dashed] at ([xshift=2cm]Fct.center) {\begin{tabular}{c}Tests de primalité\end{tabular}};
+		
+			\node (An) at (0,-1.2) [rectangle,draw,text depth=-3cm,minimum width=5cm,minimum height=4cm,font=\textbf\Large] {\begin{tabular}{c}Analyses\end{tabular}};
+			\node (MPerf) [rectangle,draw,dashed,below=of Fct.south,yshift=-1cm] {\begin{tabular}{c}Mesures de performance\end{tabular}};
+			\node (AM) [rectangle,draw,dashed,below=of MPerf.south,yshift=0cm] {\begin{tabular}{c}Analyse des mesures\end{tabular}};
+			
+			%\node (VERIF) [rectangle,draw,dashed,fill=white] at ([yshift=1cm]API1.center){\begin{tabular}{c}Vérification format\\fichier\end{tabular}};
+			%\node (ANALYS) [rectangle,draw,dashed,fill=white,below=of VERIF.south,yshift=0.5cm] {\begin{tabular}{c}Analyse contenu\\fichier\end{tabular}};
+		
+			\draw[-triangle 45,blue!60] (CS.2.5) -- node[anchor=south,yshift=0.0cm]{1} (TPrim.177.5);
+			\draw[-triangle 45,blue!60] (TPrim.182.5) -- node[anchor=south,yshift=-0.5cm]{2} (CS.357.5);
+			
+			\path[->,>=stealth',blue!60] (MPerf) edge[bend left=5] node[anchor=south,left,xshift=-0.1cm,yshift=-0.1cm]{3} (CS);
+			\path[->,>=stealth',blue!60] (CS) edge[bend left=5] node[anchor=south,right,xshift=0.1cm,yshift=0.0cm]{4} (MPerf);
+			\path[->,>=stealth',blue!60] (MPerf) edge[bend left=5] node[anchor=south,left,xshift=-0.1cm,yshift=0.0cm]{5} (TPrim);
+			\path[->,>=stealth',blue!60] (TPrim) edge[bend left=5] node[anchor=south,right,xshift=0.1cm,yshift=-0.1cm]{6} (MPerf);
+		
+			\draw[-triangle 45,blue!60] (MPerf) -- node[anchor=south,left] {7} (AM);
+		
+		\end{scope}
+		%Légende
+		\begin{scope}
+			\node (LEGENDE) at (-7,-5) {\textbf{Légende :}};
+			\node (PACKAGE) at (-4.5,-5) [rectangle,draw] {\begin{tabular}{c}Package\end{tabular}};
+			\node (MODULE) at (-2,-5) [rectangle,draw,dashed] {\begin{tabular}{c}Module\end{tabular}};
+			\path[->,>=stealth',blue!60] (0.5,-5.3) edge[bend left=0] node[anchor=south,above]{informations transmises} (3,-5.3);
+		\end{scope}
+		\end{tikzpicture}
+		\caption{Organigramme des différents modules de l'application}\label{fig:M1}
+	\end{figure}
+		
+	\vspace{1em}
+	\hspace{-1.3em}\textbf{Notes :}\\
+		\textbf{(1)} Nombre entier à tester (primalité)\\
+		\textbf{(2)} Réponse sur la primalité (0 composé, 1 premier, 2 pseudo-premier)\\
+		\textbf{(3)} Message à chiffrer\\
+		\textbf{(4)} Chiffré du message\\
+		\textbf{(5)} Nombre entier à tester (primalité)\\
+		\textbf{(6)} Réponse sur la primalité (0 composé, 1 premier, 2 pseudo-premier)\\
+		\textbf{(7)} Données collectées des différentes mesures de performance\\	
+	
+	
+	\subsection{Fonctionnalités des modules}
+		\subsubsection*{Package Fonctionnalités}
+			\begin{enumerate}[leftmargin=*]
+				\item Module Cryptosystèmes : implémentation de cryptosystèmes ayant recours à des nombres premiers (\textbf{\textit{RSA}}) et des générateurs de nombres premiers.
+				\item Module Test de primalité : implémentation de différents algorithmes de tests de primalité qui feront l'objet d'une étude comparative par la suite :
+				\begin{itemize}
+					\item Test naïf
+					\item Test de Fermat
+					\item Test de Miller-Rabin
+					\item Test de Solovay-Strassen
+					\item AKS
+				\end{itemize}
+				\item Module Exemples : exemples d'utilisation des fonctionnalités implémentées (cryptosystèmes et tests de primalité), permet au package Fonctionnalités d'être utilisé comme une API indépendante de l'application finale.
+			\end{enumerate}
+			
+			\subsubsection*{Package Analyses}
+			\begin{enumerate}[leftmargin=*]
+				\item Module Mesures de performance : mesures des performances des différents tests de primalité implémentés selon les valeurs données en entrées et les cryptosystèmes qui les utilisent.
+				\item Module Analyse des mesures :
+				\begin{itemize}[leftmargin=0.2cm]
+					\item Analyse comparative des différentes mesures calculées par le module Mesures de performance.
+					\item Produit final de l'application.
+				\end{itemize}
+			\end{enumerate}
+	
+	\subsection{Outils et langages de programmation}
+	Notre application va être implémentée dans le langage {\ttfamily C}. Le langage {\ttfamily C} possède plusieurs types pour représenter des nombre entiers. Cependant, tous ces types ont une précision fixe et ne peuvent pas dépasser un certain nombre d'octets. Le type le plus grand est le {\ttfamily long long int} qui peut contenir des entiers d'un taille maximale de 64 bits. Or, tous ces types sont beaucoup trop courts pour les applications cryptographiques qui nécessitent la manipulation de données d'au moins 512 bits.
+	\paragraph{}{\ttfamily GNU MP} pour {\ttfamily GNU Multi Precision}, souvent appelée \lstinline!GMP! est une bibliothèque {\ttfamily C}/{\ttfamily C++} de calcul multiprécision sur des nombres entiers, rationnels et à virgule flottante qui permet en particulier de manipuler de très grand nombres.
+	

@@ -1,21 +1,22 @@
-# Primalité
+# Projet Primalité
 
-## Tester les modules
+Code source et application **(Linux)** dans le répertoire **"App"**.
+**Pré-requis :** installer la bibliothèque **GMP**. 
+**Exécution :** utiliser un terminal Linux et se positionner sur le répertoire **"App"** :  
 
-## Compilation App
-```cd TER/app```
+* Compilation
 
-### Main
-Compiler et lancer le main
-```
-sudo make
-```
-Lancer le main sans recompiler
-```
-sudo make run
-```
-## Génération de Rapport.pdf
-```
-cd TER/docs/Rapport
-pdflatex Rapport.tex
-```
+		# make
+
+* Exécution
+
+		# make run
+	
+* Nettoyage binaires
+
+		# make clean
+		
+* Nettoyage intégral
+		
+		# make mrproper
+

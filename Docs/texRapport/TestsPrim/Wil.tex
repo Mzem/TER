@@ -1,0 +1,14 @@
+\subsection{Test de Wilson}
+	Le \textit{\textbf{test de Wilson}} est basé sur le théorème suivant :
+		
+		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+		\begin{Th}[Théorème de Wilson]
+			un entier $n > 1$ est un nombre premier si et seulement si
+			\[(n-1)! \equiv -1 \pmod n\]
+		\end{Th}
+		\end{adjustwidth}\vspace{0.5em}
+		
+		
+		
+		\subsubsection*{Complexité}
+			Ce test qui est basé sur une propriété très simple a cependant une complexité trop élevée. Il faut effectuer environ $n$ multiplications modulaires, par conséquent la complexité est de $O(n)$.

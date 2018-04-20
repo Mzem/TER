@@ -1,0 +1,79 @@
+\input{../texLib/preambule}
+\usepackage[french,frenchkw,ruled,vlined]{../texLib/algorithm2e}
+
+\title{\vspace{\fill}\textbf{\Huge Rapport}}
+\author{
+	Sonny Klotz - Idir Hamad - Younes Benyamna - Malek Zemni
+	\vspace{2em}\\
+	\textit{Projet M1 Informatique}\\\textit{Primalité}
+	\vspace{2em}
+}
+
+\declaretheorem[name=Théorème]{Th}
+\declaretheorem[name=Définition]{Df}
+
+
+\begin{document}
+\pagenumbering{gobble}\clearpage
+\maketitle\vspace{9em}
+\begin{center}\includegraphics[scale=0.7]{logo.png}\end{center}
+\begin{flushright}Module \textit{TER}\end{flushright}
+
+\newpage
+\tableofcontents
+
+\newpage
+\listoffigures
+\listofalgorithms
+\renewcommand{\listtheoremname}{Liste des théorèmes et des définitions}
+\listoftheorems
+
+\newpage\clearpage\pagenumbering{arabic}
+
+
+
+	\section*{Introduction}
+	
+	\paragraph{}Ce document est le compte-rendu final de notre projet sur les tests de primalité qui s'inscrit dans le cadre du module \textit{TER} du M1 informatique de l'\textit{UVSQ}.
+	\paragraph{}Les tests de primalité sont des algorithmes qui permettent de savoir si un nombre entier est premier. Ces tests sont indispensables pour la cryptographie à clé publique.
+	\paragraph{}Il existe plusieurs algorithmes de tests de primalité. L'efficacité de ces algorithmes est particulièrement liée au cryptosystème utilisé. 
+	\paragraph{}Notre travail consiste donc à implémenter différents tests de primalité et de comparer leurs performances.
+	\paragraph{}Dans la première partie de ce document, on présentera l'architecture de notre application, illustrée par un organigramme.\\
+	Ensuite, on parlera des principaux cryptosystèmes faisant appel à des tests de primalité. \\
+	La troisième partie traitera des différents algorithmes de tests de primalité implémentés.\\
+	Les mesures de performance et le comparatif des tests de primalités seront détaillés dans la quatrième partie.\\
+	Finalement, on établira un bilan technique de notre projet, quant à l'application, à l'organisation interne au sein du groupe et aux coûts.
+	
+	
+	\input{Archi}
+	
+	\input{Cryp}
+	
+	\input{Gen}
+	
+	\input{TestsPrim}
+	
+	\input{Comp}
+	
+	
+	\section{Bilan technique du projet}
+		Notre produit final, c'est à dire l'application, se comporte comme prévu : l'application est fonctionnelle, la liaison entre ses différents modules réussit bien et les différentes fonctionnalités fournissent le résultat attendu.		
+
+		\subsection{Problèmes rencontrés}
+			\subsubsection*{Problèmes résolus :} 
+			Lors de la réalisation de l'application, on a été confrontés à plusieurs problèmes et points délicats, principalement des verrous techniques, qui ont perturbé le bon déroulement de notre travail :
+				
+			\subsubsection*{Problèmes non résolus :}
+				Certains problèmes rencontrés n'ont pas été entièrement résolus. Ces problèmes ne sont pas déterminants pour l'acceptabilité de notre produit.
+				
+		\subsection{Organisation interne du groupe}
+		Assignation des modules pour chaque membre du groupe :
+		Cette répartition a été parfaitement respectée. Elle nous a permis de travailler efficacement et assez indépendamment, ce qui prouve que l'assignation des modules a été judicieusement faite. Nous sommes également restés en contact pendant toute la phase de développement pour s'entraider pour la prise en main des nouveaux outils.
+	
+		\subsection{Coûts}
+		Ce tableau indique les coûts estimés et les coûts finaux, en nombre de lignes de code et pour chaque module :
+	
+	\section*{Conclusion}
+	
+		
+\end{document}

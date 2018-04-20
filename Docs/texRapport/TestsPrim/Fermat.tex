@@ -1,0 +1,34 @@
+\subsection{Test de Fermat}
+	Le test de Fermat est un test de primalité probabiliste basé sur le \textit{petit théorème de Fermat}.
+	
+	\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+	\begin{Th}[Petit théorème de Fermat]
+		\label{ThFermat}
+		si $p$ est un nombre premier, alors pour tout nombre entier $a$ premier avec $p$
+		\[a^{p-1}\equiv 1 \pmod p\]
+	\end{Th}
+	\end{adjustwidth}\vspace{0.5em}
+	
+	\subsubsection{Algorithme et preuve}
+		Le théorème de Fermat décrit une propriété commune à tous les nombres premiers qui peut être utilisée pour détecter si un nombre est premier ou bien composé.\\
+		En effet, si pour un entier $a$ premier avec $n$ : 
+		\begin{itemize}
+		\item $a^{n-1} \not\equiv 1 \pmod n$ alors $n$ est surement composé.
+		\item $a^{n-1}\equiv 1 \pmod n$, on ne peut pas conclure avec certitude que $n$ est premier puisque la réciproque du théorème de Fermat est fausse. Un nombre $n$ vérifiant cette équation peut être premier, mais aussi composé, dans ce cas $n$ est dit \textit{\textbf{pseudo-premier} de base $a$}.
+		\end{itemize}
+		Les nombres pseudo-premiers sont relativement rares. On peut donc envisager d'adopter ce critère pour un test probabiliste de primalité, qui est le test de Fermat.\\
+		
+		\begin{algorithm}[H]
+			\caption{Test de Fermat}\label{TF}
+			\Donnees{un entier $n$ et le nombre de répétitions $k$}
+			\Pour{$i$ = $1$ jusqu'à $k$}{
+				Choisir aléatoirement $a$ tel que $1 < a < n - 1$\;
+				\Si {$a^{p-1} \not\equiv 1 \pmod n$}
+					{\Retour composé\;}
+		}
+		\Retour premier\;
+		\end{algorithm}
+		
+		En effet, l'entier $k$ correspond ici au nombre de fois que ce test sera répété. À chaque itération, on effectue le test avec une base $a$ différente. Plus le nombre de répétitions est grand, plus la probabilité que le résultat du test soit correct augmente.
+
+	\subsubsection{Complexité}

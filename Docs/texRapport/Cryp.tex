@@ -1,0 +1,35 @@
+\section{Cryptosystèmes - RSA}
+
+	Les tests de primalité sont des algorithmes indispensables pour la cryptographie à clé publique. Ces tests sont couramment utilisés par les cryptosystèmes \textbf{\textit{RSA}} et \textbf{\textit{ElGamal}} afin de générer des nombres premiers.\\
+	Pour \textit{RSA}, les tests sont effectués lors la phase de génération de clés. Pour \textit{ElGamal}, ils sont effectués lors de l'établissement d'un échange de clés.\\
+	Dans cette partie, on va détailler le cryptosystème \textit{RSA} et exhiber rôle important des nombres premiers. On a choisi de s'intéresser qu'à un seul cryptosystème puisque le choix du cryptosystème n'aura pas d'effet sur les performances des tests de primalité, objet principal de ce projet.
+	
+	\subsection{Description de RSA}
+	Décrit en 1977 par Ronald Rivest, Adi Shamir et Leonard Adleman, RSA est un cryptosystème basé sur le problème de factorisation, qui utilise une paire de clés (publique, privée) permettant de chiffrer et de déchiffrer un message. Le fonctionnement de RSA peut être décrit en 3 phases :
+		\begin{enumerate}[leftmargin=2em]
+			\vspace{1em}
+			\item \textbf{Génération des clés} 
+			\begin{itemize}
+				\item Choisir 2 grands \textbf{\textit{nombres premiers}} distincts $p$ et $q$.
+				\item Calculer $n = p * q$. $n$ est le module RSA et fait 1024 bits au minimum en général.
+				\item Calculer $\Phi(n) = (p - 1)(q - 1)$.
+				\item Choisir $e \in \mathbb{Z}_{\Phi(n)}^{*}$ ($e$ premier avec $\Phi(n)$).
+				\item Calculer $d$ telle que $d*e \equiv 1 mod \Phi(n)$ ($d$ inverse de $e$ pour la multiplication modulo $\Phi(n)$).
+			\end{itemize}
+			Les éléments échangés constituant la clé publique sont $(n, e)$. Les éléments constituant la clé privé sont $(p, q, d)$.
+			\vspace{1em}
+			\item \textbf{Chiffrement}\\
+			Pour chiffrer un message $M$ en un chiffré $C$, on utilise les éléments de la clé publique $(n, e)$ :
+			\[C \equiv M^{e} \pmod n\]		
+			
+			\item \textbf{Déchiffrement}\\
+			Pour déchiffrer un chiffré $C$ en un message clair $M$, on utilise les éléments de la clé privée $(p, q, d)$ :
+			\[M \equiv C^{d} \pmod n\]
+		\end{enumerate}
+		
+		\subsection{Rôle des nombres premiers}
+		La première étape pour la mise en place d'un cryptosystème RSA est la génération de deux très grands nombres premiers $p$ et $q$. Leur produit $n = p * q$ forme le module RSA. Pour cette raison, la taille de $p$ et $q$ en bits, doit être égale à la moitie de la taille en bits du module $n$. Par exemple, dans le cadre de RSA-1024, les deux nombres premiers doivent avoir une longueur de 512 bits.
+		\paragraph{}En effet, un attaquant qui connait le module RSA $n$ et la clé publique $e$ doit connaitre la factorisation de $n$ en nombres premiers pour trouver la clé privée $d$. Ainsi, l'entier $n$ doit être très grand afin que sa factorisation ne soit pas possible avec les ressources de calcul actuelles. On voit donc l'intérêt crucial pour la sécurité de générer les deux grands nombres premiers $p$ et $q$.
+		\paragraph{}Parmi les algorithmes classiques de factorisation les plus efficaces, on retrouve \textbf{\textit{GNFS}} (General Number Field Sieve) dont le temps d'exécution croît exponentiellement à la taille de $n$ (complexité exponentielle). Avec les puissances de calcul actuelles, il est de plus en plus déconseillé d'utiliser un module RSA de taille 1024 bits. Il est estimé qu'un module de taille 2048 bits soit sécurisé (complexité factorisation supérieure à $2^{80}$) jusqu'à l'année 2020. 
+		En 1994, l'algorithme de Shor appliqué sur des ordinateurs quantiques a permis d'effectuer un factorisation en un temps non exponentiel. Les applications des ordinateurs quantiques permettent théoriquement de casser RSA par la force brute, mais actuellement ces ordinateurs génèrent des erreurs aléatoires qui les rendent inefficaces.
+		
