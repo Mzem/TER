@@ -1,22 +1,67 @@
 \subsection{Test de Fermat}
-	Le test de Fermat est un test de primalité probabiliste basé sur le \textit{petit théorème de Fermat}.
+	Le test de Fermat est un test de primalité probabiliste basé sur le \textit{petit théorème de Fermat} :
 	
 	\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
-	\begin{Th}[Petit théorème de Fermat]
+	\begin{Th}[Petit théorème de Fermat (énoncé 1)]
 		\label{ThFermat}
 		si $p$ est un nombre premier, alors pour tout nombre entier $a$ premier avec $p$
 		\[a^{p-1}\equiv 1 \pmod p\]
 	\end{Th}
 	\end{adjustwidth}\vspace{0.5em}
 	
-	\subsubsection{Algorithme et preuve}
-		Le théorème de Fermat décrit une propriété commune à tous les nombres premiers qui peut être utilisée pour détecter si un nombre est premier ou bien composé.\\
-		En effet, si pour un entier $a$ premier avec $n$ : 
+	Il existe un énoncé équivalent de ce théorème, qui est le suivant :
+	
+	\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+	\begin{Th}[Petit théorème de Fermat (énoncé 2)]
+		\label{ThFermat}
+		si $p$ est un nombre premier, et $a$ un nombre entier quelconque, alors
+		\[a^{p}\equiv a \pmod p\]
+	\end{Th}
+	\end{adjustwidth}\vspace{0.5em}
+	
+	Ce théorème doit son nom à \textit{Pierre de Fermat}, qui l'énonce la première fois en 1640. 
+	
+	\subsubsection{Algorithme}
+		Le premier énoncé du théorème de Fermat va être exploité pour construire l'algorithme du test de primalité. Ce théorème décrit une propriété commune à tous les nombres premiers qui peut être utilisée pour détecter si un nombre est premier ou bien composé.\\
+		En effet, pour $n$ est un entier dont on veut tester la primalité et $a$ un entier quelconque telle que $1 < a < n - 1$ : 
 		\begin{itemize}
-		\item $a^{n-1} \not\equiv 1 \pmod n$ alors $n$ est surement composé.
-		\item $a^{n-1}\equiv 1 \pmod n$, on ne peut pas conclure avec certitude que $n$ est premier puisque la réciproque du théorème de Fermat est fausse. Un nombre $n$ vérifiant cette équation peut être premier, mais aussi composé, dans ce cas $n$ est dit \textit{\textbf{pseudo-premier} de base $a$}.
+			\item Le fait de choisir $1 < a < n - 1$ garantit que si $n$ était premier, $a$ sera forcément premier avec $n$ (puisque $a < n - 1$) et ainsi le test n'échouera pas. 
+			\item Si $\mathbf{a^{n-1} \not\equiv 1 \pmod n}$, alors $n$ est surement composé.\\
+			Parmi les entiers $a$ qui ne vérifient pas l'inégalité de Fermat, il y a évidement ceux qui ne sont pas premiers avec $n$. Si l'on trouve un tel entier $a$ (qu'il soit premier ou non avec $n$), on dit que $a$ est un \textit{\textbf{témoin de non primalité}} de $n$ issu de la divisibilité.
+					
+					\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+					\begin{Def}[Témoin de Fermat]
+						\label{TemFermat}
+						Soit un entier $n \geqslant 2$. On appelle témoin de Fermat pour $n$, tout entier $a$, telle que
+						\[1 < a < n  \quad \text{et} \quad a^{n-1} \not\equiv 1 \pmod n\]
+					\end{Def}
+					\end{adjustwidth}\vspace{0.5em}
+					
+			\item Si $\mathbf{a^{n-1}\equiv 1 \pmod n}$, on ne peut pas conclure avec certitude que $n$ est premier puisque la réciproque du théorème de Fermat est fausse.\\
+				Un nombre $n$ vérifiant cette équation peut être premier, mais aussi composé, dans ce cas $n$ est dit \textit{\textbf{pseudo-premier} de base $a$}.
+					
+					\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+					\begin{Def}[Nombre pseudo-premier]
+						\label{PseudoPrem}
+						Un nombre pseudo-premier est un nombre premier probable (un entier naturel qui partage une propriété commune à tous les nombres premiers) qui n'est en fait pas premier. Un nombre pseudo-premier provenant du théorème de Fermat est appelé nombre pseudo-premier de Fermat.
+					\end{Def}
+					\end{adjustwidth}\vspace{0.5em}
+					
+				Si un nombre pseudo-premier $n$ de base $a$ est pseudo-premier pour toutes les valeurs de $a$ qui sont premières avec $n$ est appelé \textit{\textbf{nombre de Carmichael}}. 
+			
+					\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+					\begin{Def}[Nombre de Carmichael]
+						\label{Carmich}
+						Un entier positif composé $n$ est appelé nombre de Carmichael si pour tout entier $a$ premier avec $n$,
+						\[a^{n-1}\equiv 1 \pmod n\]
+					\end{Def}
+					\end{adjustwidth}\vspace{0.5em}
+					
+				L'entier $n = 561 = 3\ .\ 11\ .\ 17$ est le plus petit nombre de Carmichael puisque $a^{560} \equiv 1 \pmod 561$ pour tout entier $a$ premier avec $561$. Les nombres de Carmichael sont très rares. Il existe par exemple seulement $246\ 683$ nombres de Carmichael inférieurs à $10^{16}$. Le nombre de premiers inférieurs à $10^{16}$ est quant à lui égal à $279\ 238\ 341\ 033\ 925$. Donc la probabilité qu'un nombre premier inférieur à $10^{16}$ soit un nombre de Carmichael est plus petite que $1/10^{9}$.
+			
 		\end{itemize}
-		Les nombres pseudo-premiers sont relativement rares. On peut donc envisager d'adopter ce critère pour un test probabiliste de primalité, qui est le test de Fermat.\\
+		
+		\paragraph{}Les nombres pseudo-premiers et les nombre de Carmichael sont relativement rares. On peut donc envisager d'adopter ce critère pour un test probabiliste de primalité, qui est le test de Fermat. En effet, va être être répété $k$ fois, et à chaque itération, on effectue le test avec une base $a$ différente. Plus le nombre de répétitions est grand, plus la probabilité que le résultat du test soit correct augmente.\\
 		
 		\begin{algorithm}[H]
 			\caption{Test de Fermat}\label{TF}
@@ -29,6 +74,12 @@
 		\Retour premier\;
 		\end{algorithm}
 		
-		En effet, l'entier $k$ correspond ici au nombre de fois que ce test sera répété. À chaque itération, on effectue le test avec une base $a$ différente. Plus le nombre de répétitions est grand, plus la probabilité que le résultat du test soit correct augmente.
-
+		
 	\subsubsection{Complexité}
+		Si un algorithme rapide est utilisé pour l'exponentiation modulaire (par exemple Square\&Multiply), la complexité en temps de l'algorithme de Fermat est
+		\[O(k\ .\ log_{2}(n)\ .\ log(log(n))\ .\ log(log(log(n))))\]
+		où $k$ est le nombre de fois que le test est répété.
+	
+	
+	\subsubsection{Preuve}
+		\colorbox{yellow}{Sonny}

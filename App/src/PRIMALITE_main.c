@@ -15,9 +15,10 @@ int main(int argc, char *argv[])
 	//Génération nombre premier avec différents tests
 	mpz_t premier;
 	mpz_init(premier);
-	RPNG_det(testNaif, 16, premier);	//le test naif galère à partir d'un nombre de plus 28 bits, à voir
+	RPNG_prob(testFermat, 512, premier);	//test Naif et Wilson galèrent à partir d'un nombre de plus 28 bits, à voir
 	mpz_clear(premier);
 	
+	/*
 	//Test chiffrement et déchiffrement RSA (module RSA mis à 32 bits pour accélérer nos tests)
 	mpz_t n, e, d, m, c;
 	mpz_inits(n, e, d, m, c, NULL);
@@ -30,6 +31,7 @@ int main(int argc, char *argv[])
 	gmp_printf("Chiffrement de %Zd : %Zd\n", m, c);
 	dechiffrementRSA(c, n, d, m);
 	gmp_printf("Déchiffrement de %Zd : %Zd\n", c, m);
+    */
     
     return EXIT_SUCCESS;
 }

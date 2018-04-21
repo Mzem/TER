@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include "../tests_primalite/testGenerique.h"
 
+#define K 15	//Nombre de répétition des tests probabilistes
+
 // Renvoie un nombre premier d'un nombre de bits souhaité, généré à partir de la fonction de test de primalitée passée en paramètre
 // Deux variantes : RPNG pour les tests de primalité déterministes et probabiliste (1 paramètre en plus) et générique
 
