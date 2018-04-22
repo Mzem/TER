@@ -1,5 +1,5 @@
-#ifndef TEST_GENERIQUE_H
-#define TEST_GENERIQUE_H
+#ifndef TEST_OPTIMAL_H
+#define TEST_OPTIMAL_H
 
 #include <gmp.h>
 #include "testNaif.h"
@@ -8,6 +8,6 @@
 #include "testMillerRabin.h"
 
 
-int testGenerique (mpz_t, int);
+int testOptimal (mpz_t, int);
 
 #endif

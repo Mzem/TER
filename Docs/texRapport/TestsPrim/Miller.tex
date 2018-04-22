@@ -1,2 +1,64 @@
 \subsection{Test de Miller-Rabin}
-	Le test de Miller-Rabin est un autre test de primalité probabiliste basé sur le \textit{petit théorème de Fermat} (théorème \ref{ThFermat}). Il exploite quant à lui quelques propriétés supplémentaires.
+	Le test de Miller-Rabin est un autre test de primalité probabiliste basé sur le \textit{petit théorème de Fermat} (théorème \ref{ThFermat1}). Il exploite quant à lui quelques propriétés supplémentaires. La version originale de ce test, publiée par \textit{Gary L. Miller} en 1976, est déterministe, mais ce déterminisme dépend d'une hypothèse non démontrée (hypothèse de Riemann généralisée). En 1980, \textit{Michael Rabin} a modifié cette hypothèse pour obtenir un algorithme de test probabiliste inconditionnel.
+	
+	\subsubsection{Algorithme}
+		
+		\paragraph{} Dans le cas du test de Miller-Rabin, la propriété en question est un raffinement du \textit{petit théorème de Fermat} (théorème \ref{ThFermat1}). De la même façon que le test de Fermat, le test de Miller-Rabin tire parti d'une propriété de l'entier $n$ dont on va tester la primalité, qui dépend d'un entier auxiliaire, le témoin $a$, et qui est vraie dès que $n$ est un nombre premier. Le principe de ce test probabiliste est donc de vérifier cette propriété pour suffisamment de témoins.
+		
+		\paragraph{}En effet, soit $n > 2$ un entier dont on va tester la primalité et $a$ un entier quelconque telle que $1 < a < n - 1$. Soient $s \in \mathbb{N}^{*}$ et $t \in \mathbb{N}$ \textbf{\textit{impair}}, on peut écrire $\mathbf{n - 1 = 2^{s}t}$ ($s$ est le nombre maximum de fois que l'on peut mettre $2$ en facteur dans $n - 1$).\\
+		Alors, dans le cas où $n$ est premier, d'après le \textit{petit théorème de Fermat} (théorème \ref{ThFermat1}) on a :
+		\[a^{n-1}\equiv 1 \pmod n\]
+		\[\Leftrightarrow\]
+		\[a^{2^{s}t}\equiv 1 \pmod n\]
+		\[\Leftrightarrow\]
+		\[a^{2^{s}t} - 1 \equiv 0 \pmod n\]
+		\[\Leftrightarrow\]
+		\[a^{2^{s}t} - 1 = (a^{2^{s-1}t})^{2} - 1 = (a^{2^{s-1}t} + 1)(a^{2^{s-1}t} - 1) \equiv 0 \pmod n	\quad	\text{(puisque } s \geqslant 1 \text{)}\]
+		
+		Si $s - 1 > 0$ alors le dernier terme est de nouveau une différence de carrés qui peut donc être factorisée. En continuant de la même manière, on obtient au final l'expression suivante :
+		\[ (a^{2^{s-1}t} + 1)(a^{2^{s-2}t} + 1)...(a^{t} + 1)(a^{t} - 1) \equiv 0 \pmod n \quad\quad \text{(*)}\]
+		
+		On sait que pour un nombre premier $p$, si $ab \equiv 0 \pmod p$ alors $a \equiv 0 \pmod p$ ou $b \equiv 0 \pmod p$. Par conséquent, si $n$ est premier, alors l'équation (*) est vraie si et seulement si un des termes de sa partie gauche est $0 \pmod n$. Autrement dit, si $n$ est premier alors
+		\[ a^{2^{j}t} \equiv -1 \pmod n \quad \text{pour au moins un } j \in \{0, 1, ..., s-1\} \]
+		\[\text{ou}\]
+		\[ a^{t} \equiv 1 \pmod n\]
+		Si pour un nombre entier $n$, une des équations ci-dessus est vérifiée, alors l'algorithme conclue que $n$ est probablement premier et termine. Si aucune de ces équations n'est vérifiée, alors l'algorithme renvoie que $n$ est composé avec certitude. On peut aussi apporter une amélioration à cette approche.\\
+		Si on trouve que
+		\[ a^{2^{j}t} \equiv 1 \pmod n \quad \text{pour un } j \in \{0, 1, ..., s-1\} \text{,}\]
+		on peut directement conclure que $n$ est composé et terminer l'exécution de l'algorithme. Ceci est dû au fait que pour un nombre $p$ premier, les seuls éléments pour lesquels un entier $x$ vérifie $x^{2} \equiv 1 \pmod p$ sont $1$ et $-1$, qui sont les deux seules racines carrées de l'unité.
+		
+		\paragraph{} Compte tenu de tous les éléments développés ci-dessus, l'algorithme du test de primalité de Miller-Rabin est le suivant :\\
+		
+		\begin{algorithm}[H]
+			\caption{Test de Miller-Rabin}\label{TF}
+			\Donnees{un entier $n$ et le nombre de répétitions $k$}
+			{Décomposer $n - 1 = 2^{s}t$, avec $s \in \mathbb{N}^{*}$ et $t \in \mathbb{N}$ impair \;}
+			\Pour{$i$ = $1$ jusqu'à $k$}{
+				{Choisir aléatoirement $a$ tel que $1 < a < n - 1$\;}
+				{$y \gets a^{t} \pmod n$\;}
+				\Si{$y \not\equiv 1 \pmod n$ et $y \not\equiv -1 \pmod n$}{
+					\Pour{$j = 1$ jusqu'à $s - 1$}{
+						{$y \gets y^{2} \pmod n$\;}
+						\Si{$y \equiv 1 \pmod n$}{
+							{\Retour composé\;}
+						}
+						\Si{$y \equiv -1 \pmod n$}{
+							{Arrêter la boucle de $j$ et continuer avec le $i$ suivant (sans renvoyer composé)\;}
+						}
+						{\Retour composé\;}
+					}
+				}
+			}
+			\Retour premier\;
+		\end{algorithm}
+	
+	
+		\paragraph{Probabilité d'erreur et nombre d'itérations :} si le test de Miller-Rabin renvoie composé, alors le nombre est effectivement composé. Il peut être démontré que si le test de Miller-Rabin dit que $n$ est premier, le résultat est faux avec une probabilité inférieure à $1/4$. En effet, il existe des valeurs de $a$ qui produiront de manière répétée des menteurs, qui indiqueront donc que $n$ est premier alors qu'il est composé. On appelle un \textit{\textbf{témoin}} fort pour $n$ un entier $a$ pour lequel
+		\[a^{t} \not\equiv 1 \pmod n \quad \text{et} \quad a^{2^{s}j} \not\equiv -1 \pmod n \quad \text{pour tout } j \in \{0, ..., s - 1\}\]
+		
+		Il peut être montré qu'il existe toujours un témoin fort pour n'importe quel composé impair $n$, et qu'au moins $3/4$ de ces valeurs pour $a$ sont des témoins forts pour la composition de $n$. Si on répète ce test $k$ fois, la probabilité que le résultat soit toujours faux décroit très rapidement. La probabilité que le test renvoie premier à tort après $k$ itérations est donc de $1/4^{k}$.
+		
+	\subsubsection{Complexité}
+		\colorbox{yellow}{Sonny}
+	\subsubsection{Preuve}
+		\colorbox{yellow}{Sonny}

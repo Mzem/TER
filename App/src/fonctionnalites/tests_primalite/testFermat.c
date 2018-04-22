@@ -16,9 +16,9 @@ int testFermat(mpz_t n, int k)
 		//nMoins1 = n - 1
 		mpz_sub_ui(nMoins1, n, 1);
 		
-		//Générer a aléatoire dans [1, n-1]
+		//Générer a aléatoire dans ]1, n-1[
 		int nbBits = mpz_sizeinbase(n, 2);
-		//Boucle do while pour sécurité, on sait jamais si le générateur aléatoire a un probleme
+		//Boucle do while pour sécurité, on sait jamais si le générateur aléatoire a un problème
 		do {
 			mpz_urandomb(a, r_state, nbBits-1);
 			mpz_add_ui(a, a, 1);
@@ -32,10 +32,12 @@ int testFermat(mpz_t n, int k)
 		if(mpz_cmp_ui(ferm, 1) != 0)
 		{
 			mpz_clears (nMoins1, a, ferm, NULL);
+			gmp_randclear(r_state);
 			return 0;
 		}
 	}
 	//Probablement premier
 	mpz_clears (nMoins1, a, ferm, NULL);
+	gmp_randclear(r_state);
 	return 1;
 }

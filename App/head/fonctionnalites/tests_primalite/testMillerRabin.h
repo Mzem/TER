@@ -2,8 +2,10 @@
 #define MILLER_RABIN_H
 
 #include <gmp.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 
-int MillerRabin(mpz_t n, int k , gmp_randstate_t etat);
+int testMillerRabin(mpz_t, int);
 
 #endif

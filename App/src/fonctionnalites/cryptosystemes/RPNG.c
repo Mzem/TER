@@ -55,7 +55,7 @@ void RPNG_prob ( int (*testPrimalite)(mpz_t, int), int bits, mpz_t retour)
 	gmp_randclear(r_state);
 }
 
-void RPNG_gen (int bits, mpz_t retour)
+void RPNG_opt (int bits, mpz_t retour)
 {
 	//Initialisation nombre aléatoire
 	mpz_t alea;
@@ -72,7 +72,7 @@ void RPNG_gen (int bits, mpz_t retour)
 		mpz_urandomb(alea, r_state, bits);
 		//mpz_set_ui(alea,11998843);
 		
-		primalite = testGenerique(alea, K);
+		primalite = testOptimal(alea, K);
 		
 		gmp_printf("Test primalité sur alea %Zd : %d\n", alea, primalite);
 	} while (primalite == 0);

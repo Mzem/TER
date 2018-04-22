@@ -26,12 +26,12 @@ run: $(EXEC)
 	./$(EXEC)
 
 
-$(EXEC): $(ODIR)/PRIMALITE_main.o $(ODIR)/RPNG.o $(ODIR)/RSA.o $(ODIR)/testGenerique.o $(ODIR)/testNaif.o $(ODIR)/testWilson.o $(ODIR)/testFermat.o $(ODIR)/testMillerRabin.o 
+$(EXEC): $(ODIR)/PRIMALITE_main.o $(ODIR)/RPNG.o $(ODIR)/RSA.o $(ODIR)/testOptimal.o $(ODIR)/testNaif.o $(ODIR)/testWilson.o $(ODIR)/testFermat.o $(ODIR)/testMillerRabin.o 
 	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS)
 
 
-$(ODIR)/PRIMALITE_main.o: $(CRYP_HDIR)/RPNG.h $(CRYP_HDIR)/RSA.h $(TPRIM_HDIR)/testGenerique.h $(TPRIM_HDIR)/testNaif.h $(TPRIM_HDIR)/testWilson.h $(TPRIM_HDIR)/testFermat.h $(TPRIM_HDIR)/testMillerRabin.h
-$(ODIR)/RPNG.o: $(TPRIM_HDIR)/testGenerique.h
+$(ODIR)/PRIMALITE_main.o: $(CRYP_HDIR)/RPNG.h $(CRYP_HDIR)/RSA.h $(TPRIM_HDIR)/testOptimal.h $(TPRIM_HDIR)/testNaif.h $(TPRIM_HDIR)/testWilson.h $(TPRIM_HDIR)/testFermat.h $(TPRIM_HDIR)/testMillerRabin.h
+$(ODIR)/RPNG.o: $(TPRIM_HDIR)/testOptimal.h
 $(ODIR)/RSA.o: $(CRYP_HDIR)/RPNG.h
 
 
