@@ -4,7 +4,7 @@
 	\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
 	\begin{Th}[Petit théorème de Fermat (énoncé 1)]
 		\label{ThFermat1}
-		si $p$ est un nombre premier, alors pour tout nombre entier $a$ premier avec $p$
+		Si $p$ est un nombre premier, alors pour tout nombre entier $a$ premier avec $p$
 		\[a^{p-1}\equiv 1 \pmod p\]
 	\end{Th}
 	\end{adjustwidth}\vspace{0.5em}
@@ -14,7 +14,7 @@
 	\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
 	\begin{Th}[Petit théorème de Fermat (énoncé 2)]
 		\label{ThFermat2}
-		si $p$ est un nombre premier, et $a$ un nombre entier quelconque, alors
+		Si $p$ est un nombre premier, et $a$ un nombre entier quelconque, alors
 		\[a^{p}\equiv a \pmod p\]
 	\end{Th}
 	\end{adjustwidth}\vspace{0.5em}
@@ -23,11 +23,11 @@
 	
 	\subsubsection{Algorithme}
 		Le premier énoncé du théorème de Fermat va être exploité pour construire l'algorithme du test de primalité. Ce théorème décrit une propriété commune à tous les nombres premiers qui peut être utilisée pour détecter si un nombre est premier ou bien composé.\\
-		En effet, pour $n$ est un entier dont on veut tester la primalité et $a$ un entier quelconque telle que $1 < a < n - 1$ : 
+		En effet, pour un entier $n$ dont on veut tester la primalité et un entier $a$ quelconque telle que $1 < a < n$ : 
 		\begin{itemize}
-			\item Le fait de choisir $1 < a < n - 1$ garantit que si $n$ était premier, $a$ sera forcément premier avec $n$ (puisque $a < n - 1$) et ainsi le test n'échouera pas. 
+			\item Le fait de choisir $1 < a < n$ garantit que si $n$ était premier, $a$ sera forcément premier avec $n$ (puisque $a < n$) et ainsi le test n'échouera pas. 
 			\item Si $\mathbf{a^{n-1} \not\equiv 1 \pmod n}$, alors $n$ est surement composé.\\
-			Parmi les entiers $a$ qui ne vérifient pas l'inégalité de Fermat, il y a évidement ceux qui ne sont pas premiers avec $n$. Si l'on trouve un tel entier $a$ (qu'il soit premier ou non avec $n$), on dit que $a$ est un \textit{\textbf{témoin de non primalité}} de $n$ issu de la divisibilité.
+			Parmi les entiers $a$ qui ne vérifient pas l'inégalité de Fermat, il y a évidement ceux qui ne sont pas premiers avec $n$. Si l'on trouve un tel entier $a$ (qu'il soit premier ou non avec $n$), on dit que $a$ est un \textit{\textbf{témoin de non primalité}} de $n$ issu de la divisibilité (\textit{témoin de Fermat)}.
 					
 					\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
 					\begin{Def}[Témoin de Fermat]
@@ -37,8 +37,8 @@
 					\end{Def}
 					\end{adjustwidth}\vspace{0.5em}
 					
-			\item Si $\mathbf{a^{n-1}\equiv 1 \pmod n}$, on ne peut pas conclure avec certitude que $n$ est premier puisque la réciproque du théorème de Fermat est fausse.\\
-				Un nombre $n$ vérifiant cette équation peut être premier, mais aussi composé, dans ce cas $n$ est dit \textit{\textbf{pseudo-premier} de base $a$}.
+			\item Si $\mathbf{a^{n-1}\equiv 1 \pmod n}$, on ne peut pas conclure avec certitude que $n$ est premier puisque la réciproque du \textit{théorème de Fermat est fausse} (théorème \ref{ThFermat1}).\\
+				Un nombre $n$ vérifiant cette équation peut être premier, mais aussi composé, dans ce cas $n$ est dit \textit{\textbf{pseudo-premier} de base $a$} ou menteur.
 					
 					\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
 					\begin{Def}[Nombre pseudo-premier]
@@ -67,11 +67,11 @@
 			\caption{Test de Fermat}\label{TF}
 			\Donnees{un entier $n$ et le nombre de répétitions $k$}
 			\Pour{$i$ = $1$ jusqu'à $k$}{
-				Choisir aléatoirement $a$ tel que $1 < a < n - 1$\;
+				Choisir aléatoirement $a$ tel que $1 < a < n$\;
 				\Si {$a^{p-1} \not\equiv 1 \pmod n$}
 					{\Retour composé\;}
 			}
-		\Retour premier\;
+		\Retour probablement premier\;
 		\end{algorithm}
 		
 		

@@ -4,6 +4,12 @@
 
 int testMillerRabin(mpz_t n, int k)
 {
+	//Premier test si n <= 2
+	if ( mpz_cmp_ui(n, 2) < 0 )
+		return 0;
+	if ( mpz_cmp_ui(n, 2) == 0 )
+		return 2;
+		
 	mpz_t a, t, t_tmp, reste, y, nMoins1;
 	mpz_inits (a, t, t_tmp, reste, y, nMoins1, NULL);
 	int s = 0;
@@ -33,14 +39,14 @@ int testMillerRabin(mpz_t n, int k)
 		int iContinue = 0;
 		mpz_sub_ui(nMoins1, n, 1);
 		
-		//Générer a aléatoire dans ]1, n-1[
+		//Générer a aléatoire dans ]1, n[
 		int nbBits = mpz_sizeinbase(n, 2);
 		//Boucle do while pour sécurité, on sait jamais si le générateur aléatoire a un problème
 		do {
 			mpz_urandomb(a, r_state, nbBits-1);
 			mpz_add_ui(a, a, 1);
 			//gmp_printf("a = %Zd\n", a);
-		} while ( mpz_cmp_ui(a,1) <= 0 || mpz_cmp(a,nMoins1) >= 0);
+		} while ( mpz_cmp_ui(a,1) <= 0 || mpz_cmp(a,nMoins1) > 0);
 		
 		//y = a^t mod n
 		mpz_set(t_tmp, t);

@@ -5,7 +5,7 @@
 		
 		\paragraph{} Dans le cas du test de Miller-Rabin, la propriété en question est un raffinement du \textit{petit théorème de Fermat} (théorème \ref{ThFermat1}). De la même façon que le test de Fermat, le test de Miller-Rabin tire parti d'une propriété de l'entier $n$ dont on va tester la primalité, qui dépend d'un entier auxiliaire, le témoin $a$, et qui est vraie dès que $n$ est un nombre premier. Le principe de ce test probabiliste est donc de vérifier cette propriété pour suffisamment de témoins.
 		
-		\paragraph{}En effet, soit $n > 2$ un entier dont on va tester la primalité et $a$ un entier quelconque telle que $1 < a < n - 1$. Soient $s \in \mathbb{N}^{*}$ et $t \in \mathbb{N}$ \textbf{\textit{impair}}, on peut écrire $\mathbf{n - 1 = 2^{s}t}$ ($s$ est le nombre maximum de fois que l'on peut mettre $2$ en facteur dans $n - 1$).\\
+		\paragraph{}En effet, soit $n > 2$ un entier dont on va tester la primalité et $a$ un entier quelconque telle que $1 < a < n$. Soient $s \in \mathbb{N}^{*}$ et $t \in \mathbb{N}$ \textbf{\textit{impair}}, on peut écrire $\mathbf{n - 1 = 2^{s}t}$ ($s$ est le nombre maximum de fois que l'on peut mettre $2$ en facteur dans $n - 1$).\\
 		Alors, dans le cas où $n$ est premier, d'après le \textit{petit théorème de Fermat} (théorème \ref{ThFermat1}) on a :
 		\[a^{n-1}\equiv 1 \pmod n\]
 		\[\Leftrightarrow\]
@@ -34,7 +34,7 @@
 			\Donnees{un entier $n$ et le nombre de répétitions $k$}
 			{Décomposer $n - 1 = 2^{s}t$, avec $s \in \mathbb{N}^{*}$ et $t \in \mathbb{N}$ impair \;}
 			\Pour{$i$ = $1$ jusqu'à $k$}{
-				{Choisir aléatoirement $a$ tel que $1 < a < n - 1$\;}
+				{Choisir aléatoirement $a$ tel que $1 < a < n$\;}
 				{$y \gets a^{t} \pmod n$\;}
 				\Si{$y \not\equiv 1 \pmod n$ et $y \not\equiv -1 \pmod n$}{
 					\Pour{$j = 1$ jusqu'à $s - 1$}{
@@ -49,7 +49,7 @@
 					}
 				}
 			}
-			\Retour premier\;
+			\Retour probablement premier\;
 		\end{algorithm}
 	
 	

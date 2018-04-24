@@ -1,1 +1,103 @@
 \subsection{Test de Solovay-Strassen}
+
+	Le test de Solovay-Strassen est un test de primalité probabiliste, publié par \textit{Robert Solovay} et \textit{Volker Strassen} en 1977. Ce test a une importance historique dans la démonstration de la faisabilité du cryptosystème RSA.
+
+	\subsubsection{Algorithme}
+		L'algorithme du test de Solovay-Strassen est essentiellement basé sur le \textit{\textbf{critère d'Euler}}, un théorème qui énonce que :
+		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+		\begin{Th}[Critère d'Euler]
+			\label{CritereEuler}
+			Soient $p > 2$ un nombre premier et $a$ un entier premier avec $p$
+			\begin{itemize}
+				\item Si $a$ est un résidu quadratique modulo $p$, alors $a^{\frac{n-1}{2}} \equiv 1 \pmod p$.
+				\item Si $a$ n'est pas un résidu quadratique modulo $p$, alors $a^{\frac{n-1}{2}} \equiv -1 \pmod p$.
+			\end{itemize}
+			Ceci se résume en utilisant le symbole de Legendre par :
+			\[a^{\frac{n-1}{2}} \equiv \left ( \frac{a}{p} \right ) \pmod p\]
+		\end{Th}
+		\end{adjustwidth}\vspace{0.5em}
+		
+		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+		\begin{Def}[Résidu quadratique]
+			\label{Residu}
+			On dit qu'un entier $q$ est un résidu quadratique modulo $p$ s'il existe un entier $x$ tel que :
+			\[x^{2} \equiv q \pmod p\]
+			Autrement dit, un résidu quadratique modulo $p$ est un nombre qui possède une racine carrée de module $p$. Dans le cas contraire, on dit que $q$ est un non-résidu quadratique modulo $p$.
+		\end{Def}
+		\end{adjustwidth}\vspace{0.5em}
+		
+		Le \textit{\textbf{symbole de Legendre}} est utilisé pour résumer le \textit{critère d'Euler}. Il est définit de la manière suivante :
+		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+		\begin{Def}[Symbole de Legendre]
+			\label{Legendre}
+			Le symbole de Legendre est une fonction de deux variables entières à valeurs dans $\{-1, 0, 1\}$. Si $p$ est un nombre premier et $a$ un entier, alors le symbole de Legendre $\left ( \frac{a}{p} \right )$ vaut :
+			\[
+			\left\{
+			\begin{array}{l l}
+			0 & \text{si } a \text{ est divisible par } p\\
+			1 & \text{si } a \text{ est un résidu quadratique modulo } p \text{ mais pas divisible par } p\\
+			-1 & \text{si } a \text{ n'est pas un résidu quadratique modulo } p
+			\end{array}
+			\right.
+			\]
+			Le cas particulier $p = 2$ est inclus dans cette définition mais est sans intérêt : $\left ( \frac{a}{p} \right )$ vaut $0$ si $a$ pair et $1$ sinon.
+		\end{Def}
+		\end{adjustwidth}\vspace{0.5em}
+		
+		Pour pouvoir exploiter le \textit{critère d'Euler} dans l'algorithme du test de primalité, on doit pouvoir calculer le \textit{symbole de Legendre} pour tout entier $n$ dont on veut tester la primalité. On introduit donc le \textit{\textbf{symbole de Jacobi}} qui est une généralisation du \textit{symbole de Legendre}, définit de la manière suivante :
+		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+		\begin{Def}[Symbole de Jacobi]
+			\label{Jacobi}
+			Le symbole de Jacobi $\left ( \frac{a}{n} \right )$ est défini, $\forall a \in \mathbb{Z}$ et $n \in \mathbb{N}$ \underline{impair}, comme produit de symboles de Legendre, en faisant intervenir la décomposition en facteurs premiers de $n$. Si $n = p_{1}*p_{2}*...*p_{k}$ pour $k \in \mathbb{N}$ telle que $p_{1}, p_{2}, ...,p_{k}$ sont des nombres premiers non nécessairement distincts, alors :
+			\[\left ( \frac{a}{n} \right ) = \left ( \frac{a}{\prod_{i \in \{1,...,k\}} p_{i}} \right ) = \prod_{i \in \{1,...,k\}} \left ( \frac{a}{p_{i}} \right )\]
+		\end{Def}
+		\end{adjustwidth}\vspace{0.5em}
+		
+		Compte tenu des notions décrites ci-dessus, on peut maintenant construire l'algorithme de test de primalité de Solovay-Strassen :\\
+		
+		\begin{algorithm}[H]
+			\caption{Test de Solovay-Strassen}\label{TSS}
+			\Donnees{un entier $n$ \underline{impair} et le nombre de répétitions $k$}
+			\Pour{$i$ = $1$ jusqu'à $k$}{
+				Choisir aléatoirement $a$ tel que $2 < a < n$\;
+				$x \gets \left ( \frac{a}{n} \right )$\;
+				\Si {$x = 0$ ou $x \not\equiv a^{\frac{n-1}{2}} \pmod n$}{
+					{\Retour composé\;}
+				}
+			}
+		\Retour probablement premier\;
+		\end{algorithm}
+		
+		\paragraph{} Cet algorithme exploite essentiellement le \textit{critère d'Euler} (théorème \ref{CritereEuler}). En effet, pour un entier $n$ dont on veut tester la primalité et un entier $a$ quelconque telle que $2 < a < n$ :
+		\begin{itemize}
+		\item Si $\mathbf{a^{\frac{n-1}{2}} \not\equiv \left ( \frac{a}{n} \right ) \pmod n}$, alors $n$ est surement composé.\\
+		Parmi les entiers $a$ qui ne vérifient pas le \textit{critère d'Euler} (théorème \ref{CritereEuler}), il y a évidement ceux qui ne sont pas premiers avec $n$. Si l'on trouve un tel entier $a$ (qu'il soit premier ou non avec $n$), on dit que $a$ est un \textit{\textbf{témoin de non primalité}} de $n$ (\textit{témoin d'Euler}).
+			
+			\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+			\begin{Def}[Témoin d'Euler]
+			\label{TemEuler}
+				Soit un entier $n > 2$. On appelle témoin d'Euler pour $n$, tout entier $a$, telle que
+				\[2 < a < n  \quad \text{et} \quad a^{\frac{n-1}{2}} \not\equiv \left ( \frac{a}{n} \right ) \pmod n\]
+			\end{Def}
+			\end{adjustwidth}\vspace{0.5em}
+		
+		\item Si $\mathbf{a^{\frac{n-1}{2}} \equiv \left ( \frac{a}{n} \right ) \pmod n}$, on ne peut pas conclure avec certitude que $n$ est premier puisque la réciproque du \textit{critère d'Euler} (théorème \ref{CritereEuler}) est fausse.\\
+		Un nombre $n$ vérifiant cette équation peut être premier, mais aussi composé, dans ce cas $n$ est dit \textit{\textbf{pseudo-premier d'Euler-Jacobi} de base $a$} ou menteur.
+					
+			\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+			\begin{Def}[Nombre pseudo-premier d'Euler-Jacobi]
+				\label{PseudoPremEulerJ}
+				Un nombre pseudo-premier d'Euler-Jacobi de base $a$ est un nombre composé impair $n$ premier avec $a$ et tel que la congruence suivante soit vérifiée :
+				\[a^{\frac{n-1}{2}} \equiv \left ( \frac{a}{n} \right ) \pmod n\]
+			\end{Def}
+			\end{adjustwidth}\vspace{0.5em}
+			
+		À la différence du test de primalité de Fermat, pour chaque entier composé $n$, au moins la moitié de tous les $a$ sont des témoins d’Euler. Par conséquent, il n’y a aucune valeur de $n$ pour laquelle tous les $a$ sont des menteurs, alors que c'est le cas pour les nombres de \textit{Carmichael} dans le test de Fermat.
+		\end{itemize}
+	
+	
+	\subsubsection{Complexité}
+		\colorbox{yellow}{Sonny}
+		
+	\subsubsection{Preuve}
+		\colorbox{yellow}{Sonny}

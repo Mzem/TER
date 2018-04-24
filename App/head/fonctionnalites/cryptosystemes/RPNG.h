@@ -5,7 +5,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../tests_primalite/testGenerique.h"
+#include "../tests_primalite/testOptimal.h"
 
 #define K 15	//Nombre de répétition des tests probabilistes
 
@@ -16,6 +16,6 @@ void RPNG_det (int (*testPrimalite)(mpz_t), int bits, mpz_t retour);
 
 void RPNG_prob (int (*testPrimalite)(mpz_t, int), int bits, mpz_t retour);
 
-void RPNG_gen (int bits, mpz_t retour);
+void RPNG_opt (int bits, mpz_t retour);
 
 #endif

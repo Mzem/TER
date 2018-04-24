@@ -7,6 +7,7 @@
 #include "../head/fonctionnalites/tests_primalite/testWilson.h"
 #include "../head/fonctionnalites/tests_primalite/testFermat.h"
 #include "../head/fonctionnalites/tests_primalite/testMillerRabin.h"
+#include "../head/fonctionnalites/tests_primalite/testSolovay.h"
 
 int main(int argc, char *argv[]) 
 {
@@ -15,7 +16,7 @@ int main(int argc, char *argv[])
 	//Génération nombre premier avec différents tests
 	mpz_t premier;
 	mpz_init(premier);
-	RPNG_prob(testMillerRabin, 1024, premier);	//test Naif et Wilson galèrent à partir d'un nombre de plus 28 bits, à voir
+	RPNG_prob(testSolovay, 1024, premier);	//test Naif et Wilson galèrent à partir d'un nombre de plus 28 bits, à voir
 	gmp_printf("Fermat dit sur %Zd : %d\n", premier, testFermat(premier, K));
 	mpz_clear(premier);
 	
