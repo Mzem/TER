@@ -91,6 +91,10 @@ Liste Eratosthene(mpz_t N)
 //Algo test naif
 int testNaif(mpz_t n)
 {
+	//Premier test si n < 2
+	if ( mpz_cmp_ui(n, 2) < 0 )
+		return 0;
+		
 	mpz_t racine_n, resteDivision;
 	mpz_inits(racine_n, resteDivision, NULL);
 	

@@ -3,6 +3,11 @@
 
 void RPNG_det ( int (*testPrimalite)(mpz_t), int bits, mpz_t retour)
 {
+	//Un nombre premier contient au moins 2 bits
+	if (bits < 2) {
+		mpz_set_ui(retour,-1);
+		return;
+	}
 	//Initialisation nombre aléatoire
 	mpz_t alea;
 	gmp_randstate_t r_state;
@@ -29,7 +34,13 @@ void RPNG_det ( int (*testPrimalite)(mpz_t), int bits, mpz_t retour)
 }
 
 void RPNG_prob ( int (*testPrimalite)(mpz_t, int), int bits, mpz_t retour)
-{
+{	
+	//Un nombre premier contient au moins 2 bits
+	if (bits < 2) {
+		mpz_set_ui(retour,-1);
+		return;
+	}
+	
 	//Initialisation nombre aléatoire
 	mpz_t alea;
 	gmp_randstate_t r_state;
@@ -57,6 +68,12 @@ void RPNG_prob ( int (*testPrimalite)(mpz_t, int), int bits, mpz_t retour)
 
 void RPNG_opt (int bits, mpz_t retour)
 {
+	//Un nombre premier contient au moins 2 bits
+	if (bits < 2) {
+		mpz_set_ui(retour,-1);
+		return;
+	}
+	
 	//Initialisation nombre aléatoire
 	mpz_t alea;
 	gmp_randstate_t r_state;

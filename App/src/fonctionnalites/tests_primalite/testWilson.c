@@ -20,6 +20,10 @@ void Fact (mpz_t retour, mpz_t n)
 
 int testWilson(mpz_t n)
 {
+	//Premier test si n < 2
+	if ( mpz_cmp_ui(n, 2) < 0 )
+		return 0;
+		
 	int retour = 0;
 	mpz_t wil, tmp;
 	mpz_inits(wil, tmp, NULL);
