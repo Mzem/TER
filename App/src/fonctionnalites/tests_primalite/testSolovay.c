@@ -1,7 +1,7 @@
 #include "../../../head/fonctionnalites/tests_primalite/testSolovay.h"
 
 
-int testSolovay (mpz_t n, int k)
+int testSolovay (const mpz_t n, int k)
 {	
 	//Premier test si n est pair ou <= 2
 	if ( mpz_cmp_ui(n, 2) < 0 )

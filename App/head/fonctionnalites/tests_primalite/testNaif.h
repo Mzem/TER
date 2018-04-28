@@ -15,7 +15,7 @@ typedef struct element Element;
 
 typedef Element* Liste;
 
-int testNaif(mpz_t);
+int testNaif(const mpz_t);
 
 Liste Eratosthene(mpz_t);
 

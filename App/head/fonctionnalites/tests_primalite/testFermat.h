@@ -2,10 +2,10 @@
 #define FERMAT_H
 
 #include <gmp.h>
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-int testFermat(mpz_t, int);
+int testFermat(const mpz_t, int);
 
 #endif

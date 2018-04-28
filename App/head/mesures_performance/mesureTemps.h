@@ -6,14 +6,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include "../fonctionnalites/cryptosystemes/RPNG.h"
-#include "../fonctionnalites/tests_primalite/testNaif.h"
-#include "../fonctionnalites/tests_primalite/testWilson.h"
-#include "../fonctionnalites/tests_primalite/testFermat.h"
-#include "../fonctionnalites/tests_primalite/testMillerRabin.h"
-#include "../fonctionnalites/tests_primalite/testSolovay.h"
  
 
-void mesureTemps(double [6][1024]);
+void mesureTemps(double [6][1025]);
+
+//Ecriture des mesures dans un fichier formatté pour le tracage de plots
+void ecrireMesures(char*, double [6][1025]);
  
  
 #endif

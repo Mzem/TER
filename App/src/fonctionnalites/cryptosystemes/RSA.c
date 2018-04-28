@@ -13,7 +13,7 @@ void dechiffrementRSA (mpz_t c, const mpz_t n, const mpz_t d, mpz_t m)
 	mpz_powm_sec(m, c, d, n);
 }
 
-void generationClesRSA_det (int (*testPrimalite)(mpz_t), mpz_t n, mpz_t e, mpz_t d)
+void generationClesRSA_det (int (*testPrimalite)(const mpz_t), mpz_t n, mpz_t e, mpz_t d)
 {   
     mpz_t p, q, pmoins1, qmoins1, phi_n, pgcd;
 	mpz_inits(p, q, pmoins1, qmoins1, phi_n, pgcd, NULL);
@@ -50,7 +50,7 @@ void generationClesRSA_det (int (*testPrimalite)(mpz_t), mpz_t n, mpz_t e, mpz_t
 	mpz_clears(p, q, pmoins1, qmoins1, phi_n, pgcd, NULL);
 }
 
-void generationClesRSA_prob (int (*testPrimalite)(mpz_t, int), mpz_t n, mpz_t e, mpz_t d)
+void generationClesRSA_prob (int (*testPrimalite)(const mpz_t, int), mpz_t n, mpz_t e, mpz_t d)
 {   
     mpz_t p, q, pmoins1, qmoins1, phi_n, pgcd;
 	mpz_inits(p, q, pmoins1, qmoins1, phi_n, pgcd, NULL);
@@ -87,17 +87,17 @@ void generationClesRSA_prob (int (*testPrimalite)(mpz_t, int), mpz_t n, mpz_t e,
 	mpz_clears(p, q, pmoins1, qmoins1, phi_n, pgcd, NULL);
 }
 
-void generationClesRSA_opt (mpz_t n, mpz_t e, mpz_t d)
+void generationClesRSA_opt (double tps[6][1025], mpz_t n, mpz_t e, mpz_t d)
 {   
     mpz_t p, q, pmoins1, qmoins1, phi_n, pgcd;
 	mpz_inits(p, q, pmoins1, qmoins1, phi_n, pgcd, NULL);
 	
 	//Génération p et p - 1
-	RPNG_opt(BITS_MODULE_RSA/2, p);
+	RPNG_opt(tps, BITS_MODULE_RSA/2, p);
 	mpz_sub_ui(pmoins1, p, 1);
 	
 	//Génération q et q - 1
-	RPNG_opt(BITS_MODULE_RSA/2, q);
+	RPNG_opt(tps, BITS_MODULE_RSA/2, q);
 	mpz_sub_ui(qmoins1, q, 1);
 	
 	//n = p*q	 

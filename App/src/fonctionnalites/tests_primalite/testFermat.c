@@ -1,7 +1,7 @@
 #include "../../../head/fonctionnalites/tests_primalite/testFermat.h"
 
 
-int testFermat(mpz_t n, int k)
+int testFermat(const mpz_t n, int k)
 {
 	//Premier test si n <= 2
 	if ( mpz_cmp_ui(n, 2) < 0 )

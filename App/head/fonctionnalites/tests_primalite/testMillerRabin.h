@@ -6,6 +6,6 @@
 #include <stdio.h>
 #include <time.h>
 
-int testMillerRabin(mpz_t, int);
+int testMillerRabin(const mpz_t, int);
 
 #endif

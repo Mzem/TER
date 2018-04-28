@@ -89,11 +89,15 @@ Liste Eratosthene(mpz_t N)
 
 
 //Algo test naif
-int testNaif(mpz_t n)
+int testNaif(const mpz_t n)
 {
 	//Premier test si n < 2
 	if ( mpz_cmp_ui(n, 2) < 0 )
 		return 0;
+		
+	//On estime que le temps d'exécution du test naif est trop grand quand le nombre à tester dépasse 20 bits
+	if (mpz_sizeinbase(n, 2) > 20)
+		return -1;
 		
 	mpz_t racine_n, resteDivision;
 	mpz_inits(racine_n, resteDivision, NULL);

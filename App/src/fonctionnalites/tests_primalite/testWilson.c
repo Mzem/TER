@@ -4,7 +4,7 @@ void Fact (mpz_t retour, mpz_t n)
 {
 	mpz_t nmoin1;
 	mpz_init(nmoin1);
-
+	
 	if (mpz_cmp_ui(n,1) == 0)
 		mpz_set_ui(retour, 1);
 	
@@ -16,13 +16,18 @@ void Fact (mpz_t retour, mpz_t n)
 		Fact(retour, nmoin1);
 		mpz_mul(retour, retour, n);
 	}
+	//gmp_printf("%Zd\n",retour);
+	mpz_clear(nmoin1);
 }
 
-int testWilson(mpz_t n)
+int testWilson(const mpz_t n)
 {
 	//Premier test si n < 2
-	if ( mpz_cmp_ui(n, 2) < 0 )
+	if ( mpz_cmp_ui(n, 2) < 0)
 		return 0;
+	//Si le nombre à tester dépasse les 16 bits : problème factorielle trop grande
+	if (mpz_sizeinbase(n, 2) > 16)
+		return -1;
 		
 	int retour = 0;
 	mpz_t wil, tmp;

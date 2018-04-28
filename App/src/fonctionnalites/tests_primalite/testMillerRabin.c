@@ -1,8 +1,7 @@
 #include "../../../head/fonctionnalites/tests_primalite/testMillerRabin.h"
 
 
-
-int testMillerRabin(mpz_t n, int k)
+int testMillerRabin(const mpz_t n, int k)
 {
 	//Premier test si n <= 2
 	if ( mpz_cmp_ui(n, 2) < 0 )

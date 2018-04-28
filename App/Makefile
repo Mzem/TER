@@ -24,14 +24,14 @@ run: $(EXEC)
 	./$(EXEC)
 
 
-$(EXEC): $(ODIR)/PRIMALITE_main.o $(ODIR)/RPNG.o $(ODIR)/RSA.o $(ODIR)/testOptimal.o $(ODIR)/testNaif.o $(ODIR)/testWilson.o $(ODIR)/testFermat.o $(ODIR)/testMillerRabin.o $(ODIR)/testSolovay.o $(ODIR)/mesureTemps.o
+$(EXEC): $(ODIR)/PRIMALITE_main.o $(ODIR)/RPNG.o $(ODIR)/RSA.o $(ODIR)/testNaif.o $(ODIR)/testWilson.o $(ODIR)/testFermat.o $(ODIR)/testMillerRabin.o $(ODIR)/testSolovay.o $(ODIR)/testAKS.o $(ODIR)/mesureTemps.o
 	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS)
 
 
-$(ODIR)/PRIMALITE_main.o: $(CRYP_HDIR)/RPNG.h $(CRYP_HDIR)/RSA.h $(TPRIM_HDIR)/testOptimal.h $(TPRIM_HDIR)/testNaif.h $(TPRIM_HDIR)/testWilson.h $(TPRIM_HDIR)/testFermat.h $(TPRIM_HDIR)/testMillerRabin.h $(TPRIM_HDIR)/testSolovay.h $(MESP_HDIR)/mesureTemps.h
-$(ODIR)/RPNG.o: $(TPRIM_HDIR)/testOptimal.h
+$(ODIR)/PRIMALITE_main.o: $(CRYP_HDIR)/RPNG.h $(CRYP_HDIR)/RSA.h $(TPRIM_HDIR)/testNaif.h $(TPRIM_HDIR)/testWilson.h $(TPRIM_HDIR)/testFermat.h $(TPRIM_HDIR)/testMillerRabin.h $(TPRIM_HDIR)/testSolovay.h $(TPRIM_HDIR)/testAKS.h $(MESP_HDIR)/mesureTemps.h
+$(ODIR)/RPNG.o: $(TPRIM_HDIR)/testNaif.h $(TPRIM_HDIR)/testWilson.h $(TPRIM_HDIR)/testFermat.h $(TPRIM_HDIR)/testMillerRabin.h $(TPRIM_HDIR)/testSolovay.h $(TPRIM_HDIR)/testAKS.h
 $(ODIR)/RSA.o: $(CRYP_HDIR)/RPNG.h
-$(ODIR)/mesureTemps.o: $(CRYP_HDIR)/RPNG.h $(TPRIM_HDIR)/testNaif.h $(TPRIM_HDIR)/testWilson.h $(TPRIM_HDIR)/testFermat.h $(TPRIM_HDIR)/testMillerRabin.h $(TPRIM_HDIR)/testSolovay.h
+$(ODIR)/mesureTemps.o: $(CRYP_HDIR)/RPNG.h $(TPRIM_HDIR)/testNaif.h $(TPRIM_HDIR)/testWilson.h $(TPRIM_HDIR)/testFermat.h $(TPRIM_HDIR)/testMillerRabin.h $(TPRIM_HDIR)/testSolovay.h $(TPRIM_HDIR)/testAKS.h
 
 
 $(ODIR)/%.o: $(SDIR)/%.c
