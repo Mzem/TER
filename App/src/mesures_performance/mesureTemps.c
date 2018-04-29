@@ -20,6 +20,7 @@ void mesureTemps(double tps[6][1025])
 			case 5 : printf("Mesure temps exec test AKS...\n"); break;
 			default: printf("/!\\    ERREUR : test non trouvé    /!\\\n"); break;	
 		}
+		//Pour un nombre de bits allant de 0 à 1024
 		for (int nbBits = 0; nbBits < 1025; nbBits++)
 		{
 			//On génère un nombre premier
@@ -37,7 +38,7 @@ void mesureTemps(double tps[6][1025])
 			}
 			//Cas ou le test est trop lent
 			if (retour == -1)
-				tps[testPrim][nbBits] = tps[testPrim][nbBits-1]+2;
+				tps[testPrim][nbBits] = tps[testPrim][nbBits-1]+((double)nbBits/(double)10000);
 			//Cas ou le test se comporte mal (erreur de notre part)
 			else if (retour == 0)
 				tps[testPrim][nbBits] = 0;
