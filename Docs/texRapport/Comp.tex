@@ -22,13 +22,53 @@
 			
 			\paragraph{} À partir de 1980, le \textit{\textbf{test de Solovay-Strassen}} a été lui aussi remplacé en pratique par le \textit{\textbf{test de Miller-Rabin}}, plus efficace, car reposant sur un critère analogue, mais ne donnant de faux positif qu'au plus une fois sur quatre lorsque le nombre testé n'est pas premier.
 			
-		\subsubsection*{Tests déterministes rapides : AKS}
-		
+		\subsubsection*{Test déterministe rapide : AKS}
+			\colorbox{yellow}{Sonny}
 	
 	\subsection{Mesure du temps d'exécution}
+		Pour comparer les performances des algorithmes de test de primalité implémentés, on va mesurer le temps d'exécution de chaque algorithme, c'est-à-dire le temps de réponse, selon le nombre de bits de l'entier testé. Cette méthode va donc permettre de connaitre le test le plus performant pour un nombre de bits donné.
+		
+		\subsubsection*{Algorithme de mesure}
+			L'algorithme qui correspond à cette méthode de mesure du temps d'exécution est le suivant :\\
+			
+			\begin{algorithm}[H]
+				\caption{Mesure temps exécution}\label{MEST}
+				\Donnees{tableau tps[6][1025] à remplir, correspondant au temps d'exécution des 6 test pour un nombre de bits entre 0 et 1024}
+				\Sortie{tableau tps[6][1025] rempli}
+				\Pour{chaque test ($i$ = $0$ jusqu'à $5$)}{
+					\Pour{pour un nombre de bits allant de 0 à 1024 ($j$ = $0$ jusqu'à $1024$)}{
+						Générer un nombre premier $p$ de $j$ bits\;
+						tps[i][j] $\gets$ temps pour que le test $i$ vérifie $p$\;
+					}
+				}
+			\end{algorithm}
+			~\\
+			Cet algorithme est implémenté dans le fichier source \href{run:../../App/src/mesures_performance/mesureTemps.c}{mesureTemps.c}.
+			
+		\subsubsection*{Analyse des mesures}
+			Une fois que les mesures ont été effectuées, on va visualiser les résultats grâce à des représentations graphiques afin de les comparer et de conclue par rapport aux performances.
+			\paragraph{} Le logiciel {\ttfamily Gnuplot} va être utilisé pour faire ces représentations graphiques. Pour cela, il faut écrire les résultats dans un fichier bien formaté dont voici un extrait :
+			\lstinputlisting[language=Gnuplot, caption={mesures.txt}, firstline=2059, lastline=2093]{../../App/mesures.txt}
+			
+			\paragraph{}Ce fichier contient 6 blocs de 1024 lignes, dont chaque bloc correspond à un test de primalité et dont les lignes correspondent au temps d'exécution mesuré pour le nombre de bit donné. En exploitant les résultat de ce fichier, le logiciel {\ttfamily Gnuplot} va permettre de construire les courbes représentatives du temps d'exécution de chaque test de primalité en fonction de la taille en bits du nombre premier à générer :
+			
+			\begin{figure}[H]\makebox[\textwidth]{\includegraphics[width=19cm,height=11cm]{perfs.png}}\vspace{-1em}\caption{Comparatif des courbes représentatives du temps d'exécution de chaque test de primalité en fonction de la taille en bits du nombre premier à générer}\label{fig:M4}\end{figure}
+			
+			\paragraph{} Ce graphique, qui est la superposition des courbes du temps d'exécution des 6 tests de primalité implémentés, va permettre d'observer les performances des différents algorithmes de test.
+			\paragraph{} En effet, en ce qui concerne le \textit{\textbf{test Naif}} et le \textit{\textbf{test de Wilson}}, ceux-ci ont un temps de réponse rapide pour un nombre de bits petit, mais ce temps de réponse va croitre d'une manière exponentielle à partir de 16 bits, ce qui en fait des tests très lents globalement.
+			\paragraph{} Concernant les tests probabilistes, ceux-ci ont un temps d'exécution rapide en moyenne. Le \textit{\textbf{test de Fermat}} présente un temps assez variable qui s'avère très lent pour certain nombre de bits (on remarque la présence de nombreux pics qui sont parfois très hauts). Le \textit{\textbf{test de Solovay-Strassen}} présente un temps variable lui aussi mais les pics sont d'une amplitude beaucoup moins importante par rapport au \textit{\textbf{test de Fermat}}. Quant au \textit{\textbf{test de Miller-Rabin}}, celui-ci inscrit un temps d'exécution faible en moyenne puisqu'il présente des pics avec de faibles amplitudes. De plus, il est le plus performant quand le nombre de bits est très grand.
+		
+		%plot  "mesures.txt" index 0 title "Test Naif" linecolor rgb "cyan" with lines linewidth 2, "mesures.txt" index 1 title "Test Wilson" linecolor rgb "pink" with lines linewidth 2, "mesures.txt" index 2 title "Test Fermat" linecolor rgb "blue" with lines, "mesures.txt" index 3 title "Test Miller-Rabin" linecolor rgb "red" with lines, "mesures.txt" index 4 title "Test Solovay-Strassen" linecolor rgb "green" with lines
 		
 		
-		
-		
-	\subsection{Test de primalité optimal}
-		
+	\subsection{Génération optimale d'un nombre premier}
+		Compte tenu des résultats des mesures effectuées sur le temps d'exécution de chaque test de primalité, il est maintenant possible, lors de la génération d'un nombre premier de $t$ bits, de choisir l'algorithme de test de primalité qui présente le temps d'exécution minimal pour $t$ bits. Pour cela, on aura juste à exploiter les résultats pré-calculés dans la structure \lstinline!tps[6][1025]! de la manière suivante :\\
+			
+			\begin{algorithm}[H]
+				\caption{RPNG Optimal}\label{RPNG_opt}
+				\Donnees{la taille $t$ en bits de l'entier premier à générer et le tableau tps[6][1025] des résultats de mesure du temps d'exécution des 6 test pour un nombre de bits entre 0 et 1024}
+				\Sortie{un nombre premier de $t$ bits}
+				Trouver le test de primalité d'indice $i$ ($i$ entre $0$ et $5$) telle que tps[i][t] est minimale (c'est-à-dire le test le plus rapide pour vérifier $t$ bits)\;
+				Générer un nombre premier de $t$ bits avec le test de primalité d'indice $i$\;
+			\end{algorithm}
+			~\\
