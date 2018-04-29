@@ -82,4 +82,42 @@
 	
 	
 	\subsubsection{Preuve}
-		\colorbox{yellow}{Sonny}
+		\paragraph{}Pour démontrer cet algorithme nous allons d'abord prouver le petit théorème de Fermat. Pour cela nous nous basons sur le fait que c'est un cas particulier du théorème d'Euler :
+		
+		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+		\begin{Th}[Théorème d'Euler]
+			\label{ThEuler}
+			Soit $n$ un naturel supérieur ou égal à 2, et $a$ un entier premier avec $n$, alors
+			\[a^{\phi(n)}\equiv 1 \pmod n\]
+			où $\phi$ est la fonction indicatrice d'Euler :
+			\begin{align*}
+				\phi \colon \mathbb{N} &\to \mathbb{N}\\
+				n &\mapsto | \{k \text{, } 1 \leq k \leq n \text{ et } pgcd(k,n) = 1\} |
+			\end{align*}
+		\end{Th}
+		\end{adjustwidth}\vspace{0.5em}
+		
+		La fonction $\phi$ évaluée sur un nombre premier $p$ vaut $p - 1$. Le petit théorème de Fermat est donc une application du théorème d'Euler en remplaçant $n$ par un nombre premier $p$.
+		
+		\paragraph{Preuve du théorème d'Euler :\\}
+			En prouvant le théorème d'Euler, nous aurons donc prouvé petit le théorème de Fermat, nous conclurons ensuite avec le preuve de l'algorithme.
+			\paragraph{}Nous effectuerons nos calculs dans le groupe multiplicatif $(\mathbb{Z}/n\mathbb{Z})^*$, l'ensemble des naturels inférieurs à $n$ inversibles modulo $n$, ou de manière équivalente, l'ensemble des naturels inférieurs à $n$ premiers avec $n$.
+			
+			\paragraph{}Considérons l'application suivante, avec $\alpha \in (\mathbb{Z}/n\mathbb{Z})^*$:
+				\begin{align*}
+					\Gamma_{\alpha} \colon (\mathbb{Z}/n\mathbb{Z})^* &\to (\mathbb{Z}/n\mathbb{Z})^*\\
+					x &\mapsto \alpha \cdot x
+				\end{align*}
+				C'est une bijection. En effet son application inverse est $\Gamma_{\alpha^{-1}}$. $\alpha \in (\mathbb{Z}/n\mathbb{Z})^*$, donc il existe $\alpha^{-1} \in (\mathbb{Z}/n\mathbb{Z})^*$ inverse de $\alpha$ modulo $n$. C'est également une permutation (bijection d'un ensemble vers lui-même), on a donc :
+				\begin{align*}
+					\prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x &= \prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} \Gamma_{\alpha}(x)\\
+					&= \alpha^{|(\mathbb{Z}/n\mathbb{Z})^* |} \cdot \prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x\\
+					&= \alpha^{\phi(n)} \cdot \prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x
+				\end{align*}
+				$\prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x$ est inversible (produit d'éléments inversibles), donc on simplifie :
+				\[\alpha^{\phi(n)} \equiv 1 \text{ modulo } n \]
+		
+		\paragraph{Preuve de l'algorithme :\\}
+		
+		\paragraph{Remarques :\\}
+		
