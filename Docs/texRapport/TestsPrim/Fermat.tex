@@ -68,7 +68,7 @@
 			\Donnees{un entier $n$ et le nombre de répétitions $k$}
 			\Pour{$i$ = $1$ jusqu'à $k$}{
 				Choisir aléatoirement $a$ tel que $1 < a < n$\;
-				\Si {$a^{p-1} \not\equiv 1 \pmod n$}
+				\Si {$a^{n-1} \not\equiv 1 \pmod n$}
 					{\Retour composé\;}
 			}
 		\Retour probablement premier\;
@@ -76,9 +76,34 @@
 		
 		
 	\subsubsection{Complexité}
-		Si un algorithme rapide est utilisé pour l'exponentiation modulaire (par exemple Square\&Multiply), la complexité en temps de l'algorithme de Fermat est
-		\[O(k\ .\ log_{2}(n)\ .\ log(log(n))\ .\ log(log(log(n))))\]
-		où $k$ est le nombre de fois que le test est répété.
+		\paragraph{}La complexité de ce test va dépendre de l'exponentiation modulaire dans le corps de la boucle de $k$ itérations.\\
+		\begin{algorithm}[H]
+			\caption{Square-and-Multiply Left-to-right binary method}\label{SqM}
+			\Donnees{$c$, $d$, et $n$ entiers : avec $d = \sum_{i=0}^{k-1} d_{i} \cdot 2^{i}$ et $d_{k-1} = 1$}
+			\Sortie{$c^d$ modulo $n$}
+			$x \gets c$\;
+			\Pour{$i$ = $k-2$ jusqu'à $0$}{
+				$x \gets x^{2}$ mod $n$\;
+				\Si {$d_{i} = 1$}
+					{$x \gets x \cdot c$ mod $n$\;}
+			}
+		\Retour $x$\;
+		\end{algorithm}
+		\paragraph{}L'analyse de la complexité cet algorithme (dont on va admettre la preuve ici) nous donne un temps en $log(d)$ multiplications modulaires dépendantes de $n$.
+		\paragraph{}Appliqué au contexte du test de Fermat, on a $n-1$ notre exposant et des multiplications modulaires dépendantes de $n$.
+		\paragraph{}Pour conclure, il nous reste à voir la complexité d'une multiplication modulaire. Étant donné que nous travaillons sur des entiers de grande taille, la multiplication ne sera pas en temps constant. Il existe un algorithme "naïf" et deux multiplications dites rapides que nous allons simplement citer :
+			\begin{itemize}
+			\item
+			Une implémentation "naïve" consisite à effectuer les calculs comme pour une multiplication de primaire. À l'aide de deux boucles imbriquées, on multiplie chiffre par chiffre nos nombres.\\
+			En appelant $n$ notre nombre, sa taille est de l'ordre de $log(n)$, la complexité de cette multiplication est donc $log(n)^{2}$.
+			\item
+			La méthode FFT (Fast Fourrier Transformation) effectue la multiplication en complexité :$$log(n) \cdot log(log(n)) \cdot log(log(log(n)))$$
+			\item
+			La méthode Karatsuba quant à elle calcule le résultat en complexité $log(n)^{log_{2}(3)}$.
+			\end{itemize}
+		\paragraph{}On obtient une complexité finale pour le test de Fermat de :
+		\[O(k \cdot log_{2}(n) \cdot C_{mult}(n))\]
+		où $k$ est le nombre de répétitions dans le test de Fermat et $n$ l'entier testé et $C_{mult}(n)$ la complexité de la multiplication modulaire.
 	
 	
 	\subsubsection{Preuve}
