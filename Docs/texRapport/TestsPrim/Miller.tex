@@ -20,7 +20,7 @@
 		\[ a^{2^{j}t} \equiv -1 \pmod n \quad \text{pour au moins un } j \in \{0, 1, ..., s-1\} \]
 		\[\text{ou}\]
 		\[ a^{t} \equiv 1 \pmod n\]
-		Si pour un nombre entier $n$, une des équations ci-dessus est vérifiée, alors l'algorithme conclue que $n$ est probablement premier et termine. Si aucune de ces équations n'est vérifiée, alors l'algorithme renvoie que $n$ est composé avec certitude. On peut aussi apporter une amélioration à cette approche.\\
+		Si pour un nombre entier $n$, une des équations ci-dessus est vérifiée, alors l'algorithme conclut que $n$ est probablement premier et termine. Si aucune de ces équations n'est vérifiée, alors l'algorithme renvoie que $n$ est composé avec certitude. On peut aussi apporter une amélioration à cette approche.\\
 		Si on trouve que
 		\[ a^{2^{j}t} \equiv 1 \pmod n \quad \text{pour un } j \in \{0, 1, ..., s-1\} \text{,}\]
 		on peut directement conclure que $n$ est composé et terminer l'exécution de l'algorithme. Ceci est dû au fait que pour un nombre $p$ premier, les seuls éléments pour lesquels un entier $x$ vérifie $x^{2} \equiv 1 \pmod p$ sont $1$ et $-1$, qui sont les deux seules racines carrées de l'unité.
@@ -28,7 +28,7 @@
 		\paragraph{} Compte tenu de tous les éléments développés ci-dessus, l'algorithme du test de primalité de Miller-Rabin est le suivant :\\
 		
 		\begin{algorithm}[H]
-			\caption{Test de Miller-Rabin}\label{TF}
+			\caption{Test de Miller-Rabin}\label{TMR}
 			\Donnees{un entier $n$ et le nombre de répétitions $k$}
 			{Décomposer $n - 1 = 2^{s}t$, avec $s \in \mathbb{N}^{*}$ et $t \in \mathbb{N}$ impair \;}
 			\Pour{$i$ = $1$ jusqu'à $k$}{
