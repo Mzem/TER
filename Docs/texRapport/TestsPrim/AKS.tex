@@ -2,7 +2,40 @@
 		
 
 	\subsubsection{Algorithme}
-		\colorbox{yellow}{Younes + Idir + Sonny}
+		\paragraph{}
+		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+		\begin{Def}[Ordre multiplicatif]
+			\label{Ordre}
+			En théorie des nombres , donné un entier a et un entier positif n avec pgcd(a,n) = 1, l'ordre multiplicatif d'un modulo n est le plus petit entier positif k avec
+			\\
+            $a^{k} \equiv 1$ $(mod$ $n)$
+		\end{Def}
+		\end{adjustwidth}\vspace{0.5em}
+		
+		\paragraph{}
+		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+		\begin{algorithm}[H]
+			\caption{Test AKS}\label{TAKS}
+			\Donnees{un entier $n$ }
+
+			
+			\Si {$n = a^{b}$ pour $a \in N$ et $b > 1$}{\Retour composé\;}
+			\\ \\
+			
+            Déterminer le plus petit entier r tel que l’ordre de n dans $\mathbb{Z}/r\mathbb{Z}$ soit supérieur à $4 \cdot log(n)^{2}.$
+            \\ \\
+            
+            \Si {$1 < pgcd(a,n) < n$ pour un entier $a \leq r$} {\Retour composé\;}
+            \\ \\
+            \Si {$n \leq r$}{\Retour premier\;}
+            \\ \\
+            \Pour{$a = 1$ jusqu'à $\lfloor2 \cdot \sqrt{\varphi(r)} log(n)$\rfloor{}{}}{
+                \Si {$(X + a)^{n} \not\equiv X^{n} + a$ dans $ \frac{\mathbb{Z}/n\mathbb{Z}[X]}{ (X^{r} - 1)\mathbb{Z}/n\mathbb{Z}[X]}$}{\Retour composé\;}
+            }
+            
+		\Retour premier\;
+		\end{algorithm}
+		\end{adjustwidth}\vspace{0.5em}
 		
 	\subsubsection{Complexité}
 		\colorbox{yellow}{Sonny}
