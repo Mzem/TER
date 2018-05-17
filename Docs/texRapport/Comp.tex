@@ -2,31 +2,31 @@
 	Dans la partie précédente, on s'est contenté de présenter différents tests de primalité sans conclure par rapport à leurs performances. Dans cette partie, on va mesurer ces performances et établir un comparatif entre les différents tests abordés.
 	
 	\subsection{Évolution des tests de primalité}
-		\colorbox{yellow}{Sonny développe cette partie quand tu fais les complexités}\\
 		Plusieurs algorithmes de tests de primalité se sont succédés au fil du temps. Des algorithmes de plus en plus efficaces apparaissent pour en remplacer d'autres.
 	
 		\subsubsection*{Premiers tests déterministes}
-			Les premiers algorithmes de tests de primalité apparus sont les algorithmes de \textit{\textbf{test naïf}}. Ces algorithmes sont déterministes, c'est-à-dire qu'ils retournent toujours une réponse exacte. Ils constituent la façon la plus naturelle de tester la primalité d'un nombre. Cependant, leur complexité était trop élevée, surtout quand il s'agissait des tester de grands nombres.
+			\paragraph{}Les plus anciens algorithmes de tests de primalité sont les algorithmes de \textit{\textbf{test naïf}}, le crible d'Erathostène date d'avant J-C. Ces algorithmes sont déterministes, c'est-à-dire qu'ils retournent toujours une réponse exacte. Ils constituent la façon la plus naturelle de tester la primalité d'un nombre mais leur complexité est trop élevée, surtout quand il s'agit de tester des grands nombres.
 			
-			\paragraph{} D'autres algorithmes déterministes très simples et un peu plus performant sont aussi apparus, telle que le \textit{\textbf{test de Wilson}}. Mais la complexité est restée trop élevée surtout pour de grands nombres.
+			\paragraph{}D'autres algorithmes déterministes basés sur des théorèmes plus récents sont aussi apparus, on peut citer le \textit{\textbf{test de Wilson}}. Il est énoncé pour la première fois par Ibn al-Haytham dans les années 1000, puis énoncé de nouveau au 18e siècle, pour enfin être prouvé par Lagrange une année plus tard. Cependant, la complexité reste trop élevée surtout pour de grands nombres.
+			
+			\paragraph{}Par la suite, les avancées sur les algorithmes de tests probabilistes ont pris plus d'importance.
 		
 		\subsubsection*{Tests probabilistes}
-			Les algorithmes de tests probabilistes constituent une façon beaucoup plus efficaces que les premiers algorithmes déterministes découverts pour tester la primalité d'un nombre. Ces algorithmes de type \textit{Monte-Carlo} décident si un entier est premier ou pas avec une certaine probabilité $P$. La sortie d'un test de primalité probabiliste sur un entier $n$ est soit :
+			Les algorithmes de tests probabilistes constituent une façon beaucoup plus efficace que les premiers algorithmes déterministes découverts pour tester la primalité d'un nombre. Ces algorithmes de type \textit{Monte-Carlo} décident si un entier est premier ou pas avec une certaine probabilité $P$. La sortie d'un test de primalité probabiliste sur un entier $n$ est soit :
 			\begin{itemize}
 				\item $n$ est composé : toujours vrai
 				\item $n$ est premier : vrai avec une probabilité $P$
 			\end{itemize}
-			Dans le cas où la sortie du test est "premier", il y a toujours une petite probabilité que le nombre testé ne soit pas vraiment premier. Pour pallier à ce problème et diminuer cette probabilité, on a tendance à répéter le test probabiliste un certain nombre de fois.
+			Dans le cas où la sortie du test est "premier", il y a toujours une petite probabilité que le nombre testé ne soit pas vraiment premier. Pour pallier à ce problème et diminuer cette probabilité, on a tendance à répéter le test probabiliste plusieurs fois.
 			
 			\paragraph{}Le premier algorithme probabiliste apparu est le \textit{\textbf{test de Fermat}}. Ce test qui repose sur un théorème énoncé en 1640 a longement était utilisé en pratique, jusqu'à l'apparition du \textit{\textbf{test de Solovay-Strassen}} en 1977. 
 			
 			\paragraph{} À partir de 1980, le \textit{\textbf{test de Solovay-Strassen}} a été lui aussi remplacé en pratique par le \textit{\textbf{test de Miller-Rabin}}, plus efficace, car reposant sur un critère analogue, mais ne donnant de faux positif qu'au plus une fois sur quatre lorsque le nombre testé n'est pas premier.
 			
 		\subsubsection*{Test déterministe rapide : AKS}
-			Aprés prés de 22 ans de recherche ,un autre algorithme deterministe 
-			plus performant a été découvert, il sagit du test de primalité AKS qui 
-			est basé essentiellement sur le petit theoreme de Fermat.
-	
+			\paragraph{}Après plus de 20 ans de recherche, un autre algorithme deterministe plus performant a été découvert, il s'agit du test de primalité AKS qui est basé essentiellement sur le petit théorème de Fermat généralisé.
+			\paragraph{}La complexité n'est pas assez compétitive pour remplacer l'utilisation de Miller-Rabin dans les systèmes de cryptographie. Cela dit, c'est un test récent et comme il est décrit dans la partie dédiée au test AKS, des travaux futurs envisagent de faire réduire cette complexité.
+			
 	\subsection{Mesure du temps d'exécution}
 		Pour comparer les performances des algorithmes de test de primalité implémentés, on va mesurer le temps d'exécution de chaque algorithme, c'est-à-dire le temps de réponse, selon le nombre de bits de l'entier testé. Cette méthode va donc permettre de connaitre le test le plus performant pour un nombre de bits donné.
 		
