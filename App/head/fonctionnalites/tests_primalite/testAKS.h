@@ -23,25 +23,25 @@ void destroy_sieve (Sieve*);
 
 int sieve_primality_test (unsigned int, Sieve*);
 
-void initialize_polynomial (Polynomial** , unsigned int);
+void initialize_polynomial (Polynomial**, unsigned int);
 
 void destroy_polynomial (Polynomial**);
 
 void clone_polynomial(Polynomial**, Polynomial*);
 
-void compact_polynomial (Polynomial* );
+void compact_polynomial (Polynomial*);
 
-int is_equal_polynomial (Polynomial* , Polynomial* );
+int is_equal_polynomial (Polynomial*, Polynomial*);
 
-void get_polynomial_coef (mpz_t* ,Polynomial*, unsigned int );
+void get_polynomial_coef (mpz_t*, Polynomial*, unsigned int);
 
-void set_polynomial_coef (Polynomial* , unsigned int, mpz_t* );
+void set_polynomial_coef (Polynomial*, unsigned int, mpz_t*);
 
-void set_polynomial_coef_si (Polynomial* , unsigned int, int);
+void set_polynomial_coef_si (Polynomial*, unsigned int, int);
 
-void polynomial_modular_multiplication (Polynomial**, Polynomial*, Polynomial*, mpz_t, unsigned int);
+void polynomial_modular_multiplication (Polynomial**, Polynomial*, Polynomial*, const mpz_t, unsigned int);
 
-void polynomial_modular_power (Polynomial** , Polynomial* , mpz_t , unsigned int );
+void polynomial_modular_power (Polynomial**, Polynomial*, const mpz_t, unsigned int);
 
 int testAKS(const mpz_t);
 

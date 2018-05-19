@@ -123,8 +123,7 @@ void get_polynomial_coef (mpz_t* p_coef,Polynomial* p_poly, unsigned int order)
 
 
 
-void set_polynomial_coef (Polynomial* p_poly, unsigned int order, 
-			  mpz_t* p_coef)
+void set_polynomial_coef (Polynomial* p_poly, unsigned int order, mpz_t* p_coef)
 {
   if (order <= p_poly->deg) {
     mpz_set(p_poly->coef[order], *p_coef);
@@ -141,8 +140,7 @@ void set_polynomial_coef (Polynomial* p_poly, unsigned int order,
 
 
 //rajoute un element a un polynome (coef_si*X^order)
-void set_polynomial_coef_si (Polynomial* p_poly, unsigned int order, 
-			     int coef_si)
+void set_polynomial_coef_si (Polynomial* p_poly, unsigned int order, int coef_si)
 {
   if (order <= p_poly->deg) {
     mpz_set_si(p_poly->coef[order], coef_si);
@@ -159,9 +157,7 @@ void set_polynomial_coef_si (Polynomial* p_poly, unsigned int order,
 
 
 
-void polynomial_modular_multiplication (Polynomial** pp_poly_res, 
-					Polynomial* p_poly0, Polynomial* p_poly1, 
-					mpz_t n, unsigned int r)
+void polynomial_modular_multiplication (Polynomial** pp_poly_res, Polynomial* p_poly0, Polynomial* p_poly1, const mpz_t n, unsigned int r)
 {
   unsigned int max_output_deg = p_poly0->deg + p_poly1->deg < r? 
     p_poly0->deg + p_poly1->deg: r - 1;
@@ -205,8 +201,7 @@ void polynomial_modular_multiplication (Polynomial** pp_poly_res,
 
 
 /* Compute ((*p_poly_base) ^ n) % (X ^ r - 1) */
-void polynomial_modular_power (Polynomial** pp_poly_res, Polynomial* p_poly_base, 
-			       mpz_t n, unsigned int r)
+void polynomial_modular_power (Polynomial** pp_poly_res, Polynomial* p_poly_base, const mpz_t n, unsigned int r)
 {
   initialize_polynomial(pp_poly_res, 0);
   set_polynomial_coef_si((*pp_poly_res), 0, 1);

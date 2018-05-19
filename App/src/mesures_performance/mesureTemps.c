@@ -33,7 +33,15 @@ void mesureTemps(double tps[6][1025])
 				case 2 : debut = clock(); retour = testFermat(premier, K+nbBits/100); fin = clock(); break;
 				case 3 : debut = clock(); retour = testMillerRabin(premier, K+nbBits/100); fin = clock(); break;
 				case 4 : debut = clock(); retour = testSolovay(premier, K+nbBits/100); fin = clock(); break;
-				case 5 : debut = clock(); retour = testAKS(premier); fin = clock()+99999; break;	//+99999 à enlever quand AKS sera implementé
+				//Pour éviter un grand temps de calcul pour AKS, on n'execute plus le test si ses 3 résultats précédents ont un temps supérieur à un seuil (3 secondes)
+				case 5 : if (nbBits >= 3 && tps[testPrim][nbBits-1] > 3.0 && tps[testPrim][nbBits-2] > 3.0)// && tps[testPrim][nbBits-3] > 3.0)
+							retour = -1;
+						else {
+							debut = clock(); 
+							retour = testAKS(premier); 
+							fin = clock(); 
+						}
+						break;
 				default: printf("/!\\    ERREUR : test non trouvé    /!\\\n"); break;	
 			}
 			//Cas ou le test est trop lent

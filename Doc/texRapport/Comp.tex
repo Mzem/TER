@@ -45,12 +45,12 @@
 				}
 			\end{algorithm}
 			~\\
-			Cet algorithme est implémenté dans le fichier source \href{run:../../App/src/mesures_performance/mesureTemps.c}{mesureTemps.c}.
+			%Cet algorithme est implémenté dans le fichier source \href{run:../../App/src/mesures_performance/mesureTemps.c}{mesureTemps.c}.
 			
 		\subsubsection*{Analyse des mesures}
 			Une fois que les mesures ont été effectuées, on va visualiser les résultats grâce à des représentations graphiques afin de les comparer et de conclue par rapport aux performances.
 			\paragraph{} Le logiciel {\ttfamily Gnuplot} va être utilisé pour faire ces représentations graphiques. Pour cela, il faut écrire les résultats dans un fichier bien formaté dont voici un extrait :
-			\lstinputlisting[language=Gnuplot, caption={mesures.txt}, firstline=2059, lastline=2093]{../../App/mesures.txt}
+			%\lstinputlisting[language=Gnuplot, caption={mesures.txt}, firstline=2059, lastline=2093]{../../App/mesures.txt}
 			
 			\paragraph{}Ce fichier contient 6 blocs de 1024 lignes, dont chaque bloc correspond à un test de primalité et dont les lignes correspondent au temps d'exécution mesuré pour le nombre de bit donné. En exploitant les résultat de ce fichier, le logiciel {\ttfamily Gnuplot} va permettre de construire les courbes représentatives du temps d'exécution de chaque test de primalité en fonction de la taille en bits du nombre premier à générer :
 			

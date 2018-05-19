@@ -1,0 +1,62 @@
+\subsection{Test AKS}
+	Le test AKS est un test de primalité déterministe publié en 2002 par trois scientifiques indiens \textit{Manindra Agrawal}, \textit{Neeraj Kayal} et \textit{Nitin Saxena}, à qui il doit le nom. Ce test est le premier en mesure de déterminer la primalité d'un nombre dans un temps polynomial tout en s'appuyant sur des propriétés démontrées et non des hypothèses.
+		
+
+	\subsubsection{Algorithme et principe de la preuve}
+		L'algorithme du test AKS est basé sur une généralisation du \textit{petit théorème de Fermat} :
+		
+		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+		\begin{Th}[Petit théorème de Fermat généralisé]
+			\label{ThFermat4}
+			Pour tout entier $n \geqslant 2$ et $a \in \mathbb{Z}$ premiers entre eux,
+			\[n \text{  est premier} \quad \Leftrightarrow \quad (X + a)^{n} \equiv X^{n} + a \pmod n\] 
+			Le symbole $X$ représente un symbole formel.
+		\end{Th}
+		\end{adjustwidth}\vspace{0.5em}
+		
+		Ce théorème est démontrable à l'aide de la formule du \textit{binôme de Newton} et de la propriété suivante du \textit{coefficient binomial} :
+		\[n \text{  est premier} \quad \Leftrightarrow \quad \forall k \in {1, ...,n-1}, \binom{n}{k} \equiv 0 \pmod n\]
+		
+		\paragraph{}L'algorithme déterministe de test de primalité déduit à partir de ce théorème est très simple, mais il faut évaluer les $n$ coefficients du polynôme $(X + a)^{n}$ à l'aide du \textit{binôme de Newton} en plus de l'exponentiation modulaire, ce qui est bien trop long.\\
+		La solution proposée dans le test est de réduire le polynôme modulo $X^{r} - 1$ avec $r$ bien choisi. Cependant avec cette modification, même si l'implication du théorème "$\Rightarrow$" est vérifiée, ce n'est plus le cas pour la réciproque.\\
+		Ce problème est géré dans les premières étapes du test. En effet, si l'équation est vérifiée pour $r$ bien choisi et un nombre suffisant de $a$ (obtenus en temps polynomiaux) alors $n$ est une puissance de nombre premier, c'est-à-dire, $n = p^{b}$ avec $p$ premier et $b \in \mathbb{N}^{*}$.\\
+		Ainsi, on obtient finalement un test de primalité déterministe polynomial en la taille de l'entrée $n$.
+				
+		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
+		\begin{Def}[Ordre multiplicatif]
+			\label{OrdM}
+			Soient les entiers $n \in \mathbb{N}$ et $a \in \mathbb{Z}$ premiers entre eux, l'ordre multiplicatif de $a$ modulo $n$, noté $Ord_{n}(a)$, est le plus petit entier $k > 0$ tel que $a^{k} \equiv 1 \pmod n$.
+		\end{Def}
+		\end{adjustwidth}\vspace{0.5em}
+		
+		L'algorithme du test AKS est composé des 6 étapes suivantes :\\
+		
+		\begin{algorithm}[H]
+			\caption{Test AKS}\label{AKS}
+			\Donnees{un entier $n > 1$}
+			
+			1 - \Si {$n = a^{b}$ pour des entiers $a > 1$ et $b > 1$}{\Retour composé\;}
+			
+            2 - Déterminer le plus petit entier $r$ tel que $Ord_{r}(n) > log_{2}(n)^{2}$ dans $\mathbb{Z}_{r}$ (si $r$ n'est pas premier avec $n$, on passe cet $r$)\;
+			
+            3 - \Pour {tout $a \leq r$}{
+					\Si{$1 < pgcd(a,n) < n$}{
+						\Retour composé\;
+					}
+				}
+            
+            4 - \Si {$n \leq r$}{\Retour premier\;}
+            
+            5 - \Pour{$a = 1$ jusqu'à $\lfloor\sqrt{\varphi(r)} log_{2}(n)\rfloor{}{}$}{
+					\Si {$(X + a)^{n} \quad \not\equiv \quad X^{n} + a\quad$ dans $ \frac{\mathbb{Z}/n\mathbb{Z}[X]}{ (X^{r} - 1)\mathbb{Z}/n\mathbb{Z}[X]}$}{
+						\Retour composé\;
+                }
+            }
+			6 - \Retour premier\;
+		\end{algorithm}
+		
+	\subsubsection{Complexité}
+		En supposant que les opérations d'addition, de multiplication et de division s'effectuent toutes en $log(n)$, l'ordre de grandeur de la complexité temporelle prouvée par les auteurs du test AKS est $O(log(n)^{15/2})$.
+		\paragraph{}Une borne moins précise mais démontrable plus facilement est $O(log(n)^{21/2})$ c'est la première complexité prouvée et elle a donc servi à établir que trouver un nombre premier est un problème que l'on peut résoudre en temps polynomial.
+		\paragraph{}La complexité repose sur l'étape 5 de l'algorithme. En effet, l'entier $r$ trouvé à l'étape 2 est borné par $log(n)^{5}$, cela dit, sous certaines conjectures non prouvées (\textit{Artin} et \textit{Sophie-Germain}), cette borne est réduite à $log(n)^2$ ce qui améliore la complexité de l'algorithme en $O(log(n)^6)$. On retient cette complexité car les preuves des conjectures sont sur la bonne voie.
+		\paragraph{}Finalement, si la conjecture d'\textit{Agrawal} est vérifiée, ce test peut être amélioré en $O(log(n)^{3})$ ce qui le rendrait assez comparable aux tests probabilistes plus largement utilisés en cryptographie.
