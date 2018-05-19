@@ -6,34 +6,25 @@
 		\begin{tikzpicture}
 		\begin{scope}[xscale=2,yscale=0.9]
 			
-			\node (Fct) at (0,5) [rectangle,draw,text depth=3.2cm,minimum width=14cm,minimum height=3cm,font=\textbf\Large] {\begin{tabular}{c}Fonctionnalités\end{tabular}};
+			\node (Fct) at (0,5) [rectangle,draw,text depth=2cm,minimum width=12cm,minimum height=2.5cm,font=\textbf\Large] {\begin{tabular}{c}Fonctionnalités\end{tabular}};
 			\node (CS) [rectangle,draw,dashed] at ([xshift=-2cm]Fct.center) {\begin{tabular}{c}Cryptosystèmes\end{tabular}};
 			\node (TPrim) [rectangle,draw,dashed] at ([xshift=2cm]Fct.center) {\begin{tabular}{c}Tests de primalité\end{tabular}};
 		
-			\node (An) at (0,-1.2) [rectangle,draw,text depth=-3cm,minimum width=5cm,minimum height=4cm,font=\textbf\Large] {\begin{tabular}{c}Analyses\end{tabular}};
-			\node (MPerf) [rectangle,draw,dashed,below=of Fct.south,yshift=-1cm] {\begin{tabular}{c}Mesures de performance\end{tabular}};
-			\node (AM) [rectangle,draw,dashed,below=of MPerf.south,yshift=0cm] {\begin{tabular}{c}Analyse des mesures\end{tabular}};
+			\node (MPerf) at (0,1) [rectangle,draw,text depth=-1.5cm,minimum width=5cm,minimum height=2.5cm,font=\textbf\Large] {\begin{tabular}{c}Mesures de performance\end{tabular}};
+			\node (MTps) [rectangle,draw,dashed] at ([yshift=0.3cm]MPerf.center) {\begin{tabular}{c}Mesure temps\end{tabular}};
 			
-			%\node (VERIF) [rectangle,draw,dashed,fill=white] at ([yshift=1cm]API1.center){\begin{tabular}{c}Vérification format\\fichier\end{tabular}};
-			%\node (ANALYS) [rectangle,draw,dashed,fill=white,below=of VERIF.south,yshift=0.5cm] {\begin{tabular}{c}Analyse contenu\\fichier\end{tabular}};
-		
 			\draw[-triangle 45,blue!60] (CS.2.5) -- node[anchor=south,yshift=0.0cm]{1} (TPrim.177.5);
 			\draw[-triangle 45,blue!60] (TPrim.182.5) -- node[anchor=south,yshift=-0.5cm]{2} (CS.357.5);
 			
-			\path[->,>=stealth',blue!60] (MPerf) edge[bend left=5] node[anchor=south,left,xshift=-0.1cm,yshift=-0.1cm]{3} (CS);
-			\path[->,>=stealth',blue!60] (CS) edge[bend left=5] node[anchor=south,right,xshift=0.1cm,yshift=0.0cm]{4} (MPerf);
-			\path[->,>=stealth',blue!60] (MPerf) edge[bend left=5] node[anchor=south,left,xshift=-0.1cm,yshift=0.0cm]{5} (TPrim);
-			\path[->,>=stealth',blue!60] (TPrim) edge[bend left=5] node[anchor=south,right,xshift=0.1cm,yshift=-0.1cm]{6} (MPerf);
-		
-			\draw[-triangle 45,blue!60] (MPerf) -- node[anchor=south,left] {7} (AM);
-		
+			\draw[-triangle 45,blue!60] (MTps.60) -- node[anchor=north,yshift=0.0cm]{3} (TPrim.300);
+			\draw[-triangle 45,blue!60] (TPrim.250) -- node[anchor=south,xshift=-0.5cm,yshift=-0.3cm]{4} (MTps.110);
 		\end{scope}
 		%Légende
 		\begin{scope}
-			\node (LEGENDE) at (-7,-5) {\textbf{Légende :}};
-			\node (PACKAGE) at (-4.5,-5) [rectangle,draw] {\begin{tabular}{c}Package\end{tabular}};
-			\node (MODULE) at (-2,-5) [rectangle,draw,dashed] {\begin{tabular}{c}Module\end{tabular}};
-			\path[->,>=stealth',blue!60] (0.5,-5.3) edge[bend left=0] node[anchor=south,above]{informations transmises} (3,-5.3);
+			\node (LEGENDE) at (-7,-2) {\textbf{Légende :}};
+			\node (PACKAGE) at (-4.5,-2) [rectangle,draw] {\begin{tabular}{c}Package\end{tabular}};
+			\node (MODULE) at (-2,-2) [rectangle,draw,dashed] {\begin{tabular}{c}Module\end{tabular}};
+			\path[->,>=stealth',blue!60] (0.5,-2.3) edge[bend left=0] node[anchor=south,above]{informations transmises} (3,-2.3);
 		\end{scope}
 		\end{tikzpicture}
 		\caption{Organigramme des différents modules de l'application}\label{fig:M1}
@@ -43,12 +34,9 @@
 	\hspace{-1.3em}\textbf{Notes :}\\
 		\textbf{(1)} Nombre entier à tester (primalité)\\
 		\textbf{(2)} Réponse sur la primalité (0 composé, 1 probablement premier, 2 premier)\\
-		\textbf{(3)} Message à chiffrer\\
-		\textbf{(4)} Chiffré du message\\
-		\textbf{(5)} Nombre entier à tester (primalité)\\
-		\textbf{(6)} Réponse sur la primalité (0 composé, 1 probablement premier, 2 premier)\\
-		\textbf{(7)} Données collectées des différentes mesures de performance\\	
-	
+		\textbf{(3)} Nombre entier à tester (primalité)\\
+		\textbf{(4)} Réponse sur la primalité (0 composé, 1 probablement premier, 2 premier)\\
+		
 	
 	\subsection{Fonctionnalités des modules}
 		\subsubsection*{Package Fonctionnalités}
