@@ -14,7 +14,7 @@
 				\item Calculer $n = p * q$. $n$ est le module RSA et fait 1024 bits au minimum en général.
 				\item Calculer $\Phi(n) = (p - 1)(q - 1)$.
 				\item Choisir $e \in \mathbb{Z}_{\Phi(n)}^{*}$ ($e$ premier avec $\Phi(n)$).
-				\item Calculer $d$ telle que $d*e \equiv 1 mod \Phi(n)$ ($d$ inverse de $e$ pour la multiplication modulo $\Phi(n)$).
+				\item Calculer $d$ tel que $d*e \equiv 1 mod \Phi(n)$ ($d$ inverse de $e$ pour la multiplication modulo $\Phi(n)$).
 			\end{itemize}
 			Les éléments échangés constituant la clé publique sont $(n, e)$. Les éléments constituant la clé privé sont $(p, q, d)$.
 			\vspace{1em}
