@@ -1,7 +1,8 @@
 \section{Architecture de l'application}
 
 	\subsection{Organigramme et données échangées}
-	Cet organigramme représente la décomposition en modules de l'application ainsi que les informations qui circulent entre ces modules.
+	L'application développée dans ce projet porte essentiellement sur l'implémentation des tests de primalité, avec quelques fonctionnalités supplémentaires. La manière dont l'application est structurée va permettre de faciliter son extension et sa réutilisation.\\
+	\indent Cet organigramme représente la décomposition en modules de l'application ainsi que les informations qui circulent entre ces modules.
 	\begin{figure}[H]
 		\begin{tikzpicture}
 		\begin{scope}[xscale=2,yscale=0.9]
@@ -41,10 +42,16 @@
 	\subsection{Fonctionnalités des modules}
 		\subsubsection*{Package Fonctionnalités}
 			\begin{enumerate}[leftmargin=*]
-				\item Module Cryptosystèmes : implémentation de cryptosystèmes ayant recours à des nombres premiers (\textbf{\textit{RSA}}) et des générateurs de nombres premiers.
-				\item Module Test de primalité : implémentation de différents algorithmes de tests de primalité qui feront l'objet d'une étude comparative par la suite :
+				\item Module Cryptosystèmes : implémentation de cryptosystèmes ayant recours à des nombres premiers (\textbf{\textit{RSA}}) et des générateurs aléatoires de nombres premiers (RPNG) :
 				\begin{itemize}
-					\item Test naïf
+					\item Cryptosystème RSA
+					\item RPNG avec test de primalité déterministe
+					\item RPNG avec test de primalité probabiliste
+					\item RPNG optimal
+				\end{itemize}
+				\item Module Tests de primalité : implémentation de différents algorithmes de test de primalité qui feront l'objet d'une étude comparative par la suite :
+				\begin{itemize}
+					\item Test Naïf
 					\item Test de Wilson
 					\item Test de Fermat
 					\item Test de Miller-Rabin
@@ -53,19 +60,14 @@
 				\end{itemize}
 			\end{enumerate}
 			
-			\subsubsection*{Package Analyses}
+		\subsubsection*{Package Mesures de performance}
 			\begin{enumerate}[leftmargin=*]
-				\item Module Mesures de performance : mesures des performances des différents tests de primalité implémentés selon les valeurs données en entrées et les cryptosystèmes qui les utilisent.
-				\item Module Analyse des mesures :
-				\begin{itemize}[leftmargin=0.2cm]
-					\item Analyse comparative des différentes mesures calculées par le module Mesures de performance.
-					\item Produit final de l'application.
-				\end{itemize}
+				\item Module Mesure temps : mesure du temps d'exécution de chaque test de primalité selon le la taille en bits du nombre à tester.
 			\end{enumerate}
 	
 	\subsection{Outils et langages de programmation}
 	Notre application va être implémentée dans le langage {\ttfamily C}. Le langage {\ttfamily C} possède plusieurs types pour représenter des nombre entiers. Cependant, tous ces types ont une précision fixe et ne peuvent pas dépasser un certain nombre d'octets. Le type le plus grand est le {\ttfamily long long int} qui peut contenir des entiers d'un taille maximale de 64 bits. Or, tous ces types sont beaucoup trop courts pour les applications cryptographiques qui nécessitent la manipulation de données d'au moins 512 bits.
 	\paragraph{}{\ttfamily GNU MP} pour {\ttfamily GNU Multi Precision}, souvent appelée \lstinline!GMP! est une bibliothèque {\ttfamily C}/{\ttfamily C++} de calcul multiprécision sur des nombres entiers, rationnels et à virgule flottante qui permet en particulier de manipuler de très grand nombres.
 	
-	\paragraph{} Finalement, le logiciel {\ttfamily Gnuplot} va être utilisé pour faire des représentations graphiques à partir des résultats issus de notre programme.
+	\paragraph{} Finalement, le logiciel {\ttfamily Gnuplot} va être utilisé pour faire des représentations graphiques à partir des résultats issus des mesures de performance de notre application.
 	

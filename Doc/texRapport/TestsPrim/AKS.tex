@@ -18,9 +18,10 @@
 		\[n \text{  est premier} \quad \Leftrightarrow \quad \forall k \in {1, ...,n-1}, \binom{n}{k} \equiv 0 \pmod n\]
 		
 		\paragraph{}L'algorithme déterministe de test de primalité déduit à partir de ce théorème est très simple, mais il faut évaluer les $n$ coefficients du polynôme $(X + a)^{n}$ à l'aide du \textit{binôme de Newton} en plus de l'exponentiation modulaire, ce qui est bien trop long.\\
-		La solution proposée dans le test est de réduire le polynôme modulo $X^{r} - 1$ avec $r$ bien choisi. Cependant avec cette modification, même si l'implication du théorème "$\Rightarrow$" est vérifiée, ce n'est plus le cas pour la réciproque.\\
-		Ce problème est géré dans les premières étapes du test. En effet, si l'équation est vérifiée pour $r$ bien choisi et un nombre suffisant de $a$ (obtenus en temps polynomiaux) alors $n$ est une puissance de nombre premier, c'est-à-dire, $n = p^{b}$ avec $p$ premier et $b \in \mathbb{N}^{*}$.\\
-		Ainsi, on obtient finalement un test de primalité déterministe polynomial en la taille de l'entrée $n$.
+		\indent La solution proposée dans le test est de réduire le polynôme modulo $X^{r} - 1$ avec $r$ bien choisi. Cependant avec cette modification, même si l'implication du théorème "$\Rightarrow$" est vérifiée, ce n'est plus le cas pour la réciproque.\\
+		\indent Ce problème est géré dans les premières étapes du test. En effet, si l'équation est vérifiée pour $r$ bien choisi et un nombre suffisant de $a$ (obtenus en temps polynomiaux) alors $n$ est une puissance de nombre premier, c'est-à-dire, $n = p^{b}$ avec $p$ premier et $b \in \mathbb{N}^{*}$.\\
+		
+		\paragraph{}Ainsi, on obtient finalement un test de primalité déterministe polynomial en la taille de l'entrée $n$. On définit la notion d'\textit{ordre multiplicatif} qu'on va utiliser dans l'algorithme :
 				
 		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
 		\begin{Def}[Ordre multiplicatif]

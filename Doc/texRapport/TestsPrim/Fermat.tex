@@ -22,8 +22,8 @@
 	Ce théorème doit son nom à \textit{Pierre de Fermat}, qui l'énonce la première fois en 1640. 
 	
 	\subsubsection{Algorithme}
-		Le premier énoncé du théorème de Fermat va être exploité pour construire l'algorithme du test de primalité. Ce théorème décrit une propriété commune à tous les nombres premiers qui peut être utilisée pour détecter si un nombre est premier ou bien composé.\\
-		En effet, pour un entier $n$ dont on veut tester la primalité et un entier $a$ quelconque telle que $1 < a < n$ : 
+		Le premier énoncé du \textit{théorème de Fermat} va être exploité pour construire l'algorithme de test de primalité. Ce théorème décrit une propriété commune à tous les nombres premiers qui peut être utilisée pour détecter si un nombre est premier ou bien composé.\\
+		\indent En effet, pour un entier $n$ dont on veut tester la primalité et un entier $a$ quelconque telle que $1 < a < n$ : 
 		\begin{itemize}
 			\item Le fait de choisir $1 < a < n$ garantit que si $n$ était premier, $a$ sera forcément premier avec $n$ (puisque $a < n$) et ainsi le test n'échouera pas. 
 			\item Si $\mathbf{a^{n-1} \not\equiv 1 \pmod n}$, alors $n$ est surement composé.\\
@@ -61,7 +61,9 @@
 			
 		\end{itemize}
 		
-		\paragraph{}Les nombres pseudo-premiers et les nombre de Carmichael sont relativement rares. On peut donc envisager d'adopter ce critère pour un test probabiliste de primalité, qui est le test de Fermat. En effet, va être être répété $k$ fois, et à chaque itération, on effectue le test avec une base $a$ différente. Plus le nombre de répétitions est grand, plus la probabilité que le résultat du test soit correct augmente.\\
+		\paragraph{}Les nombres pseudo-premiers et les nombre de Carmichael sont relativement rares. On peut donc envisager d'adopter ce critère pour un test probabiliste de primalité, qui est le \textit{test de Fermat}. En effet, va être être répété $k$ fois, et à chaque itération, on effectue le test avec une base $a$ différente. Plus le nombre de répétitions est grand, plus la probabilité que le résultat du test soit correct augmente.
+		
+		\paragraph{} L'algorithme de test de primalité qu'on obtient finalement est le suivant :\\
 		
 		\begin{algorithm}[H]
 			\caption{Test de Fermat}\label{TF}
@@ -76,9 +78,10 @@
 		
 		
 	\subsubsection{Complexité}
-		\paragraph{}La complexité de ce test va dépendre de l'exponentiation modulaire dans le corps de la boucle de $k$ itérations.\\
+		\paragraph{}La complexité de ce test va dépendre de l'exponentiation modulaire utilisée dans le corps de la boucle de $k$ itérations.\\
+		
 		\begin{algorithm}[H]
-			\caption{Square-and-Multiply Left-to-right binary method}\label{SqM}
+			\caption{Square-and-Multiply (Left-to-right binary method)}\label{SqM}
 			\Donnees{$c$, $d$, et $n$ entiers : avec $d = \sum_{i=0}^{k-1} d_{i} \cdot 2^{i}$ et $d_{k-1} = 1$}
 			\Sortie{$c^d$ modulo $n$}
 			$x \gets c$\;
@@ -89,25 +92,27 @@
 			}
 		\Retour $x$\;
 		\end{algorithm}
-		\paragraph{}L'analyse de la complexité cet algorithme (dont on va admettre la preuve ici) nous donne un temps en $log(d)$ multiplications modulaires dépendantes de $n$.
-		\paragraph{}Appliqué au contexte du test de Fermat, on a $n-1$ notre exposant et des multiplications modulaires dépendantes de $n$.
-		\paragraph{}Pour conclure, il nous reste à voir la complexité d'une multiplication modulaire. Étant donné que nous travaillons sur des entiers de grande taille, la multiplication ne sera pas en temps constant. Il existe un algorithme "naïf" et deux multiplications dites rapides que nous allons simplement citer :
+		
+		\paragraph{}L'analyse de la complexité cet algorithme (dont on va admettre la preuve ici) nous donne un temps en $log(d)$ multiplications modulaires dépendantes de $n$.\\
+		\indent Appliqué au contexte du test de Fermat, on a $n-1$ notre exposant et des multiplications modulaires dépendantes de $n$.\\
+		\indent Pour conclure, il nous reste à voir la complexité d'une multiplication modulaire. Étant donné que nous travaillons sur des entiers de grande taille, la multiplication ne sera pas en temps constant. Il existe un algorithme "naïf" et deux multiplications dites rapides que nous allons simplement citer :
 			\begin{itemize}
 			\item
-			Une implémentation "naïve" consisite à effectuer les calculs comme pour une multiplication de primaire. À l'aide de deux boucles imbriquées, on multiplie chiffre par chiffre nos nombres.\\
+			Une implémentation "naïve" consiste à effectuer les calculs comme pour une multiplication de primaire. À l'aide de deux boucles imbriquées, on multiplie chiffre par chiffre nos nombres.\\
 			En appelant $n$ notre nombre, sa taille est de l'ordre de $log(n)$, la complexité de cette multiplication est donc $log(n)^{2}$.
 			\item
-			La méthode FFT (Fast Fourrier Transformation) effectue la multiplication en complexité :$$log(n) \cdot log(log(n)) \cdot log(log(log(n)))$$
+			La méthode FFT (\textit{Fast Fourrier Transformation}) effectue la multiplication en complexité :
+			$$log(n) \cdot log(log(n)) \cdot log(log(log(n)))$$
 			\item
-			La méthode Karatsuba quant à elle calcule le résultat en complexité $log(n)^{log_{2}(3)}$.
-			\end{itemize}
-		\paragraph{}On obtient une complexité finale pour le test de Fermat de :
+			La méthode \textit{Karatsuba} quant à elle calcule le résultat en complexité $log(n)^{log_{2}(3)}$.
+			\end{itemize}~\\
+		On obtient une complexité finale pour le \textit{test de Fermat} de :
 		\[O(k \cdot log_{2}(n) \cdot C_{mult}(n))\]
-		où $k$ est le nombre de répétitions dans le test de Fermat et $n$ l'entier testé et $C_{mult}(n)$ la complexité de la multiplication modulaire.
+		où $k$ est le nombre de répétitions dans le \textit{test de Fermat}, $n$ l'entier testé et $C_{mult}(n)$ la complexité de la multiplication modulaire.
 	
 	
 	\subsubsection{Preuve}
-		\paragraph{}Pour démontrer cet algorithme nous allons d'abord prouver le petit théorème de Fermat. Pour cela nous nous basons sur le fait que c'est un cas particulier du théorème d'Euler :
+		\paragraph{}Pour démontrer cet algorithme nous allons d'abord prouver le \textit{petit théorème de Fermat}. Pour cela nous nous basons sur le fait que c'est un cas particulier du \textit{théorème d'Euler} :
 		
 		\vspace{-1.5em}\begin{adjustwidth}{1.5cm}{1.5cm} 
 		\begin{Th}[Théorème d'Euler]
@@ -122,32 +127,31 @@
 		\end{Th}
 		\end{adjustwidth}\vspace{0.5em}
 		
-		La fonction $\phi$ évaluée sur un nombre premier $p$ vaut $p - 1$. Le petit théorème de Fermat est donc une application du théorème d'Euler en remplaçant $n$ par un nombre premier $p$.
+		La fonction $\phi$ évaluée sur un nombre premier $p$ vaut $p - 1$. Le \textit{petit théorème de Fermat} est donc une application du théorème d'Euler en remplaçant $n$ par un nombre premier $p$.
 		
-		\paragraph{Preuve du théorème d'Euler :\\}
-			En prouvant le théorème d'Euler, nous aurons donc prouvé petit le théorème de Fermat, nous conclurons ensuite avec le preuve de l'algorithme.
-			\paragraph{}Nous effectuerons nos calculs dans le groupe multiplicatif $(\mathbb{Z}/n\mathbb{Z})^*$, l'ensemble des naturels inférieurs à $n$ inversibles modulo $n$, ou de manière équivalente, l'ensemble des naturels inférieurs à $n$ premiers avec $n$.
+		\paragraph{Preuve du \textit{théorème d'Euler} :} 
+		\paragraph{}En prouvant le \textit{théorème d'Euler}, on aura donc prouvé \textit{petit le théorème de Fermat}, on concluera ensuite avec le preuve de l'algorithme.
 			
-			\paragraph{}Considérons l'application suivante, avec $\alpha \in (\mathbb{Z}/n\mathbb{Z})^*$:
-				\begin{align*}
-					\Gamma_{\alpha} \colon (\mathbb{Z}/n\mathbb{Z})^* &\to (\mathbb{Z}/n\mathbb{Z})^*\\
-					x &\mapsto \alpha \cdot x
-				\end{align*}
-				C'est une bijection. En effet son application inverse est $\Gamma_{\alpha^{-1}}$. $\alpha \in (\mathbb{Z}/n\mathbb{Z})^*$, donc il existe $\alpha^{-1} \in (\mathbb{Z}/n\mathbb{Z})^*$ inverse de $\alpha$ modulo $n$. C'est également une permutation (bijection d'un ensemble vers lui-même), on a donc :
-				\begin{align*}
-					\prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x &= \prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} \Gamma_{\alpha}(x)\\
-					&= \alpha^{|(\mathbb{Z}/n\mathbb{Z})^* |} \cdot \prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x\\
-					&= \alpha^{\phi(n)} \cdot \prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x
-				\end{align*}
-				$\prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x$ est inversible (produit d'éléments inversibles), donc on simplifie :
-				\[\alpha^{\phi(n)} \equiv 1 \text{ modulo } n \]
+		\paragraph{}On effectuera les calculs dans le groupe multiplicatif $(\mathbb{Z}/n\mathbb{Z})^*$, l'ensemble des naturels inférieurs à $n$ inversibles modulo $n$, ou de manière équivalente, l'ensemble des naturels inférieurs à $n$ premiers avec $n$.
 		
-		\paragraph{Preuve de l'algorithme :\\}
-			Directement, en se basant sur la contraposée du petit théorème de Fermat on a :
+		\paragraph{}On considère l'application suivante, avec $\alpha \in (\mathbb{Z}/n\mathbb{Z})^*$:
+			\begin{align*}
+				\Gamma_{\alpha} \colon (\mathbb{Z}/n\mathbb{Z})^* &\to (\mathbb{Z}/n\mathbb{Z})^*\\
+				x &\mapsto \alpha \cdot x
+			\end{align*}
+			C'est une bijection. En effet son application inverse est $\Gamma_{\alpha^{-1}}$. $\alpha \in (\mathbb{Z}/n\mathbb{Z})^*$, donc il existe $\alpha^{-1} \in (\mathbb{Z}/n\mathbb{Z})^*$ inverse de $\alpha$ modulo $n$. C'est également une permutation (bijection d'un ensemble vers lui-même), on a donc :
+			\begin{align*}
+				\prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x &= \prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} \Gamma_{\alpha}(x)\\
+				&= \alpha^{|(\mathbb{Z}/n\mathbb{Z})^* |} \cdot \prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x\\
+				&= \alpha^{\phi(n)} \cdot \prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x
+			\end{align*}
+			$\prod_{x \in (\mathbb{Z}/n\mathbb{Z})^*} x$ est inversible (produit d'éléments inversibles), donc on simplifie :
+			\[\alpha^{\phi(n)} \equiv 1 \text{ modulo } n \]
+		
+		\paragraph{Preuve de l'algorithme :} directement, en se basant sur la contraposée du \textit{petit théorème de Fermat} on a :
 			\begin{center}
 			Soit $a$ un entier premier avec $p$, alors $a^{p-1} \not\equiv 1 \text{ modulo } n \Rightarrow p$ non premier.
 			\end{center}
 		
-		\paragraph{Remarques :\\}
-			On vient bien avec cette preuve qu'on peut affirmer avec certitude qu'un nombre qui ne passe pas le test est composé. Cela dit, si le test passe, ceci ne confirme pas que notre nombre est premier. On peut simplement avoir plus confiance sur le nombre $p$ testé.
+		\paragraph{Remarque :} on voit bien avec cette preuve qu'on peut affirmer avec certitude qu'un nombre qui ne passe pas le test est composé. Cela dit, si le test passe, ceci ne confirme pas forcément que notre nombre est premier.
 		

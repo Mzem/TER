@@ -37,9 +37,9 @@
 	\paragraph{}Ce document est le compte-rendu final de notre projet sur les tests de primalité qui s'inscrit dans le cadre du module \textit{TER} du M1 informatique de l'\textit{UVSQ}.
 	\paragraph{}Les tests de primalité sont des algorithmes qui permettent de savoir si un nombre entier est premier. Ces tests sont indispensables pour la cryptographie à clé publique.
 	\paragraph{}Il existe plusieurs algorithmes de tests de primalité, plus ou moins performants. L'efficacité de ces algorithmes est particulièrement liée à la taille des données entrées. 
-	\paragraph{}Notre travail consiste donc à implémenter différents tests de primalité et de comparer leurs performances. Ces mesures de performance nous permettront de construire un algorithme qui génère un nombre premier de manière optimale. Cet algorithme sera produit final de ce projet. 
+	\paragraph{}Notre travail consiste donc à implémenter différents tests de primalité et de comparer leurs performances. Ces mesures de performance nous permettront de construire un algorithme qui génère un nombre premier de manière optimale. Cet algorithme sera le produit final de l'application développée dans ce projet. 
 	\paragraph{}Dans la première partie de ce document, on présentera l'architecture de notre application, illustrée par un organigramme.
-	\paragraph{}Dans la deuxième partie, on évoquera le champs d'application principal des tests de primalité, en l'occurrence, les cryptosystèmes à clé publique.
+	\paragraph{}Dans la deuxième partie, on évoquera les champs d'application principaux des tests de primalité, en l'occurrence, les cryptosystèmes à clé publique.
 	\paragraph{}Dans la troisième partie, on détaillera le processus utilisé en pratique pour générer un nombre premier.
 	\paragraph{}Ensuite, la quatrième partie traitera des tests de primalité qu'on implémentera : leur algorithme, leur complexité et leur preuve.
 	\paragraph{}Finalement, on établira dans la dernière partie un comparatif entre ces algorithmes de tests de primalité ainsi qu'un processus de mesure de performance qui aboutira à une génération optimale d'un nombre premier.
@@ -57,6 +57,10 @@
 	
 	
 	\section*{Conclusion}
+		Ce document est le rapport final de notre projet sur les tests de primalité. Ce travail a abouti par une implémentation de divers tests de primalité, une description de leur principe et de leur preuve, et une comparaison des performances de ces tests.
+		\paragraph{} On peut revoir, avec du recul, la manière avec laquelle notre travail a été effectué. En effet, les majeures difficultés ont été principalement trouvées lors de l'établissement des complexité et surtout des preuve des algorithmes implémentés. En ce qui concerne l'implémentation, le \textit{test AKS} a été le plus difficile, on a donc eu a réutiliser du code libre pour construire l'algorithme final.
+		\paragraph{} Certains points restent encore ouverts. On pourrait envisager d'appliquer d'autres méthodes de mesure de performance pour établir non pas un générateur optimal, mais un test de primalité optimal. Il faudrait aussi effectuer des mesures sur les tests probabilistes pour déterminer le nombre optimal de répétitions à effectuer. Cela reviendrait à voir plus en détail les probabilités d'erreur de ces tests.
+		\paragraph{} Ce projet a eu la particularité de faire appel à des compétences en informatique et en mathématique de manière égale. Cette épreuve constitue donc une expérience enrichissante pour nous, sur le plan compétence, mais aussi sur le plan de travail collectif, qui nous inspirera certainement pour de futurs projets.
 	
 		
 \end{document}

@@ -3,10 +3,10 @@
 	
 	\subsubsection{Algorithme}
 		
-		\paragraph{} Dans le cas du test de Miller-Rabin, la propriété en question est un raffinement du \textit{petit théorème de Fermat} (théorème \ref{ThFermat1}). De la même façon que le test de Fermat, le test de Miller-Rabin tire parti d'une propriété de l'entier $n$ dont on va tester la primalité, qui dépend d'un entier auxiliaire, le témoin $a$, et qui est vraie dès que $n$ est un nombre premier. Le principe de ce test probabiliste est donc de vérifier cette propriété pour suffisamment de témoins.
+		\paragraph{} Dans le cas du \textit{test de Miller-Rabin}, la propriété en question est un raffinement du \textit{petit théorème de Fermat} (théorème \ref{ThFermat1}). De la même façon que le test de Fermat, le \textit{test de Miller-Rabin} tire parti d'une propriété de l'entier $n$ dont on va tester la primalité, qui dépend d'un entier auxiliaire, le témoin $a$, et qui est vraie dès que $n$ est un nombre premier. Le principe de ce test probabiliste est donc de vérifier cette propriété pour suffisamment de témoins.
 		
 		\paragraph{}En effet, soit $n > 2$ un entier dont on va tester la primalité et $a$ un entier quelconque telle que $1 < a < n$. Soient $s \in \mathbb{N}^{*}$ et $t \in \mathbb{N}$ \textbf{\textit{impair}}, on peut écrire $\mathbf{n - 1 = 2^{s}t}$ ($s$ est le nombre maximum de fois que l'on peut mettre $2$ en facteur dans $n - 1$).\\
-		Alors, dans le cas où $n$ est premier, d'après le \textit{petit théorème de Fermat} (théorème \ref{ThFermat1}) on a :
+		\indent Alors, dans le cas où $n$ est premier, d'après le \textit{petit théorème de Fermat} (théorème \ref{ThFermat1}) on a :
 		\begin{align*}
 			a^{n-1}\equiv 1 \pmod n &\Leftrightarrow a^{2^{s}t}\equiv 1 \pmod n\\
 									&\Leftrightarrow a^{2^{s}t} - 1 \equiv 0 \pmod n\\
@@ -20,8 +20,8 @@
 		\[ a^{2^{j}t} \equiv -1 \pmod n \quad \text{pour au moins un } j \in \{0, 1, ..., s-1\} \]
 		\[\text{ou}\]
 		\[ a^{t} \equiv 1 \pmod n\]
-		Si pour un nombre entier $n$, une des équations ci-dessus est vérifiée, alors l'algorithme conclut que $n$ est probablement premier et termine. Si aucune de ces équations n'est vérifiée, alors l'algorithme renvoie que $n$ est composé avec certitude. On peut aussi apporter une amélioration à cette approche.\\
-		Si on trouve que
+		\indent Si pour un nombre entier $n$, une des équations ci-dessus est vérifiée, alors l'algorithme conclut que $n$ est probablement premier et termine. Si aucune de ces équations n'est vérifiée, alors l'algorithme renvoie que $n$ est composé avec certitude. On peut aussi apporter une amélioration à cette approche.\\
+		\indent Si on trouve que
 		\[ a^{2^{j}t} \equiv 1 \pmod n \quad \text{pour un } j \in \{0, 1, ..., s-1\} \text{,}\]
 		on peut directement conclure que $n$ est composé et terminer l'exécution de l'algorithme. Ceci est dû au fait que pour un nombre $p$ premier, les seuls éléments pour lesquels un entier $x$ vérifie $x^{2} \equiv 1 \pmod p$ sont $1$ et $-1$, qui sont les deux seules racines carrées de l'unité.
 		
@@ -51,14 +51,14 @@
 		\end{algorithm}
 	
 	
-		\paragraph{Probabilité d'erreur et nombre d'itérations :} si le test de Miller-Rabin renvoie composé, alors le nombre est effectivement composé. Il peut être démontré que si le test de Miller-Rabin dit que $n$ est premier, le résultat est faux avec une probabilité inférieure à $1/4$. En effet, il existe des valeurs de $a$ qui produiront de manière répétée des menteurs, qui indiqueront donc que $n$ est premier alors qu'il est composé. On appelle un \textit{\textbf{témoin}} fort pour $n$ un entier $a$ pour lequel
+		\paragraph{Probabilité d'erreur et nombre d'itérations :} si le \textit{test de Miller-Rabin} renvoie composé, alors le nombre est effectivement composé. Il peut être démontré que si le test de Miller-Rabin dit que $n$ est premier, le résultat est faux avec une probabilité inférieure à $1/4$. En effet, il existe des valeurs de $a$ qui produiront de manière répétée des menteurs, qui indiqueront donc que $n$ est premier alors qu'il est composé. On appelle un \textit{\textbf{témoin}} fort pour $n$ un entier $a$ pour lequel
 		\[a^{t} \not\equiv 1 \pmod n \quad \text{et} \quad a^{2^{s}j} \not\equiv -1 \pmod n \quad \text{pour tout } j \in \{0, ..., s - 1\}\]
 		
 		Il peut être montré qu'il existe toujours un témoin fort pour n'importe quel composé impair $n$, et qu'au moins $3/4$ de ces valeurs pour $a$ sont des témoins forts pour la composition de $n$. Si on répète ce test $k$ fois, la probabilité que le résultat soit toujours faux décroit très rapidement. La probabilité que le test renvoie premier à tort après $k$ itérations est donc de $1/4^{k}$.
 		
 	\subsubsection{Complexité}
-		\paragraph{}Le test de Miller-Rabin est similaire au test de Fermat. Pour prouver que nous effectuons bien de l'ordre de $log(n)$ multiplications modulaires il faut constater que nous effectuons dans Miller-Rabin $s + log_{2}(t)$ multiplications modulaires, c'est-à-dire $log_{2}(2^{s} \cdot t)$ ou bien $log_{2}(n - 1)$ car $n - 1 = 2^{s} \cdot t$
+		\paragraph{}Le \textit{test de Miller-Rabin} est similaire au test de Fermat. Pour prouver que nous effectuons bien de l'ordre de $log(n)$ multiplications modulaires il faut constater que nous effectuons dans Miller-Rabin $s + log_{2}(t)$ multiplications modulaires, c'est-à-dire $log_{2}(2^{s} \cdot t)$ ou bien $log_{2}(n - 1)$ car $n - 1 = 2^{s} \cdot t$
 		
 	\subsubsection{Preuve}
-		\paragraph{}La preuve de cet algorithme repose sur la preuve du petit théorème de Fermat de la partie précédente et des explications de l'algorithme au début de cette partie.
+		\paragraph{}La preuve de cet algorithme repose sur la preuve du \textit{petit théorème de Fermat} de la partie précédente et des explications détaillés du principe de l'algorithme au début de cette partie.
 		
