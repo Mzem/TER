@@ -261,8 +261,8 @@
 			\begin{frame}
 				\textbf{Complexité :} dépend de \\~\\
 				\begin{itemize}
-				\item l'exponentiation modulaire \textbf{\textit{Square And Multiply}} : ...
 				\item la multiplication modulaire : $C_{mult}(n)$
+				\item l'exponentiation modulaire \textbf{\textit{Square And Multiply}} : $log_{2}(n) \cdot C_{mult}(n)$
 				\end{itemize}
 				~\\
 				$\Longrightarrow$ Complexité test de Fermat : $O(k \cdot log_{2}(n) \cdot C_{mult}(n))$.
@@ -270,44 +270,127 @@
 		
 		\subsection{Test de Miller-Rabin}
 			\begin{frame}
+			Probabiliste, initialement publié en 1976, basé sur un raffinement du petit théorème de Fermat.\\~\\
+			\begin{itemize}
+				\item Écriture $\mathbf{n - 1 = 2^{s}t}$ pour $n>0$ et $t$ impair
+				\item Exploitation dans la propriété du petit théorème de Fermat : $a^{n-1}\equiv 1 \pmod n$
+				\item Établissement de la propriété de primalité, si :
+				\[ a^{2^{j}t} \equiv 1 \pmod n \quad \text{pour un } j \in \{0, 1, ..., s-1\} \text{,}\]
+				alors $n$ est composé.
+			\end{itemize}
+			\end{frame}
+			
+			\begin{frame}
+			
+				\begin{algorithm}[H]
+				\caption{Test de Miller-Rabin}\label{TMR}
+				\Donnees{un entier $n$ et le nombre de répétitions $k$}
+				{Décomposer $n - 1 = 2^{s}t$, avec $s \in \mathbb{N}^{*}$ et $t \in \mathbb{N}$ impair \;}
+				\Pour{$i$ = $1$ jusqu'à $k$}{
+					{Choisir aléatoirement $a$ tel que $1 < a < n$\;}
+					{$y \gets a^{t} \pmod n$\;}
+					\Si{$y \not\equiv 1 \pmod n$ et $y \not\equiv -1 \pmod n$}{
+						\Pour{$j = 1$ jusqu'à $s - 1$}{
+							{$y \gets y^{2} \pmod n$\;}
+							\Si{$y \equiv 1 \pmod n$}{
+								{\Retour composé\;}
+							}
+							\Si{$y \equiv -1 \pmod n$}{
+								{Arrêter la boucle de $j$ et continuer avec le $i$ suivant (sans renvoyer composé)\;}
+							}
+							{\Retour composé\;}
+						}
+					}
+				}
+				\Retour probablement premier\;
+				\end{algorithm}
 		
 			\end{frame}
 			
 			\begin{frame}
+				\textbf{Répétitions et probabilité d'erreurs :} la probabilité que le test renvoie premier à tort après $k$ itérations est de $1/4^{k}$.\\~\\
 		
-			\end{frame}
-			
-			\begin{frame}
-		
+				\textbf{Complexité :} $log_{2}(n - 1)$.
 			\end{frame}
 		
 		\subsection{Test de Solovay-Strassen}	
 			\begin{frame}
+			Probabiliste, publié en 1977, basé sur le \textit{\textbf{critère d'Euler}}.\\~\\
+			\begin{Th}[Critère d'Euler]
+			\label{CritereEuler}
+			Soient $p > 2$ un nombre premier et $a$ un entier premier avec $p$
+			\begin{itemize}
+				\item Si $a$ est un résidu quadratique modulo $p$, alors $a^{\frac{n-1}{2}} \equiv 1 \pmod p$.
+				\item Si $a$ n'est pas un résidu quadratique modulo $p$, alors $a^{\frac{n-1}{2}} \equiv -1 \pmod p$.
+			\end{itemize}
+			Ceci se résume en utilisant le symbole de Legendre par :
+			\[a^{\frac{n-1}{2}} \equiv \left ( \frac{a}{p} \right ) \pmod p\]
+			\end{Th}
 		
 			\end{frame}
 			
 			\begin{frame}
+			\begin{algorithm}[H]
+				\caption{Test de Solovay-Strassen}\label{TSS}
+				\Donnees{un entier $n$ \underline{impair} et le nombre de répétitions $k$}
+				\Pour{$i$ = $1$ jusqu'à $k$}{
+					Choisir aléatoirement $a$ tel que $2 < a < n$\;
+					$x \gets \left ( \frac{a}{n} \right )$\;
+					\Si {$x = 0$ ou $x \not\equiv a^{\frac{n-1}{2}} \pmod n$}{
+						{\Retour composé\;}
+					}
+				}
+			\Retour probablement premier\;
+			\end{algorithm}
 		
 			\end{frame}
 			
 			\begin{frame}
-		
+			
 			\end{frame}	
 		
 		\subsection{Test AKS}	
 			\begin{frame}
-		
+			Déterministe, publié en 2002, temps polynomial, basé sur une généralisation du petit théorème de Fermat :\\~\\
+			\begin{Th}[Petit théorème de Fermat généralisé]
+			\label{ThFermat4}
+			Pour tout entier $n \geqslant 2$ et $a \in \mathbb{Z}$ premiers entre eux,
+			\[n \text{  est premier} \quad \Leftrightarrow \quad (X + a)^{n} \equiv X^{n} + a \pmod n\] 
+			Le symbole $X$ représente un symbole formel.
+			\end{Th}
 			\end{frame}
 			
 			\begin{frame}
-		
+			\begin{algorithm}[H]
+				\caption{Test AKS}\label{AKS}
+				\Donnees{un entier $n > 1$}
+				
+				1 - \Si {$n = a^{b}$ pour des entiers $a > 1$ et $b > 1$}{\Retour composé\;}
+				
+				2 - Déterminer le plus petit entier $r$ tel que $Ord_{r}(n) > log_{2}(n)^{2}$ dans $\mathbb{Z}_{r}$ (si $r$ n'est pas premier avec $n$, on passe cet $r$)\;
+				
+				3 - \Pour {tout $a \leq r$}{
+						\Si{$1 < pgcd(a,n) < n$}{
+							\Retour composé\;
+						}
+					}
+				
+				4 - \Si {$n \leq r$}{\Retour premier\;}
+				
+				5 - \Pour{$a = 1$ jusqu'à $\lfloor\sqrt{\varphi(r)} log_{2}(n)\rfloor{}{}$}{
+						\Si {$(X + a)^{n} \quad \not\equiv \quad X^{n} + a\quad$ dans $ \frac{\mathbb{Z}/n\mathbb{Z}[X]}{ (X^{r} - 1)\mathbb{Z}/n\mathbb{Z}[X]}$}{
+							\Retour composé\;
+					}
+				}
+				6 - \Retour premier\;
+			\end{algorithm}
 			\end{frame}
 			
 			\begin{frame}
-		
+				\textbf{Complexité :}
 			\end{frame}	
 		
-	\section{Mesures de performance et comparatifs}	
+	\section{Comparatifs - Performances}	
 		\begin{frame}
 	
 		\end{frame}
