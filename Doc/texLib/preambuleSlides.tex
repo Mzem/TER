@@ -4,7 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
 \usepackage[ddmmyyyy]{datetime}
-\usepackage{listings,lstautogobble,graphicx,tikz}
+\usepackage{listings,lstautogobble,graphicx,tikz,verbatim, amsthm,amsfonts,amsmath,amssymb,mathrsfs,thmtools}
 \usetikzlibrary{arrows,automata}
 \usetikzlibrary{positioning}
 
@@ -20,6 +20,12 @@
   \frametitle{Plan}
   \tableofcontents[currentsection]
   \end{frame}
+}
+\AtBeginSubsection[]
+{
+    \begin{frame}{Plan}
+        \tableofcontents[currentsection,currentsubsection]
+    \end{frame}
 }
 
 \author{Sonny Klotz - Idir Hamad - Younes Benyamna - Malek Zemni}

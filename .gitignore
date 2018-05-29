@@ -19,4 +19,5 @@ PRIMALITE
 bin
 App/bin
 .DS_Store
-Docs/texRapport/Rapport.pdf
+Doc/texRapport/Rapport.pdf
+Doc/texPresentation/Presentation.pdf
