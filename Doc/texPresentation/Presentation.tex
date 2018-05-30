@@ -12,7 +12,6 @@
 	\begin{frame}
 		\titlepage
 	\end{frame}
-	à
 	\section*{Introduction}
 	
 		\begin{frame}
@@ -369,6 +368,7 @@
 				\item $k$ itérations
 				\item Au total : $O(k \cdot log(n) \cdot C_{mult}(n))$.
 				\end{itemize}
+				~\\
 				\textbf{Idée de preuve} : Si $n$ premier on a,
 				\[
 					a^{n - 1} = 1 \Leftrightarrow (a^{\frac{n - 1}{2}} - 1) \cdot (a^{\frac{n - 1}{2}} + 1) = 0
@@ -427,6 +427,7 @@
 				\item Si on prouve l'équation pour plusieurs $a$ alors $n = p^{b}$ où p est premier. 
 				\item L'étape 1 nous permet de conclure si $b = 1$ ou non.
 				\end{itemize}
+				~\\
 				\textbf{Complexité :} Premier test déterministe prouvé en temps polynomial. Estimation la plus utilisée : $O(log(n)^{6})$.
 			\end{frame}	
 		
@@ -441,6 +442,7 @@
 				\item Test de Wilson (1770)
 				\end{itemize}
 			\pause
+			~\\
 			\item Tests probabilistes
 				\begin{itemize}
 				\item Test de Fermat (1640) longuement utilisé
@@ -448,6 +450,7 @@
 				\item Remplacés par le test de Miller-Rabin à partir de 1980 (bonne probabilité)
 				\end{itemize}
 			\pause
+			~\\
 			\item Test déterministe rapide : AKS (2002), complexité polynomiale, améliorations envisageables
 			\end{itemize}
 		\end{frame}
