@@ -12,7 +12,7 @@
 	\begin{frame}
 		\titlepage
 	\end{frame}
-	
+	à
 	\section*{Introduction}
 	
 		\begin{frame}
@@ -278,6 +278,11 @@
 				\[ a^{2^{j}t} \equiv 1 \pmod n \quad \text{pour un } j \in \{0, 1, ..., s-1\} \text{,}\]
 				alors $n$ est composé.
 			\end{itemize}
+			Idée de preuve :
+			\[
+				a^{2^{s}t} - 1 = (a^{2^{s-1}t})^{2} - 1 = (a^{2^{s-1}t} + 1)(a^{2^{s-1}t} - 1)
+			\]
+			On reconnait une autre identité remarquable si $s-1 > 0$ et on réitère.
 			\end{frame}
 			
 			\begin{frame}
@@ -310,7 +315,18 @@
 			\begin{frame}
 				\textbf{Répétitions et probabilité d'erreurs :} la probabilité que le test renvoie premier à tort après $k$ itérations est de $1/4^{k}$.\\~\\
 		
-				\textbf{Complexité :} $log_{2}(n - 1)$.
+				\textbf{Complexité :} 
+				\begin{itemize}
+				\item $log(n)$ multiplications modulaires
+				\item $k$ itérations
+				\item Au total : $O(k \cdot log(n) \cdot C_{mult}(n))$.
+				\end{itemize}
+				
+				\begin{block}{Choix du test}
+					La \textbf{précision} et la \textbf{vitesse d'exécution} font de ce test un des meilleurs choix pour une utilisation en cryptographie.
+				\end{block}
+				
+				Exemple : proba d'echec $< 10^{-6} \Rightarrow k = 10$
 			\end{frame}
 		
 		\subsection{Test de Solovay-Strassen}	
@@ -346,7 +362,23 @@
 			\end{frame}
 			
 			\begin{frame}
-			
+				\textbf{Complexité :} L'évaluation du symbole de Jacobi n'est pas dominant devant l'exponentiation modulaire.
+				\begin{itemize}
+				\item évaluation du symbole de Jacobi en $log(n)^{2}$
+				\item $log(n)$ multiplications modulaires
+				\item $k$ itérations
+				\item Au total : $O(k \cdot log(n) \cdot C_{mult}(n))$.
+				\end{itemize}
+				\textbf{Idée de preuve} : Si $n$ premier on a,
+				\[
+					a^{n - 1} = 1 \Leftrightarrow (a^{\frac{n - 1}{2}} - 1) \cdot (a^{\frac{n - 1}{2}} + 1) = 0
+				\]
+				
+				\begin{itemize}
+				\item Si $a = x^{2}$ le premier facteur s'annule (petit théorème de Fermat).
+				\item Sinon le deuxième s'annule.
+				\item On vérifie cela dans notre test à l'aide du symbole de Jacobi.
+				\end{itemize}
 			\end{frame}	
 		
 		\subsection{Test AKS}	
@@ -358,6 +390,7 @@
 			\[n \text{  est premier} \quad \Leftrightarrow \quad (X + a)^{n} \equiv X^{n} + a \pmod n\] 
 			Le symbole $X$ représente un symbole formel.
 			\end{Th}
+			L'évaluation de cette équation est trop longue.
 			\end{frame}
 			
 			\begin{frame}
@@ -387,7 +420,14 @@
 			\end{frame}
 			
 			\begin{frame}
-				\textbf{Complexité :}
+				\textbf{Principe :}
+				\begin{itemize}
+				\item $r$ choisi à l'étape 2 :
+				\item réduction mod $X^{r} - 1$ à l'étape 6, on n'a plus l'équivalence dans le théorème.
+				\item Si on prouve l'équation pour plusieurs $a$ alors $n = p^{b}$ où p est premier. 
+				\item L'étape 1 nous permet de conclure si $b = 1$ ou non.
+				\end{itemize}
+				\textbf{Complexité :} Premier test déterministe prouvé en temps polynomial. Estimation la plus utilisée : $O(log(n)^{6})$.
 			\end{frame}	
 		
 	\section{Comparatifs - Performances}	
