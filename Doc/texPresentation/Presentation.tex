@@ -392,15 +392,71 @@
 		
 	\section{Comparatifs - Performances}	
 		\begin{frame}
-	
+			\textbf{Évolution des tests de primalité :}\\~\\
+			\pause
+			\begin{itemize}
+			\item Premiers tests déterministes
+				\begin{itemize}
+				\item Test Naïf - Crible d'Eratosthène (III\up siècle avant J-C.)
+				\item Test de Wilson (1770)
+				\end{itemize}
+			\pause
+			\item Tests probabilistes
+				\begin{itemize}
+				\item Test de Fermat (1640) longuement utilisé
+				\item Apparition du test de Solovay-Strassen (1977)
+				\item Remplacés par le test de Miller-Rabin à partir de 1980 (bonne probabilité)
+				\end{itemize}
+			\pause
+			\item Test déterministe rapide : AKS (2002), complexité polynomiale, améliorations envisageables
+			\end{itemize}
 		\end{frame}
 		
 		\begin{frame}
-	
+			\textbf{Mesures de performance : temps d'exécution}\\~\\
+			\begin{algorithm}[H]
+				\caption{Mesure temps exécution}\label{MEST}
+				\Donnees{tableau tps[6][1025] à remplir, correspondant au temps d'exécution des 6 test pour un nombre de bits entre 0 et 1024}
+				\Sortie{tableau tps[6][1025] rempli}
+				\Pour{chaque test ($i$ = $0$ jusqu'à $5$)}{
+					\Pour{pour un nombre de bits allant de 0 à 1024 ($j$ = $0$ jusqu'à $1024$)}{
+						Générer un nombre premier $p$ de $j$ bits\;
+						tps[i][j] $\gets$ temps pour que le test $i$ vérifie $p$\;
+					}
+				}
+			\end{algorithm}
 		\end{frame}
 		
 		\begin{frame}
-	
+			\begin{figure}[H]\makebox[\textwidth]{\includegraphics[width=12cm,height=7cm]{../texRapport/img/perfsAll.png}}\vspace{-1em}\caption{Temps d'exécution des tests en fonction de la taille en bits du nombre premier}\label{fig:M4}\end{figure}
+		\end{frame}
+		
+		\begin{frame}
+			\begin{figure}[H]\makebox[\textwidth]{\includegraphics[width=12cm,height=7cm]{../texRapport/img/perfsDet.png}}\vspace{-1em}\caption{Temps d'exécution des tests déterministes}\label{fig:M5}\end{figure}
+		\end{frame}		
+		
+		\begin{frame}
+			\begin{figure}[H]\makebox[\textwidth]{\includegraphics[width=12cm,height=7cm]{../texRapport/img/perfsProb.png}}\vspace{-1em}\caption{Temps d'exécution des tests probabilistes}\label{fig:M6}\end{figure}
+		\end{frame}	
+		
+		\begin{frame}
+			\textbf{Générateur optimal}\\~\\
+			\begin{algorithm}[H]
+				\caption{RPNG Optimal}\label{RPNG_opt}
+				\Donnees{la taille $t$ en bits de l'entier premier à générer et le tableau tps[6][1025] des résultats de mesure du temps d'exécution des 6 test pour un nombre de bits entre 0 et 1024}
+				\Sortie{un nombre premier de $t$ bits}
+				Trouver le test de primalité d'indice $i$ ($i$ entre $0$ et $5$) telle que tps[i][t] est minimale (c'est-à-dire le test le plus rapide pour vérifier $t$ bits)\;
+				Générer un nombre premier de $t$ bits avec le test de primalité d'indice $i$\;
+			\end{algorithm}
+		\end{frame}
+		
+	\section{Conclusion}
+		\begin{frame}
+			\begin{itemize}
+				\item Difficultés : complexités, preuves et AKS.
+				\item Améliorations : répétitions tests probabilistes
+				\item Perspectives : test de primalité optimal
+			\end{itemize}
 		\end{frame}
 	
 \end{document}
